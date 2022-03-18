@@ -8,6 +8,7 @@ const Auth = () => {
     e.preventDefault();
     dispatch(signin());
   }
+  //extra commetn before commiting.
   return (
     <main className={classes.auth}>
       <section>
