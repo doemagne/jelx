@@ -13,6 +13,7 @@ import ServerURL from './constraint/ServerURL';
 import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
 import ExpenseJournal from './pages/ExpenseJournal';
 import ReduxStarter from './reduxer/starter/ReduxStarter';
+import Warehouse from './whcomponents/Warehouse';
 let namec = '';
 function App() {
   const [name, setName] = useState(namec);
@@ -78,6 +79,7 @@ function App() {
           <Route path="/merchandise/register" element={<MerchandiseRegisterJ />} />
           <Route path="/expensesjournal" element={<ExpenseJournal />} />
           <Route path="/redux/starter" element={<ReduxStarter />} />
+          <Route path="/ware/house" element={<Warehouse />} />
         </Routes>
       </BrowserRouter>
     </div>
