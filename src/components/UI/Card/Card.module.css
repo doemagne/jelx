@@ -1,0 +1,8 @@
+.card {
+    border-radius:12px;
+    box-shadow: 1px 8px rgba(0,0,0,0.25);
+}
+.darc {
+    border-radius:0.12rem;
+    box-shadow: 1px 8px #000;
+}

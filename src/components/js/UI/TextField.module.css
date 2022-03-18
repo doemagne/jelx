@@ -1,0 +1,31 @@
+/*
+.form-control.invalid input {
+    border-color: '#ff0000' !important;
+    background: '#ff001840'!important;
+}
+.form-control.invalid label {
+    color: '#ff0000'!important;
+}*/
+
+.form-floating.invalid input {
+    border-color: '#ff0000' !important;
+    background: '#ff001840'!important;
+}
+.form-floating.invalid label {
+    color: '#ff0000'!important;
+}
+
+.form-fl.invalid input {
+    border-color: '#ff0000' !important;
+    background: '#ff001840'!important;
+}
+.form-fl.invalid label {
+    color: '#ff0000'!important;
+}
+.invalid input{
+    border-color: '#ff0000' !important;
+    background: '#ff001840'!important;
+}
+.invalid label {
+    color: '#ff0000'!important;
+}
