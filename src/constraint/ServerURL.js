@@ -1,5 +1,8 @@
 
 const ServerPort = ":2023"
-const ServerURL = "http://pecan.local"+ServerPort;
+export const ServerURL = "http://pecan.local"+ServerPort;
+export const WHCartURL = 'https://merchandise-74a85-default-rtdb.firebaseio.com';
 
-export default ServerURL;
+//export  const UWHCartURL = WHCartURL;
+
+//export default ServerURL;

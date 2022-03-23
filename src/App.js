@@ -9,7 +9,7 @@ import SignUp from './pages/SignUp';
 import SignOut from './pages/SignOut';
 import Config from './pages/Config';
 import StockJ from './pages/StockJ';
-import ServerURL from './constraint/ServerURL';
+import { ServerURL } from './constraint/ServerURL';
 import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
 import ExpenseJournal from './pages/ExpenseJournal';
 import ReduxStarter from './reduxer/starter/ReduxStarter';
@@ -75,7 +75,7 @@ function App() {
           <Route path="/account/user" element={<Account name={name} />} />
           <Route path="/account/signout" element={<SignOut />} />
           <Route path="/config" element={<Config />} />
-          <Route path="/account/stockj" element={<StockJ />} />
+          <Route path="/merchandise/cart" element={<StockJ />} />
           <Route path="/merchandise/register" element={<MerchandiseRegisterJ />} />
           <Route path="/expensesjournal" element={<ExpenseJournal />} />
           <Route path="/redux/starter" element={<ReduxStarter />} />

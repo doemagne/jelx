@@ -3,7 +3,7 @@ import { Navigate } from "react-router";
 import Button from "../components/UI/Button/Button";
 import Card from "../components/UI/Card/Card";
 import InputRequired from "../components/UI/Form/InputRequired";
-import ServerURL from "../constraint/ServerURL";
+import { ServerURL } from "../constraint/ServerURL";
 const SignUp = (props) => {
 
   const [name, setName] = useState("");
@@ -53,7 +53,7 @@ const SignUp = (props) => {
   return (
     <main className="form-signin">
       <Card className="form-signin">
-        <h1 className="h3 mb-3 fw-normal">Please register</h1>
+        <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
         <form onSubmit={submit}>
         <InputRequired
         inputtype={'text'}

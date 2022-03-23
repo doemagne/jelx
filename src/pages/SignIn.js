@@ -3,7 +3,7 @@ import { Navigate } from 'react-router';
 import Card from "../components/UI/Card/Card";
 import InputRequired from "../components/UI/Form/InputRequired";
 import Modal from "../components/UI/Modal/Modal";
-import ServerURL from "../constraint/ServerURL";
+import { ServerURL } from "../constraint/ServerURL";
 const SignIn = (props) => {
   const [error, setError] = useState({
     title: '',

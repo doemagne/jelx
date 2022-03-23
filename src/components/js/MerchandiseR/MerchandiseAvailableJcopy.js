@@ -4,32 +4,33 @@ import ItemJ from './Item/ItemJ';
 import { useEffect, useState } from 'react';
 import { ServerURL } from '../../../constraint/ServerURL';
 
+let tmpUrl = ServerURL;
+
 const AvailableMerchandiseJ = () => {
   const [httpError, setHttpError] = useState();
   const [merchandisel, setMerchandiseList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const fetchMerchandise = async () => {
-    //const stimulus = await fetch("https://merchandise-74a85-default-rtdb.firebaseio.com/merchandise.json").then();
-    const stimulus = await fetch(ServerURL + '/api/merchandise/list');
-    if (!stimulus.ok) {
-      throw new Error('Something went wrong.');
-    }
-    const response = await stimulus.json();
-    const transformation = [];
-    for (const key in response) {
-      transformation.push({
-        //id: key,//firebase
-        id: response[key].id,
-        name: response[key].name,
-        description: response[key].description,
-        price: response[key].price
-      })
-    }
-    setMerchandiseList(transformation);
-    setIsLoading(false);
-  };
   useEffect(() => {
+    const fetchMerchandise = async () => {
+      const stimulus = await fetch("https://merchandise-74a85-default-rtdb.firebaseio.com/merchandise.json").then();
+      /*const stimulus = await fetch(ServerURL + '/api/merchandise/list');*/
+      if (!stimulus.ok) {
+        throw new Error('Something went wrong.');
+      }
+      const response = await stimulus.json();
+      const transformation = [];
+      for (const key in response) {
+        transformation.push({
+          id: key,//firebase
+          /*id: response[key].id,*/
+          name: response[key].name,
+          description: response[key].description,
+          price: response[key].price
+        })
+      }
+      setMerchandiseList(transformation);
+      setIsLoading(false);
+    };
     //try {
     fetchMerchandise().catch((error) => {
       setIsLoading(false);

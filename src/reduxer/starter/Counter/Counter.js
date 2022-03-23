@@ -1,5 +1,5 @@
 //import { counterActions } from '../../store/index-redux';
-import { increase, decrement, increment, toggle } from './CounterSlice';
+import { increase, decrement, increment, toggle } from '../../../store/slice/CounterSlice';
 import classes from './Counter.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 //import { useState } from 'react';

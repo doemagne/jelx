@@ -6,7 +6,7 @@ import Anonymous from './Anonymous/Anonymous';
 import AuthLogout from './AuthLogout';
 import SearchBar from './Anonymous/SearchBar';
 import BrandBar from './BrandBar';
-import ServerURL from '../../../constraint/ServerURL';
+import { ServerURL } from '../../../constraint/ServerURL';
 //import { useCallback } from 'react';
 const Nav = (props) => {
     const [exited, setExited] = useState(false);

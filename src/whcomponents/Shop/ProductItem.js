@@ -1,21 +1,28 @@
-import Card from '../UI/Card';
+import { useDispatch } from 'react-redux';
+import WCard from '../UI/WCard';
 import classes from './ProductItem.module.css';
+import { addItemToCart } from '../../store/slice/WHCartSlice';
 
 const ProductItem = (props) => {
-  const { title, price, description } = props;
+  const { id, name, price, description } = props;
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    dispatch(addItemToCart({id,name,price,description}));
+  };
 
   return (
     <li className={classes.item}>
-      <Card>
+      <WCard>
         <header>
-          <h3>{title}</h3>
+          <h3>{name}</h3>
           <div className={classes.price}>${price.toFixed(2)}</div>
         </header>
         <p>{description}</p>
         <div className={classes.actions}>
-          <button>Add to Cart</button>
+          <button onClick={addToCartHandler}>Add to Cart</button>
         </div>
-      </Card>
+      </WCard>
     </li>
   );
 };

@@ -3,6 +3,14 @@
     box-shadow: 1px 8px rgba(0,0,0,0.25);
 }
 .darc {
-    border-radius:0.12rem;
-    box-shadow: 1px 8px #000;
+    border-radius:12px;
+    /*box-shadow: 1px 8px #000;*/
+    box-shadow: 1px 8px rgba(0,0,0,0.25);
+    max-width: 25rem;
+    /* text-align: center; */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid #555;
 }

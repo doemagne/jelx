@@ -1,0 +1,29 @@
+.merchandise {
+    max-width: 60rem;
+    width: 90%;
+    margin: 2rem auto;
+    animation: merchandise-appear 1s ease-out forwards;
+  }
+  
+  .merchandise ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  @keyframes merchandise-appear {
+    from {
+      opacity: 0;
+      transform: translateY(3rem);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .merchandiseLoading {
+    text-align: center;
+    font-size: 1.5rem;
+  }

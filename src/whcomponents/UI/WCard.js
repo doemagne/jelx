@@ -1,6 +1,6 @@
 import classes from './Card.module.css';
 
-const Card = (props) => {
+const WCard = (props) => {
   return (
     <section
       className={`${classes.card} ${props.className ? props.className : ''}`}
@@ -10,4 +10,4 @@ const Card = (props) => {
   );
 };
 
-export default Card;
+export default WCard;
