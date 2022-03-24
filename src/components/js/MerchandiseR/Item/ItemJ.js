@@ -1,17 +1,23 @@
-import { useContext,Fragment } from "react";
+import { /*useContext,*/Fragment } from "react";
 import ItemFormJ from "./ItemFormJ";
 import classes from './Item.module.css';
-import CartContext from "../../../../store/cart-context";
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../../../../store/slice/CartSlice";
+//import CartContext from "../../../../store/cart-context";
 const ItemJ = (props) => {
-    const cartCtx = useContext(CartContext);
+    //const cartCtx = useContext(CartContext);
+    //const cartCtx = useSelector(state => state.cart);
+    const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
-    const addToCartHandler = (amount) => {
-        cartCtx.addItem({
+    const addToCartHandler = (quantity) => {
+        //console.log(props);
+        dispatch(addItemToCart({
             id: props.id,
             name: props.name,
-            amount: amount,
-            price: props.price
-        });
+            quantity: quantity,
+            price: props.price,
+            uid: props.uid,
+        }));
     };
     return (
         <Fragment>

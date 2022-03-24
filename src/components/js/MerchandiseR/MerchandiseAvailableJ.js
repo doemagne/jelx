@@ -18,12 +18,14 @@ const AvailableMerchandiseJ = () => {
     const response = await stimulus.json();
     const transformation = [];
     for (const key in response) {
+      //console.log(response[key].uid);
       transformation.push({
         //id: key,//firebase
         id: response[key].id,
         name: response[key].name,
         description: response[key].description,
-        price: response[key].price
+        price: response[key].price,
+        uid: response[key].uid,
       })
     }
     setMerchandiseList(transformation);
@@ -73,6 +75,7 @@ const AvailableMerchandiseJ = () => {
       name={merchandise.name}
       description={merchandise.description}
       price={merchandise.price}
+      uid={merchandise.uid}
     />
   ));
 

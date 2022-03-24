@@ -14,6 +14,7 @@ import MerchandiseRegisterJ from './components/js/Merchandise/Register/Merchandi
 import ExpenseJournal from './pages/ExpenseJournal';
 import ReduxStarter from './reduxer/starter/ReduxStarter';
 import Warehouse from './whcomponents/Warehouse';
+import MerchandiseR from './pages/MerchandiseR';
 let namec = '';
 function App() {
   const [name, setName] = useState(namec);
@@ -76,6 +77,7 @@ function App() {
           <Route path="/account/signout" element={<SignOut />} />
           <Route path="/config" element={<Config />} />
           <Route path="/merchandise/cart" element={<StockJ />} />
+          <Route path="/merchandise/cartr" element={<MerchandiseR />} />
           <Route path="/merchandise/register" element={<MerchandiseRegisterJ />} />
           <Route path="/expensesjournal" element={<ExpenseJournal />} />
           <Route path="/redux/starter" element={<ReduxStarter />} />
