@@ -26,6 +26,7 @@ const AvailableMerchandiseJ = () => {
         description: response[key].description,
         price: response[key].price,
         uid: response[key].uid,
+        iref: response[key].itemref
       })
     }
     setMerchandiseList(transformation);

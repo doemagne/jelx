@@ -4,15 +4,24 @@ import Card from "../components/UI/Card/Card";
 import InputRequired from "../components/UI/Form/InputRequired";
 import Modal from "../components/UI/Modal/Modal";
 import { ServerURL } from "../constraint/ServerURL";
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthState } from '../store/slice/AuthSlice';
+
+
+
+
 const SignIn = (props) => {
   const [error, setError] = useState({
     title: '',
     content: '',
   });
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [valid, setValid] = useState(true);
+  const dispatch = useDispatch();
+
   const submit = async (e) => {
     try {
       e.preventDefault();
@@ -35,6 +44,13 @@ const SignIn = (props) => {
       console.log(content);
       setRedirect(true);
       props.setName(content.name);
+      props.setCartuid(content.cartuid)
+      props.setUid(content.uid)
+      dispatch(setAuthState({
+        username:content.name,
+        uid: content.uid,
+        cartuid: content.cartuid,
+      }));
     } catch (e) {
       let result;// = (e as Error).message;
       if (e instanceof Error) {

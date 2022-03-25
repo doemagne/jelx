@@ -15,15 +15,26 @@ import ExpenseJournal from './pages/ExpenseJournal';
 import ReduxStarter from './reduxer/starter/ReduxStarter';
 import Warehouse from './whcomponents/Warehouse';
 import MerchandiseR from './pages/MerchandiseR';
+import Cookies from 'universal-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthState } from './store/slice/AuthSlice';
 let namec = '';
 function App() {
+  const dispatch = useDispatch(setAuthState);
+  const accuser = useSelector(state => state.auth);
   const [name, setName] = useState(namec);
+  const [cartuid, setCartuid] = useState('')
+  const [uid, setUid] = useState('')
   const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState({
     title: '',
     content: '',
   });
+  const cookie = new Cookies();
 
+  const setCartHandler = () => {
+    dispatch()
+  };
 
   const fetchUserHandler = useCallback(async () => {
     try {
@@ -40,9 +51,11 @@ function App() {
       const content = await response.json();
       setName(content.name);
       namec = content.name;
-      if (content.name && content.name.trim() !== '') {
+      if (content.name.length > 0 && content.name && content.name.trim() !== '') {
         setAuthenticated(true);
-        console.log(`SideEffect has detected a session with ${namec}`);
+        console.log(`SideEffect has detected a session with ${namec} cookie: ${cookie.get('jwt')}`);
+        setCartuid(content.cartuid)
+        setUid(content.uid)
       }
     } catch (e) {
       setAuthenticated(false);
@@ -61,6 +74,13 @@ function App() {
   useEffect(() => {
     console.log('useEffect -> fetchUserHandler')
     fetchUserHandler();
+    if (cartuid.length > 0) {
+      dispatch(setAuthState({
+        username:name,
+        uid: uid,
+        cartuid: cartuid,
+      }))
+    }
   }, [fetchUserHandler]);//WORKS -> RUNS ONCE
   // }, []);//ALSO WORKS -> RUNS ONCE//KEEP
 
@@ -71,7 +91,7 @@ function App() {
         <Navigation name={name} setName={setName} authenticated={authenticated} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/account/signin" element={<SignIn setName={setName} email={''} password={''} />} />
+          <Route path="/account/signin" element={<SignIn setName={setName} setUid={setUid} setCartuid={setCartuid} email={''} password={''} />} />
           <Route path="/account/signup" element={<SignUp name={''} email={''} password={''} />} />
           <Route path="/account/user" element={<Account name={name} />} />
           <Route path="/account/signout" element={<SignOut />} />
