@@ -67,7 +67,6 @@ const AvailableMerchandiseJ = () => {
     );
   }
 
-
   const merchandiseList = merchandisel.map((merchandise) => (
     <ItemJ
       id={merchandise.id}
@@ -76,6 +75,7 @@ const AvailableMerchandiseJ = () => {
       description={merchandise.description}
       price={merchandise.price}
       uid={merchandise.uid}
+      //iref={merchandise.iref}
     />
   ));
 

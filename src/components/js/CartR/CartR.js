@@ -57,6 +57,7 @@ const CartJ = props => {
                     name={item.name}
                     quantity={item.quantity}
                     price={item.price}
+                    iref={item.ref}
                     onRemove={cartItemRemoveHandler.bind(null, item.id)}
                     onAdd={cartItemAddHandler.bind(null, item)}
                 />
