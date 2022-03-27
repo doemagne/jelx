@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { v4 as uuidv4 } from 'uuid';
 const initialState = {
     items: [],
     totalItems: 0,
@@ -19,6 +19,8 @@ const cartSlice = createSlice({
             state.totalAmount = state.totalAmount + newitem.price * newitem.quantity;
             state.totalItems += newitem.quantity
             if (!existingItem) {
+                //const iref = uuidv4();
+                //console.log(iref);
                 state.items.push({
                     id: newitem.id,
                     name: newitem.name,
@@ -77,8 +79,15 @@ const cartSlice = createSlice({
             state.totalItems = action.payload.totalItems;
         },
         setguid: (state, action) => {
-            console.log(action.payload)
-            state.uid = action.payload;
+            const pay = action.payload;
+            //if (pay) {
+                state.uid = pay.uid;
+                //state.totalAmount = pay.totalAmount;
+                //state.totalItems = pay.totalItems;
+
+                console.log(action.payload);
+
+            //}
         },
     },
 });

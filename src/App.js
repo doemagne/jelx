@@ -19,6 +19,8 @@ import Cookies from 'universal-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState } from './store/slice/AuthSlice';
 let namec = '';
+let uidc = '';
+let cartuidc = '';
 function App() {
   const dispatch = useDispatch(setAuthState);
   const accuser = useSelector(state => state.auth);
@@ -51,11 +53,24 @@ function App() {
       const content = await response.json();
       setName(content.name);
       namec = content.name;
+      setCartuid(content.cartuid)
+      cartuidc = content.cartuid;
+      setUid(content.uid)
+      uidc = content.uid;
+      //console.log(cartuid)
+      //console.log(uid)
       if (content.name.length > 0 && content.name && content.name.trim() !== '') {
-        setAuthenticated(true);
-        console.log(`SideEffect has detected a session with ${namec} cookie: ${cookie.get('jwt')}`);
+        //setAuthenticated(true);
+        console.log(`SideEffect has detected a session with ${namec}`);
         setCartuid(content.cartuid)
         setUid(content.uid)
+        dispatch(setAuthState({
+          username: namec,
+          uid: uidc,
+          cartuid: cartuidc,
+        }))
+        //const tauth = accuser;
+        setAuthenticated(accuser.athenticated);
       }
     } catch (e) {
       setAuthenticated(false);
@@ -74,16 +89,15 @@ function App() {
   useEffect(() => {
     console.log('useEffect -> fetchUserHandler')
     fetchUserHandler();
-    if (cartuid.length > 0) {
+    /*if (cartuid.length > 0) {
       dispatch(setAuthState({
-        username:name,
+        username: name,
         uid: uid,
         cartuid: cartuid,
       }))
-    }
+    }*/
   }, [fetchUserHandler]);//WORKS -> RUNS ONCE
   // }, []);//ALSO WORKS -> RUNS ONCE//KEEP
-
 
   return (
     <div className="App">
@@ -97,7 +111,7 @@ function App() {
           <Route path="/account/signout" element={<SignOut />} />
           <Route path="/config" element={<Config />} />
           <Route path="/merchandise/cart" element={<StockJ />} />
-          <Route path="/merchandise/cartr" element={<MerchandiseR />} />
+          <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid}/>} />
           <Route path="/merchandise/register" element={<MerchandiseRegisterJ />} />
           <Route path="/expensesjournal" element={<ExpenseJournal />} />
           <Route path="/redux/starter" element={<ReduxStarter />} />

@@ -21,8 +21,14 @@ export const authSlice = createSlice({
                 state.username = pay.username;
                 state.uid = pay.uid;
                 state.cartuid = pay.cartuid;
+                window.sessionStorage.setItem("user",state.username);
+                window.sessionStorage.setItem("useruid",state.uid);
+                window.sessionStorage.setItem("cartuid",state.cartuid);
+                console.log('chek session storage.');
             } else {
                 state.authenticated = false;
+                console.log("clearing the session storage.")
+                window.sessionStorage.clear();
             }
             console.log(pay);
         },
@@ -31,6 +37,7 @@ export const authSlice = createSlice({
         },
         signout: (state) => {
             state.authenticated = false
+            window.sessionStorage.clear();
         },
     },
 })

@@ -7,8 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ServerURL, WHCartURL } from '../constraint/ServerURL';
 
 let cartuid = '';
-let totalAmountc = '';
-let totalItemsc = '';
 const MerchandiseR = props => {
     const [cartShown, setCartShown] = useState(false);
     const [uid, setUID] = useState(cartuid);
@@ -17,30 +15,44 @@ const MerchandiseR = props => {
 
     const updateCartID = useCallback(//const fetchCartID =
         async () => {
-            if (props.cartuid.length > 0) {
-                setUID(props.cartuid);
-                console.log(props.cartuid)
-                const quantity = cart.totalItems;
-                const amount = cart.totalAmount;
-                const tcart = {
-                    uid: props.cartuid,
-                    totalAmount: `${amount.toFixed(2)}`,
-                    totalItems: quantity.toString(),
-                };
-                const stimulus = await fetch(ServerURL + '/api/cart/update',
-                    {
-                        method: 'PUT',//body: JSON.stringify(cart),
-                        body: JSON.stringify(tcart),
-                        headers: { "Content-Type": "application/json" },
-                        //credentials: 'include',
-                    });
-                setUID(props.uid);
-                const response = await stimulus.json();
-                totalItemsc = response.totalItemsd;
-                totalAmountc = response.totalAmountc
-                //console.log(totalAmountc);
-                //console.log(totalItemsc);
-                //console.log(uid);
+            setUID(props.cartuid);
+            console.log(props.cartuid)
+            const quantity = cart.totalItems;
+            const amount = cart.totalAmount;
+            const items = cart.items;
+            const tmpis = [];
+            const tcart = {
+                uid: props.cartuid,
+                totalAmount: `${amount.toFixed(2)}`,
+                totalItems: quantity.toString(),
+            };
+            const stimulus = await fetch(ServerURL + '/api/cart/update',
+                {
+                    method: 'PUT',//body: JSON.stringify(cart),
+                    body: JSON.stringify(tcart),
+                    headers: { "Content-Type": "application/json" },
+                    //credentials: 'include',
+                });
+            const response = await stimulus.json();
+            //setUID(response.uid);
+            setUID(props.uid);
+            console.log()
+            if (items.length > 0) {
+                for (const i in items) {
+                    const tmpi = {
+                        cartuid: props.cartuid,
+                        itemuid: items[i].uid,
+                        quantity: items[i].quantity.toString(),
+                    };
+                    const stimulus = await fetch(ServerURL + '/api/cart/item/register',
+                        {
+                            method: 'POST',//body: JSON.stringify(cart),
+                            body: JSON.stringify(tmpi),
+                            headers: { "Content-Type": "application/json" },
+                            //credentials: 'include',
+                        });
+                    const response = await stimulus.json();
+                }
             }
             return;
         }, [uid, cart]);//cartuid = uid;
@@ -48,13 +60,8 @@ const MerchandiseR = props => {
 
     useEffect(() => {
         setUID(props.cartuid);
+        dispatch(setguid(props.cartuid));//console.log(cart.uid)
         updateCartID()
-        const newcart = {
-            uid:props.cartuid,
-            //totalAmount:totalAmountc,
-            //totalItems:totalItemsc,
-        };
-        dispatch(setguid(newcart));//console.log(cart.uid)
         return;
     }, [cart, dispatch]);
 
@@ -114,20 +121,3 @@ export default MerchandiseR;
         //dispatch(setguid(props.uid));//console.log(cart.uid)
         //} else {
         //console.log(cart)
-
-
-/*for (const i in items) {
-    const tmpi = {
-        cartuid: props.cartuid,
-        itemuid: items[i].uid,
-        quantity: items[i].quantity.toString(),
-    };
-    const stimulus = await fetch(ServerURL + '/api/cart/item/register',
-        {
-            method: 'POST',//body: JSON.stringify(cart),
-            body: JSON.stringify(tmpi),
-            headers: { "Content-Type": "application/json" },
-            //credentials: 'include',
-        });
-    const response = await stimulus.json();
-}*/

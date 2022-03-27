@@ -17,7 +17,7 @@ const NavAuthBar = () => {
         <Link to="/config" className="nav-link active" aria-current="page">Config</Link>
         </li>
         <li className="nav-item">
-        <Link to="/account/stockj" className="nav-link active" aria-current="page">Stock</Link>
+        <Link to="/merchandise/cartr" className="nav-link active" aria-current="page">Stock</Link>
         </li>
         <DropDownBar navHandler={dropDrownHandler}/>
     </ul>

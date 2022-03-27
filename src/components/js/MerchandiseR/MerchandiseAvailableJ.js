@@ -11,7 +11,8 @@ const AvailableMerchandiseJ = () => {
 
   const fetchMerchandise = async () => {
     //const stimulus = await fetch("https://merchandise-74a85-default-rtdb.firebaseio.com/merchandise.json").then();
-    const stimulus = await fetch(ServerURL + '/api/merchandise/list');
+    const uuid = window.sessionStorage.getItem("useruid");
+    const stimulus = await fetch(ServerURL + `/api/merchandise/map/${uuid}`);
     if (!stimulus.ok) {
       throw new Error('Something went wrong.');
     }
@@ -26,7 +27,7 @@ const AvailableMerchandiseJ = () => {
         description: response[key].description,
         price: response[key].price,
         uid: response[key].uid,
-        iref: response[key].itemref
+        iref: response[key].iref,
       })
     }
     setMerchandiseList(transformation);
@@ -76,7 +77,7 @@ const AvailableMerchandiseJ = () => {
       description={merchandise.description}
       price={merchandise.price}
       uid={merchandise.uid}
-      //iref={merchandise.iref}
+      iref={merchandise.iref}
     />
   ));
 

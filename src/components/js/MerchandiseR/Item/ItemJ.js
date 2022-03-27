@@ -3,20 +3,57 @@ import ItemFormJ from "./ItemFormJ";
 import classes from './Item.module.css';
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../../../store/slice/CartSlice";
-//import CartContext from "../../../../store/cart-context";
+import { ServerURL } from "../../../../constraint/ServerURL";
 const ItemJ = (props) => {
-    //const cartCtx = useContext(CartContext);
-    //const cartCtx = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
+    
+    const sfetchItemHandler = (quantity) => {
+        const tmpi = {
+            cartuid: props.cartuid,
+            itemuid: props.uid,
+            quantity: quantity.toString(),
+            iref: props.iref,
+        };
+        fetch(ServerURL + '/api/cart/item/register',
+            {
+                method: 'POST',//body: JSON.stringify(cart),
+                body: JSON.stringify(tmpi),
+                headers: { "Content-Type": "application/json" },
+            })
+            .then(response => {
+                response.json()
+            })
+            .then(data => { 
+                return data.iref; 
+            });
+    };
+    const fetchItemHandler = async(quantity) => {
+        const tmpi = {
+            cartuid: props.cartuid,
+            itemuid: props.uid,
+            quantity: quantity.toString(),
+            iref: props.iref,
+        };
+        const stimulus = await fetch(ServerURL + '/api/cart/item/register',
+            {
+                method: 'POST',//body: JSON.stringify(cart),
+                body: JSON.stringify(tmpi),
+                headers: { "Content-Type": "application/json" },
+                //credentials: 'include',
+            });
+    };
+
     const addToCartHandler = (quantity) => {
         //console.log(props);
+        fetchItemHandler(quantity);
         dispatch(addItemToCart({
             id: props.id,
             name: props.name,
             quantity: quantity,
             price: props.price,
             uid: props.uid,
+            iref: props.iref,
         }));
     };
     return (
@@ -28,12 +65,43 @@ const ItemJ = (props) => {
                     <div className={classes.price}>{price}</div>
                 </div>
                 <div>
-                    <ItemFormJ onAddToCart={addToCartHandler}/>
+                    <ItemFormJ onAddToCart={addToCartHandler} />
                 </div>
             </li>
         </Fragment>
     );
 };
 
-                    //<ItemFormJ/>
+//<ItemFormJ/>
 export default ItemJ;
+
+/*for (const i in items) {
+    const tmpi = {
+        cartuid: props.cartuid,
+        itemuid: items[i].uid,
+        quantity: items[i].quantity.toString(),
+    };
+    const stimulus = await fetch(ServerURL + '/api/cart/item/register',
+        {
+            method: 'POST',//body: JSON.stringify(cart),
+            body: JSON.stringify(tmpi),
+            headers: { "Content-Type": "application/json" },
+            //credentials: 'include',
+        });
+    const response = await stimulus.json();
+}
+
+    const fetchItemHandler = async(quantity) => {
+        const stimulus = await fetch(ServerURL + '/api/cart/item/register',
+            {
+                method: 'POST',//body: JSON.stringify(cart),
+                body: JSON.stringify(tmpi),
+                headers: { "Content-Type": "application/json" },
+                //credentials: 'include',
+            });
+        const response = await stimulus.json();
+        return response.uid
+    }*/
+//synchonous
+
+

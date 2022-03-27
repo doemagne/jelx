@@ -7,6 +7,8 @@ import AuthLogout from './AuthLogout';
 import SearchBar from './Anonymous/SearchBar';
 import BrandBar from './BrandBar';
 import { ServerURL } from '../../../constraint/ServerURL';
+import { useDispatch } from 'react-redux';
+import { signout } from '../../../store/slice/AuthSlice';
 //import { useCallback } from 'react';
 const Nav = (props) => {
     const [exited, setExited] = useState(false);
@@ -14,14 +16,16 @@ const Nav = (props) => {
         title: '',
         content: '',
     });
+    const dispatch = useDispatch();
     const logout = async (e) => {
-    //const logout = useCallback( async (e: SyntheticEvent) => {
+        dispatch(logout());
+        //const logout = useCallback( async (e: SyntheticEvent) => {
         props.setName('');
         setExited(true);
         e.preventDefault();
         try {
             //await fetch("http://pecan.local:2023/api/signout", {
-            await fetch(ServerURL+'/api/signout', {
+            await fetch(ServerURL + '/api/signout', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -46,7 +50,7 @@ const Nav = (props) => {
 
         }
     }
- //   ,[props.name]);
+    //   ,[props.name]);
 
     let nav;
     let menu = (<AnonymousBar />);
@@ -70,7 +74,7 @@ const Nav = (props) => {
                     {leftmenu}
                     {searchform}
                 </div>
-                    {menu}
+                {menu}
             </div>
         </nav>
     );
@@ -83,7 +87,7 @@ const Nav = (props) => {
         );
     }
 
-                //{<Navigate to="/api/signout" />}
+    //{<Navigate to="/api/signout" />}
     //{<Navigate to="/account/signout" />}
     //{<Redirect to="/login" /> && <Redirect to="/logout" />}
     //{<Redirect to="/logout" />}
