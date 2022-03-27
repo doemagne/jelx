@@ -2,7 +2,7 @@ import { /*useContext,*/Fragment } from "react";
 import ItemFormJ from "./ItemFormJ";
 import classes from './Item.module.css';
 import { useDispatch } from "react-redux";
-import { addItemToCart } from "../../../../store/slice/CartSlice";
+import { addItemToCart } from "../../../../store/redux/slice/CartSlice";
 import { ServerURL } from "../../../../constraint/ServerURL";
 const ItemJ = (props) => {
     const dispatch = useDispatch();

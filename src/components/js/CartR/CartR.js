@@ -1,7 +1,7 @@
 import { Fragment, useContext, useState } from "react";
 //import CartContext from "../../../store/cart-context";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart, removeItemFromCart } from "../../../store/slice/CartSlice";
+import { addItemToCart, removeItemFromCart } from "../../../store/redux/slice/CartSlice";
 import ModalJ from "../UI/ModalJ";
 import classes from './Cart.module.css';
 import CartItemJ from "./CartItemR";

@@ -16,19 +16,22 @@ export const authSlice = createSlice({
     reducers: {
         setAuthState: (state, action) => {
             const pay = action.payload;
-            state.authenticated = (pay.username.length > 0 && pay.uid.length > 0 && pay.cartuid.length > 0 )
+            state.authenticated = (pay.username.length > 0 && pay.uid.length > 0 && pay.cartuid.length > 0)
             if (state.authenticated) {
                 state.username = pay.username;
                 state.uid = pay.uid;
                 state.cartuid = pay.cartuid;
-                window.sessionStorage.setItem("user",state.username);
-                window.sessionStorage.setItem("useruid",state.uid);
-                window.sessionStorage.setItem("cartuid",state.cartuid);
+                window.sessionStorage.setItem("user", state.username);
+                window.sessionStorage.setItem("useruid", state.uid);
+                window.sessionStorage.setItem("cartuid", state.cartuid);
                 console.log('chek session storage.');
             } else {
                 state.authenticated = false;
                 console.log("clearing the session storage.")
-                window.sessionStorage.clear();
+                window.sessionStorage.setItem("user", "");
+                window.sessionStorage.setItem("useruid", "");
+                window.sessionStorage.setItem("cartuid", "");
+                //window.sessionStorage.clear();
             }
             console.log(pay);
         },
@@ -37,7 +40,10 @@ export const authSlice = createSlice({
         },
         signout: (state) => {
             state.authenticated = false
-            window.sessionStorage.clear();
+            window.sessionStorage.setItem("user", null);
+            window.sessionStorage.setItem("useruid", null);
+            window.sessionStorage.setItem("cartuid", null);
+            //window.sessionStorage.clear();
         },
     },
 })

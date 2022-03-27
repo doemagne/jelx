@@ -1,7 +1,7 @@
 import { useContext,Fragment } from "react";
 import ItemFormJ from "./ItemFormJ";
 import classes from './Item.module.css';
-import CartContext from "../../../../store/cart-context";
+import CartContext from "../../../../store/context/cart-context";
 const ItemJ = (props) => {
     const cartCtx = useContext(CartContext);
     const price = `$${props.price.toFixed(2)}`;

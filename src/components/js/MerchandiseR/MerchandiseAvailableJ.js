@@ -19,7 +19,6 @@ const AvailableMerchandiseJ = () => {
     const response = await stimulus.json();
     const transformation = [];
     for (const key in response) {
-      //console.log(response[key].uid);
       transformation.push({
         //id: key,//firebase
         id: response[key].id,
@@ -34,16 +33,10 @@ const AvailableMerchandiseJ = () => {
     setIsLoading(false);
   };
   useEffect(() => {
-    //try {
     fetchMerchandise().catch((error) => {
       setIsLoading(false);
       setHttpError(error.message);
-
     });
-    //} catch (error) {
-    //}
-    //const timer = setTimeout(() => { setIsLoading(false); }, 1300);
-    //return () => { clearTimeout(timer); };
   }, []);
   if (isLoading) {
     return (

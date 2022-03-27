@@ -1,5 +1,5 @@
 import classes from './CartButton.module.css';
-import { toggle } from '../../store/slice/WHUISlice';
+import { toggle } from '../../../../store/redux/slice/WHUISlice';
 import { useDispatch, useSelector } from 'react-redux';
 const WCartButton = (props) => {
   const dispatch = useDispatch();

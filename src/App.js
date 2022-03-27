@@ -12,12 +12,11 @@ import StockJ from './pages/StockJ';
 import { ServerURL } from './constraint/ServerURL';
 import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
 import ExpenseJournal from './pages/ExpenseJournal';
-import ReduxStarter from './reduxer/starter/ReduxStarter';
-import Warehouse from './whcomponents/Warehouse';
+import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
+import Warehouse from './components/old/whcomponents/Warehouse';
 import MerchandiseR from './pages/MerchandiseR';
-import Cookies from 'universal-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuthState } from './store/slice/AuthSlice';
+import { setAuthState, signout } from './store/redux/slice/AuthSlice';
 let namec = '';
 let uidc = '';
 let cartuidc = '';
@@ -32,11 +31,6 @@ function App() {
     title: '',
     content: '',
   });
-  const cookie = new Cookies();
-
-  const setCartHandler = () => {
-    dispatch()
-  };
 
   const fetchUserHandler = useCallback(async () => {
     try {
@@ -57,7 +51,6 @@ function App() {
       cartuidc = content.cartuid;
       setUid(content.uid)
       uidc = content.uid;
-      //console.log(cartuid)
       //console.log(uid)
       if (content.name.length > 0 && content.name && content.name.trim() !== '') {
         //setAuthenticated(true);
@@ -69,15 +62,12 @@ function App() {
           uid: uidc,
           cartuid: cartuidc,
         }))
-        //const tauth = accuser;
         setAuthenticated(accuser.athenticated);
       }
     } catch (e) {
       setAuthenticated(false);
       setName('');
-      //let result = (e as Error).message;
       if (e instanceof Error) {
-        //result = (e as Error).message; // works, `e` narrowed to Error
         setError({
           title: "An error occured.",
           content: `The system encountered an unexpected error:\n ${e} \n Please try again later.`,
@@ -89,13 +79,9 @@ function App() {
   useEffect(() => {
     console.log('useEffect -> fetchUserHandler')
     fetchUserHandler();
-    /*if (cartuid.length > 0) {
-      dispatch(setAuthState({
-        username: name,
-        uid: uid,
-        cartuid: cartuid,
-      }))
-    }*/
+    if (!authenticated){
+      dispatch(signout());
+    }
   }, [fetchUserHandler]);//WORKS -> RUNS ONCE
   // }, []);//ALSO WORKS -> RUNS ONCE//KEEP
 
@@ -111,7 +97,7 @@ function App() {
           <Route path="/account/signout" element={<SignOut />} />
           <Route path="/config" element={<Config />} />
           <Route path="/merchandise/cart" element={<StockJ />} />
-          <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid}/>} />
+          <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} />} />
           <Route path="/merchandise/register" element={<MerchandiseRegisterJ />} />
           <Route path="/expensesjournal" element={<ExpenseJournal />} />
           <Route path="/redux/starter" element={<ReduxStarter />} />

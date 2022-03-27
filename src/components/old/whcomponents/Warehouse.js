@@ -3,8 +3,8 @@ import Layout from './Layout/Layout';
 import Products from './Shop/Products';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';//import { WHCartURL } from '../constraint/ServerURL';
-import { ServerURL, WHCartURL } from '../constraint/ServerURL';
-import { setguid } from '../store/slice/WHCartSlice';
+import { ServerURL, WHCartURL } from '../../../constraint/ServerURL';
+import { setguid } from '../../../store/redux/slice/WHCartSlice';
 
 let cartuid = '';
 function Warehouse() {

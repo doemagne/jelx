@@ -2,7 +2,7 @@ import { useState } from "react";
 import CartJ from "../components/js/Cart/CartJ";
 import HeaderJ from "../components/js/Layout/Header/HeaderJ";
 import MerchandiseJ from "../components/js/Merchandise/MerchandiseJ";
-import CartProvider from "../store/CartProvider";
+import CartProvider from "../store/context/CartProvider";
 
 const StockJ = props => {
     const [cartShown,setCartShown] = useState(false);

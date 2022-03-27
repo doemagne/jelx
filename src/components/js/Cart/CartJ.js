@@ -1,5 +1,5 @@
 import { Fragment, useContext, useState } from "react";
-import CartContext from "../../../store/cart-context";
+import CartContext from "../../../store/context/cart-context";
 import ModalJ from "../UI/ModalJ";
 import classes from './Cart.module.css';
 import CartItemJ from "./CartItemJ";

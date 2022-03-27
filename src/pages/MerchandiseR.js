@@ -2,13 +2,13 @@ import { Fragment, useState, useEffect, useCallback } from "react";
 import CartJ from "../components/js/CartR/CartR";
 import HeaderR from "../components/js/Layout/Header/HeaderR";
 import MerchandiseJ from "../components/js/MerchandiseR/MerchandiseJ";
-import { setguid } from "../store/slice/CartSlice";
+import { setguid } from "../store/redux/slice/CartSlice";
 import { useSelector, useDispatch } from 'react-redux';
 import { ServerURL, WHCartURL } from '../constraint/ServerURL';
 
 let cartuid = '';
-let totalAmountc = '';
-let totalItemsc = '';
+//let totalAmountc = '';
+//let totalItemsc = '';
 const MerchandiseR = props => {
     const [cartShown, setCartShown] = useState(false);
     const [uid, setUID] = useState(cartuid);
@@ -36,14 +36,10 @@ const MerchandiseR = props => {
                     });
                 setUID(props.uid);
                 const response = await stimulus.json();
-                totalItemsc = response.totalItemsd;
-                totalAmountc = response.totalAmountc
-                //console.log(totalAmountc);
-                //console.log(totalItemsc);
-                //console.log(uid);
+                console.log(uid);
             }
             return;
-        }, [uid, cart]);//cartuid = uid;
+        }, [cart]);//cartuid = uid;
 
 
     useEffect(() => {

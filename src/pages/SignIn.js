@@ -5,7 +5,7 @@ import InputRequired from "../components/UI/Form/InputRequired";
 import Modal from "../components/UI/Modal/Modal";
 import { ServerURL } from "../constraint/ServerURL";
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuthState } from '../store/slice/AuthSlice';
+import { setAuthState } from '../store/redux/slice/AuthSlice';
 
 
 
