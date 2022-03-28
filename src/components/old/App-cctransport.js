@@ -1,23 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Navigation from './components/UI/Navigation/Navigation';
-import Account from './pages/Account';
-import Home from './pages/Home';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import SignOut from './pages/SignOut';
-import Config from './pages/Config';
-import StockJ from './pages/StockJ';
-import { ServerURL } from './constraint/ServerURL';
-import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
-import ExpenseJournal from './pages/ExpenseJournal';
-import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
-import Warehouse from './components/old/whcomponents/Warehouse';
-import MerchandiseR from './pages/MerchandiseR';
+import Navigation from '../UI/Navigation/Navigation';
+import Account from '../../pages/Account';
+import Home from '../../pages/Home';
+import SignIn from '../../pages/SignIn';
+import SignUp from '../../pages/SignUp';
+import SignOut from '../../pages/SignOut';
+import Config from '../../pages/Config';
+import StockJ from '../../pages/StockJ';
+import { ServerURL } from '../../constraint/ServerURL';
+import MerchandiseRegisterJ from '../js/Merchandise/Register/MerchandiseRegisterJ';
+import ExpenseJournal from '../../pages/ExpenseJournal';
+import ReduxStarter from './reduxer/starter/ReduxStarter';
+import Warehouse from './whcomponents/Warehouse';
+import MerchandiseR from '../../pages/MerchandiseR';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuthState, signout } from './store/redux/slice/AuthSlice';
-import { setguid } from './store/redux/slice/CartSlice';
+import { setAuthState, signout } from '../../store/redux/slice/AuthSlice';
+import { setguid } from '../../store/redux/slice/CartSlice';
 let namec = '';
 let uidc = '';
 let cartuidc = '';
@@ -43,9 +43,12 @@ function App() {
       console.log(`Getting user session:`);
       //const response = await fetch("http://pecan.local:2023/api/user", {
       const response = await fetch(ServerURL + '/api/user', {
-        headers: {"Content-Type": "application/json",},
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
         //mode:"no-cors",
+
       });
       const content = await response.json();
       transport = content;
@@ -69,19 +72,15 @@ function App() {
         setCartuid(content.cartuid)
         setUid(content.uid)
         dispatch(setAuthState({
-          username: transport.username,
-          uid: transport.uid,
-          cartuid: transport.cartuid,
+          username: namec,
+          uid: uidc,
+          cartuid: cartuidc,
         }))
-        dispatch(setguid(transport.cart))
-/*
-{
-          //uid: transport.uid,
-          //totalItems: transport.cart.totalItems,
-          //totalAmount: transport.cart.totalAmount,
-          cart: transport.cart,
-        }
-*/
+        dispatch(setguid({
+          uid: uidc,
+          totalItems: quantityc,
+          totalAmount: amountc,
+        }))
         setAuthenticated(accuser.athenticated);
       }
     } catch (e) {

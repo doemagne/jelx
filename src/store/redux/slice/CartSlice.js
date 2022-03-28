@@ -81,13 +81,23 @@ const cartSlice = createSlice({
         setguid: (state, action) => {
             const pay = action.payload;
             //if (pay) {
-                state.uid = pay.uid;
-                //state.totalAmount = pay.totalAmount;
-                //state.totalItems = pay.totalItems;
-
-                console.log(action.payload);
-
-            //}
+            //console.log(pay.items);
+            state.uid = pay.uid;
+            state.totalAmount = pay.totalAmount;
+            state.totalItems = pay.totalItems;
+            if (state.items.length == 0) {
+                for (const i in pay.items) {
+                    state.items.push({
+                        id: pay.items[i].merchandise.id,
+                        name: pay.items[i].merchandise.name,
+                        quantity: pay.items[i].quantity,
+                        price: pay.items[i].merchandise.price,
+                        total: pay.items[i].total,
+                        uid: pay.items[i].merchandise.uid,
+                        iref: pay.items[i].uid,
+                    });
+                }
+            }
         },
     },
 });

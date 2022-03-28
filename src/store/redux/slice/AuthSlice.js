@@ -31,6 +31,7 @@ export const authSlice = createSlice({
                 window.sessionStorage.setItem("user", "");
                 window.sessionStorage.setItem("useruid", "");
                 window.sessionStorage.setItem("cartuid", "");
+                //window.location.reload();
                 //window.sessionStorage.clear();
             }
             console.log(pay);
@@ -43,6 +44,7 @@ export const authSlice = createSlice({
             window.sessionStorage.setItem("user", null);
             window.sessionStorage.setItem("useruid", null);
             window.sessionStorage.setItem("cartuid", null);
+            //window.location.reload();
             //window.sessionStorage.clear();
         },
     },

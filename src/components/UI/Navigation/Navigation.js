@@ -31,6 +31,7 @@ const Nav = (props) => {
                 },
                 credentials: "include",
             });
+            window.location.reload();
             return;
         } catch (e) {
             if (e instanceof Error) {

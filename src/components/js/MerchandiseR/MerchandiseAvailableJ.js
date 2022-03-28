@@ -14,7 +14,7 @@ const AvailableMerchandiseJ = () => {
     const uuid = window.sessionStorage.getItem("useruid");
     const stimulus = await fetch(ServerURL + `/api/merchandise/map/${uuid}`);
     if (!stimulus.ok) {
-      throw new Error('Something went wrong.');
+      throw new Error(`Something went wrong.Please reload this tab or try again later.`);
     }
     const response = await stimulus.json();
     const transformation = [];

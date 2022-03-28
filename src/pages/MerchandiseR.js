@@ -12,6 +12,8 @@ let cartuid = '';
 const MerchandiseR = props => {
     const [cartShown, setCartShown] = useState(false);
     const [uid, setUID] = useState(cartuid);
+    //const [TAmount, setTAmount] = useState('')
+    //const [TQuantity, setTQuantity] = useState('')
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
@@ -36,23 +38,26 @@ const MerchandiseR = props => {
                     });
                 setUID(props.uid);
                 const response = await stimulus.json();
+                //setTAmount(response.total);
+                //setTQuantity(response.quantity);
                 console.log(uid);
             }
             return;
         }, [cart]);//cartuid = uid;
+    //}, []);//cartuid = uid;
 
 
     useEffect(() => {
         setUID(props.cartuid);
         updateCartID()
-        const newcart = {
-            uid:props.cartuid,
-            //totalAmount:totalAmountc,
-            //totalItems:totalItemsc,
-        };
-        dispatch(setguid(newcart));//console.log(cart.uid)
+        //const newcart = {
+            //uid:props.cartuid,
+            //totalAmount:TAmount,
+            //totalItems:TQuantity,
+        //};
+        //dispatch(setguid(newcart));//console.log(cart.uid)
         return;
-    }, [cart, dispatch]);
+    }, [dispatch, cart]);
 
     const showCartHandler = () => {
         setCartShown(true);
@@ -110,8 +115,6 @@ export default MerchandiseR;
         //dispatch(setguid(props.uid));//console.log(cart.uid)
         //} else {
         //console.log(cart)
-
-
 /*for (const i in items) {
     const tmpi = {
         cartuid: props.cartuid,

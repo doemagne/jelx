@@ -6,6 +6,7 @@ import Modal from "../components/UI/Modal/Modal";
 import { ServerURL } from "../constraint/ServerURL";
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState } from '../store/redux/slice/AuthSlice';
+import { setguid } from "../store/redux/slice/CartSlice";
 
 
 
@@ -51,6 +52,7 @@ const SignIn = (props) => {
         uid: content.uid,
         cartuid: content.cartuid,
       }));
+      dispatch(setguid(content.cart));
     } catch (e) {
       let result;// = (e as Error).message;
       if (e instanceof Error) {

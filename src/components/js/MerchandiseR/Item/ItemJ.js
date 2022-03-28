@@ -7,27 +7,7 @@ import { ServerURL } from "../../../../constraint/ServerURL";
 const ItemJ = (props) => {
     const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
-    
-    const sfetchItemHandler = (quantity) => {
-        const tmpi = {
-            cartuid: props.cartuid,
-            itemuid: props.uid,
-            quantity: quantity.toString(),
-            iref: props.iref,
-        };
-        fetch(ServerURL + '/api/cart/item/register',
-            {
-                method: 'POST',//body: JSON.stringify(cart),
-                body: JSON.stringify(tmpi),
-                headers: { "Content-Type": "application/json" },
-            })
-            .then(response => {
-                response.json()
-            })
-            .then(data => { 
-                return data.iref; 
-            });
-    };
+
     const fetchItemHandler = async(quantity) => {
         const tmpi = {
             cartuid: props.cartuid,
@@ -42,6 +22,8 @@ const ItemJ = (props) => {
                 headers: { "Content-Type": "application/json" },
                 //credentials: 'include',
             });
+            const response = await stimulus.json();
+
     };
 
     const addToCartHandler = (quantity) => {
@@ -75,7 +57,32 @@ const ItemJ = (props) => {
 //<ItemFormJ/>
 export default ItemJ;
 
-/*for (const i in items) {
+/*
+SYNCHOUS FETCH
+
+    
+    const sfetchItemHandler = (quantity) => {
+        const tmpi = {
+            cartuid: props.cartuid,
+            itemuid: props.uid,
+            quantity: quantity.toString(),
+            iref: props.iref,
+        };
+        fetch(ServerURL + '/api/cart/item/register',
+            {
+                method: 'POST',//body: JSON.stringify(cart),
+                body: JSON.stringify(tmpi),
+                headers: { "Content-Type": "application/json" },
+            })
+            .then(response => {
+                response.json()
+            })
+            .then(data => { 
+                return data.iref; 
+            });
+    };
+
+for (const i in items) {
     const tmpi = {
         cartuid: props.cartuid,
         itemuid: items[i].uid,

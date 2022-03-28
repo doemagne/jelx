@@ -43,9 +43,12 @@ function App() {
       console.log(`Getting user session:`);
       //const response = await fetch("http://pecan.local:2023/api/user", {
       const response = await fetch(ServerURL + '/api/user', {
-        headers: {"Content-Type": "application/json",},
+        headers: {
+          "Content-Type": "application/json",
+        },
         credentials: "include",
         //mode:"no-cors",
+
       });
       const content = await response.json();
       transport = content;
@@ -69,19 +72,15 @@ function App() {
         setCartuid(content.cartuid)
         setUid(content.uid)
         dispatch(setAuthState({
-          username: transport.username,
-          uid: transport.uid,
-          cartuid: transport.cartuid,
+          username: namec,
+          uid: uidc,
+          cartuid: cartuidc,
         }))
-        dispatch(setguid(transport.cart))
-/*
-{
-          //uid: transport.uid,
-          //totalItems: transport.cart.totalItems,
-          //totalAmount: transport.cart.totalAmount,
-          cart: transport.cart,
-        }
-*/
+        dispatch(setguid({
+          uid: uidc,
+          totalItems: quantityc,
+          totalAmount: amountc,
+        }))
         setAuthenticated(accuser.athenticated);
       }
     } catch (e) {

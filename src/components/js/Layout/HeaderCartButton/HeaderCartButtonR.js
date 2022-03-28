@@ -11,7 +11,8 @@ const HeaderCartButtonR = props => {
     const cartCtx = useSelector(state => state.cart);
 
     const { items } = cartCtx;
-
+    const tAmount = cartCtx.totalAmount;    
+    const tItems = cartCtx.totalItems;
     const numberOfCartItems = items.reduce((currentNumber, item) => {
         return currentNumber + item.quantity;
     }, 0);
@@ -40,7 +41,7 @@ const HeaderCartButtonR = props => {
             <button className={buttonClasses} onClick={props.onClick}>
                 <span className={classes.icon}><CartIconJ /></span>
                 <span>Your Cart</span>
-                <span className={classes.badge}>{numberOfCartItems}</span>
+                <span className={classes.badge}>{tItems}</span>
             </button>
         </Fragment>
     );
