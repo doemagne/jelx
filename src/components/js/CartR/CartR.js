@@ -6,6 +6,7 @@ import ModalJ from "../UI/ModalJ";
 import classes from './Cart.module.css';
 import CartItemJ from "./CartItemR";
 import CheckoutJ from "./Checkout/CheckoutJ";
+import { ServerURL } from "../../../constraint/ServerURL";
 
 const CartJ = props => {
     const [orderClicked, setOrderClicked] = useState(false);
@@ -20,13 +21,52 @@ const CartJ = props => {
     const totalAmount = `$${cartTotal.toFixed(2)}`;
     const hasItems = cartCtx.items.length > 0;
     //{[{id: 'c1', name: 'Sushi', price: 12.99}].map((item) => (
-    const cartItemRemoveHandler = id => {
+    
+    const deductItemHandler = async(item) => {
+        const tmpi = {
+            cartuid: item.cartuid,
+            itemuid: item.uid,
+            //quantity: quantity.toString(),
+            quantity: `1`,
+            iref: item.iref,
+        };
+        const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
+            {
+                method: 'POST',//body: JSON.stringify(cart),
+                body: JSON.stringify(tmpi),
+                headers: { "Content-Type": "application/json" },
+                //credentials: 'include',
+            });
+            const response = await stimulus.json();
+
+    };
+    const registerItemHandler = async(item) => {
+        const tmpi = {
+            cartuid: item.cartuid,
+            itemuid: item.uid,
+            //quantity: quantity.toString(),
+            quantity: `1`,
+            iref: props.iref,
+        };
+        const stimulus = await fetch(ServerURL + '/api/cart/item/register',
+            {
+                method: 'POST',//body: JSON.stringify(cart),
+                body: JSON.stringify(tmpi),
+                headers: { "Content-Type": "application/json" },
+                //credentials: 'include',
+            });
+            const response = await stimulus.json();
+
+    };
+    const cartItemRemoveHandler = item => {
         //cartCtx.removeItem(id);
-        dispatch(removeItemFromCart(id));
+        dispatch(removeItemFromCart(item.id));
+        deductItemHandler(item);
     };
     const cartItemAddHandler = item => {
         //cartCtx.addItem({ ...item, amount: 1 });
         dispatch(addItemToCart({ ...item, quantity: 1 }));
+        registerItemHandler(item);
     };
 
     const orderClickedHandler = () => {
@@ -57,8 +97,9 @@ const CartJ = props => {
                     name={item.name}
                     quantity={item.quantity}
                     price={item.price}
-                    iref={item.ref}
-                    onRemove={cartItemRemoveHandler.bind(null, item.id)}
+                    uid={item.uid}
+                    iref={item.iref}
+                    onRemove={cartItemRemoveHandler.bind(null, item)}
                     onAdd={cartItemAddHandler.bind(null, item)}
                 />
             ))}
