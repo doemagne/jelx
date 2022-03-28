@@ -8,9 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState } from '../store/redux/slice/AuthSlice';
 import { setguid } from "../store/redux/slice/CartSlice";
 
-
-
-
 const SignIn = (props) => {
   const [error, setError] = useState({
     title: '',
@@ -83,7 +80,6 @@ const SignIn = (props) => {
       <Card className="form-signin">
         <form onSubmit={submit}>
         <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-
         <InputRequired 
         inputtype={'email'}
         setTxt={setEmail} 
@@ -100,8 +96,6 @@ const SignIn = (props) => {
         setValid={setValid}
         valid={valid}
         />
-
-
         <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
         <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
       </form>
@@ -112,25 +106,3 @@ const SignIn = (props) => {
 }
 
 export default SignIn;
-
-/*      <form>
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-
-        <div className="form-floating">
-          <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
-          <label htmlFor="floatingInput">Email address</label>
-        </div>
-        <div className="form-floating">
-          <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
-          <label htmlFor="floatingPassword">Password</label>
-        </div>
-
-        <div className="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
-        </div>
-        <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-        <p className="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
-      </form>
-      */
