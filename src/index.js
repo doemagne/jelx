@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 //import store from './store/index-redux';
 import Store from './store/redux/store';
-//import * as serviceworker from './serviceWorker';
+//import * as serviceworker from './components/js/offline/serviceWorker';
 ReactDOM.render(
   <React.StrictMode>
   <Provider store={Store}>

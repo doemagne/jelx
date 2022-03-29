@@ -7,6 +7,7 @@ import { ServerURL } from "../constraint/ServerURL";
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState } from '../store/redux/slice/AuthSlice';
 import { setguid } from "../store/redux/slice/CartSlice";
+import { setTransport } from "../store/redux/slice/UserSlice";
 
 const SignIn = (props) => {
   const [error, setError] = useState({
@@ -50,6 +51,7 @@ const SignIn = (props) => {
         cartuid: content.cartuid,
       }));
       dispatch(setguid(content.cart));
+      dispatch(setTransport({id:1,content}));
     } catch (e) {
       let result;// = (e as Error).message;
       if (e instanceof Error) {

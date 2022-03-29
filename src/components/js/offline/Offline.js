@@ -1,7 +1,8 @@
 import React from 'react';
-import Main from "./components/Main";
+import Main from "./Main";
+import "./Offline.module.css";
 
-function App() {
+function Offline() {
   return (
     <div className="App">
       <header>
@@ -17,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default Offline;

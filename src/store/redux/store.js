@@ -5,6 +5,8 @@ import whuiReducer from './slice/WHUISlice';
 import uiReducer from './slice/UISlice';
 import whcartReducer from './slice/WHCartSlice';
 import cartReducer from './slice/CartSlice';
+import userReducer from './slice/UserSlice';
+
 const Store = configureStore({
     reducer: {
         counter: counterReducer,
@@ -13,6 +15,7 @@ const Store = configureStore({
         ui: uiReducer,
         whcart: whcartReducer,
         cart: cartReducer,
+        user: userReducer,
     },
 })
 

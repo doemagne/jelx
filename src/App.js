@@ -9,12 +9,13 @@ import SignUp from './pages/SignUp';
 import SignOut from './pages/SignOut';
 import Config from './pages/Config';
 import StockJ from './pages/StockJ';
-import { ServerURL } from './constraint/ServerURL';
 import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
 import ExpenseJournal from './pages/ExpenseJournal';
 import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
 import Warehouse from './components/old/whcomponents/Warehouse';
 import MerchandiseR from './pages/MerchandiseR';
+import Offline from './components/js/offline/Offline';
+import { ServerURL } from './constraint/ServerURL';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
 import { setguid } from './store/redux/slice/CartSlice';
@@ -100,6 +101,7 @@ function App() {
           <Route path="/expensesjournal" element={<ExpenseJournal />} />
           <Route path="/redux/starter" element={<ReduxStarter />} />
           <Route path="/ware/house" element={<Warehouse />} />
+          <Route path="index/offline" element={<Offline/>}/>
         </Routes>
       </BrowserRouter>
     </div>
