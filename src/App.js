@@ -61,6 +61,7 @@ function App() {
           cartuid: transport.cartuid,
         }))
         dispatch(setguid(transport.cart))
+        console.log("sendCartData was called.");
         setAuthenticated(accuser.athenticated);
       }
     } catch (e) {

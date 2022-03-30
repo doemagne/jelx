@@ -24,7 +24,7 @@ export const authSlice = createSlice({
                 window.sessionStorage.setItem("user", state.username);
                 window.sessionStorage.setItem("useruid", state.uid);
                 window.sessionStorage.setItem("cartuid", state.cartuid);
-                console.log('chek session storage.');
+                //console.log('chek session storage.');
             } else {
                 state.authenticated = false;
                 console.log("clearing the session storage.")
@@ -34,7 +34,7 @@ export const authSlice = createSlice({
                 //window.location.reload();
                 //window.sessionStorage.clear();
             }
-            console.log(pay);
+            //console.log(pay);
         },
         signin: (state) => {
             state.authenticated = true

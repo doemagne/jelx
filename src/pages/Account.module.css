@@ -1,0 +1,55 @@
+/*
+    width: 10%;
+cartul
+
+    display:flex;
+    display:flex;
+    padding: 1%;
+    margin: 1%;
+    padding: 1%;
+    background-color: red;
+    padding: 5%;
+    margin: 15%;
+    text-align: right;
+*/
+
+.profile section{
+    display: flex;
+    margin: 0.1%;
+    padding: 0.1%;
+}
+.profile p {
+    display: flex;
+    margin: 0.2;
+    padding: 0.1%;
+}
+.profile div {
+    display: flex;
+    width: 50%;
+    margin: 0.1%;
+}
+
+.listitem div{
+    display: flex;
+}
+
+.cartitem li div{
+    align-items: center;
+    width: 100%;
+    padding-left: 0.1%;
+    margin: 0.1%;
+}
+.cart ul {
+    list-style: none;
+    margin:1%;
+    padding:1%;
+}
+.cart div {
+    margin:0.1%;
+    padding:0.1%;
+}
+
+.cartitem li{
+}
+.cartitem div{
+}

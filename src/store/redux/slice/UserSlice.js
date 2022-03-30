@@ -43,30 +43,10 @@ export const userSlice = createSlice({
             const idx = indexdb.transport.put(state);
             console.log(state);
 
-        },/*
-        populateIDB: (state, action) => {
-            //const tx = action.payload;
-            const useridx = indexdb.user.add({
-                id: 1,
-                uid:tx.uid,
-                name: tx.name,
-                username: tx.username,
-                email: tx.email,
-                cartuid: tx.cartuid,                
-            });
-            
-            const cartidx = indexdb.cart.add({
-                id: 1,
-                uid: tx.cart.uid,
-                total: tx.cart.totalAmount,
-                quantity: tx.cart.totalItems,
-            });
+        },
+        yieldTransport: (state) => {
 
-            for (var i in tx.cart.items) {
-                const itemidx = 
-            }
-
-        },*/
+        },
     },
 })
 

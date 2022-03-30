@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from 'uuid';
 const initialState = {
     items: [],
     totalItems: 0,
@@ -79,6 +80,8 @@ const cartSlice = createSlice({
         },
         setguid: (state, action) => {
             const pay = action.payload;
+            //if (pay) {
+            //console.log(pay.items);
             state.uid = pay.uid;
             state.totalAmount = pay.totalAmount;
             state.totalItems = pay.totalItems;
@@ -98,47 +101,7 @@ const cartSlice = createSlice({
         },
     },
 });
+
 export const { addItemToCart, removeItemFromCart, replaceCart, setguid } = cartSlice.actions;
 
 export default cartSlice.reducer;
-/*
-export const sendCartData = (cart) => {
-    return (async (dispatch) => {
-
-        dispatch(notify({
-            status: 'pending',
-            title: 'sending',
-            message: 'Sending cart data, please wait',
-        }));
-        const sendRequest = async () => {
-            const stimulus = await fetch(ServerURL + '/api/cart/update',
-                {
-                    method: 'PUT',//body: JSON.stringify(cart),
-                    body: JSON.stringify(cart),
-                    headers: { "Content-Type": "application/json" },
-                    //credentials: 'include',
-                });
-            if (!stimulus.ok) {
-                throw new Error('Error: failed to cart data.')
-            }
-            const response = await stimulus.json();
-        }
-        try {
-            await sendRequest();
-            dispatch(notify({
-                status: 'success',
-                title: 'success',
-                message: 'cart data was sent successfully.',
-            }));
-        } catch (error) {
-            dispatch(notify({
-                status: 'failed',
-                title: 'failed to send',
-                message: `[failed to send cart data]${error.message}`,
-            }));
-
-        }
-
-    });
-}
-*/

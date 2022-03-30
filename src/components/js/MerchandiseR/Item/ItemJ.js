@@ -4,11 +4,12 @@ import classes from './Item.module.css';
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../../../store/redux/slice/CartSlice";
 import { ServerURL } from "../../../../constraint/ServerURL";
+import { sendCartItem } from "../../../../store/redux/action/CartAction";
 const ItemJ = (props) => {
     const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
 
-    const fetchItemHandler = async(quantity) => {
+    const fetchItemHandler = async (quantity) => {
         const tmpi = {
             cartuid: props.cartuid,
             itemuid: props.uid,
@@ -22,21 +23,32 @@ const ItemJ = (props) => {
                 headers: { "Content-Type": "application/json" },
                 //credentials: 'include',
             });
-            const response = await stimulus.json();
+        const response = await stimulus.json();
 
     };
 
-    const addToCartHandler = (quantity) => {
-        //console.log(props);
-        fetchItemHandler(quantity);
-        dispatch(addItemToCart({
+    const addToCartHandler = async(quantity) => {
+        const titem = {
+            cartuid: props.cartuid,
             id: props.id,
             name: props.name,
             quantity: quantity,
             price: props.price,
             uid: props.uid,
             iref: props.iref,
-        }));
+        }
+        //console.log(titem);
+        //fetchItemHandler(quantity);
+        //dispatch(addItemToCart(titem));
+        await dispatch(sendCartItem(titem));
+        /*dispatch(addItemToCart({
+            id: props.id,
+            name: props.name,
+            quantity: quantity,
+            price: props.price,
+            uid: props.uid,
+            iref: props.iref,
+        }));*/
     };
     return (
         <Fragment>
@@ -60,7 +72,7 @@ export default ItemJ;
 /*
 SYNCHOUS FETCH
 
-    
+
     const sfetchItemHandler = (quantity) => {
         const tmpi = {
             cartuid: props.cartuid,
@@ -77,8 +89,8 @@ SYNCHOUS FETCH
             .then(response => {
                 response.json()
             })
-            .then(data => { 
-                return data.iref; 
+            .then(data => {
+                return data.iref;
             });
     };
 
