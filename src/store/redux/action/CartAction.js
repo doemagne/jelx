@@ -37,20 +37,18 @@ export const fetchCartData = (cart) => {
                 title: 'failed to send',
                 message: `[failed to fetch cart data]${error.message}`,
             }));
-
         }
-
     });
 }
 
 export const sendCartItem = (item) => {
     return (async (dispatch) => {
         const sendRequest = async () => {
-        const tmpi = {
-            uid: item.iref,
-            quantity: item.quantity,
-            //iref: item.uid,
-        };
+            const tmpi = {
+                uid: item.iref,
+                quantity: item.quantity,
+                //iref: item.uid,
+            };
             const stimulus = await fetch(ServerURL + '/api/cart/item/register',
                 {
                     method: 'POST',//body: JSON.stringify(cart),

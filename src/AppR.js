@@ -4,34 +4,24 @@ import './App.css';
 import Navigation from './components/UI/Navigation/Navigation';
 import Account from './pages/Account';
 import Home from './pages/Home';
-import SignInN from './pages/SignInN';
-import SignUpN from './pages/SignUpN';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import SignOut from './pages/SignOut';
-import Config from './pages/Config';
-import StockJ from './pages/StockJ';
-import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
-import ExpenseJournal from './pages/ExpenseJournal';
-import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
-import Warehouse from './components/old/whcomponents/Warehouse';
 import MerchandiseR from './pages/MerchandiseR';
-import Offline from './components/js/offline/Offline';
 import { ServerURL } from './constraint/ServerURL';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuthState, signout } from './store/redux/slice/AuthSlice';
+import { setAuthenticationState, signout } from './store/redux/slice/UserSlice';
 import { setguid } from './store/redux/slice/CartSlice';
-import Authentication from './components/old/authentication/Authentication';
 let namec = '';
 //let uidc = '';//let cartuidc = '';//let amountc = '';//let quantityc = 0;
 let transport = {};
 function App() {
-  const dispatch = useDispatch(setAuthState);
-  const accuser = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const accuser = useSelector(state => state.user);
   const [name, setName] = useState(namec);
-  const [cartuid, setCartuid] = useState('')
+  const [cartuid, setCartuid] = useState('');
   //const [amount, setAmount] = useState(0);//const [quantity, setQuantity] = useState(0);
-  const [uid, setUid] = useState('')
+  const [uid, setUid] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState({
     title: '',
@@ -58,11 +48,13 @@ function App() {
         console.log(`SideEffect has detected a session with ${namec}`);
         setCartuid(content.cartuid)
         setUid(content.uid)
-        dispatch(setAuthState({
+
+        console.log('STATE');
+        dispatch(setAuthenticationState(content/*{
           username: transport.username,
           uid: transport.uid,
           cartuid: transport.cartuid,
-        }))
+        }*/))
         dispatch(setguid(transport.cart))
         console.log("sendCartData was called.");
         setAuthenticated(accuser.athenticated);
@@ -75,7 +67,7 @@ function App() {
           title: "An error occured.",
           content: `The system encountered an unexpected error:\n ${e} \n Please try again later.`,
         });
-        console.log(error);
+        //console.log(error);
       }
     }
   }, [])
@@ -94,19 +86,11 @@ function App() {
         <Navigation name={name} setName={setName} authenticated={authenticated} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/account/signinN" element={<SignInN/>} />
-          <Route path="/account/signupN" element={<SignUpN/>} />
+          <Route path="/account/signin" element={<SignIn email={'z@z.z'} password={'z'} />} />
+          <Route path="/account/signup" element={<SignUp name={''} email={''} password={''} />} />
           <Route path="/account/user" element={<Account name={name} />} />
           <Route path="/account/signout" element={<SignOut />} />
-          <Route path="/config" element={<Config />} />
-          <Route path="/merchandise/cart" element={<StockJ />} />
-          <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated}/>} />
-          <Route path="/merchandise/register" element={<MerchandiseRegisterJ />} />
-          <Route path="/expensesjournal" element={<ExpenseJournal />} />
-          <Route path="/redux/starter" element={<ReduxStarter />} />
-          <Route path="/ware/house" element={<Warehouse />} />
-          <Route path="/index/offline" element={<Offline/>}/>
-          <Route path="/tication" element={<Authentication/>}/>
+          <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -114,6 +98,20 @@ function App() {
 }
 
 export default App;
-//KEEP ORIGINALS
-          //<Route path="/account/signin" element={<SignIn setName={setName} setUid={setUid} setCartuid={setCartuid} email={''} password={''} />} />
-          //<Route path="/account/signup" element={<SignUp name={''} email={''} password={''} />} />
+
+/*import Config from './pages/Config';
+import StockJ from './pages/StockJ';
+import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
+import ExpenseJournal from './pages/ExpenseJournal';
+import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
+import Warehouse from './components/old/whcomponents/Warehouse';
+import Offline from './components/js/offline/Offline';
+
+          <Route path="/config" element={<Config />} />
+          <Route path="/merchandise/cart" element={<StockJ />} />
+          <Route path="/merchandise/register" element={<MerchandiseRegisterJ />} />
+          <Route path="/expensesjournal" element={<ExpenseJournal />} />
+          <Route path="/redux/starter" element={<ReduxStarter />} />
+          <Route path="/ware/house" element={<Warehouse />} />
+          <Route path="/index/offline" element={<Offline/>}/>
+*/

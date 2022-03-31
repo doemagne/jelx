@@ -1,0 +1,136 @@
+import Card from "../components/UI/Card/Card";
+
+const SignInN = (props) => {
+  return (
+    <main className="form-signin">
+      <Card className="form-signin">
+        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <form >
+          <div className={`form-floating form-fl`}>
+            <input className="form-control" id="email" placeholder="Email" type="email" />
+            <label htmlFor="email">Email</label>
+          </div>
+          <div className={`form-floating form-fl`}>
+            <input className="form-control" id="password" placeholder="Password" type="password" />
+            <label htmlFor="password">Password</label>
+          </div>
+          <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+          <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
+        </form>
+      </Card>
+    </main>
+
+  )
+}
+
+export default SignInN;
+/*
+import React, { useState } from "react";
+import { Navigate } from 'react-router';
+import InputRequired from "../components/UI/Form/InputRequired";
+import Modal from "../components/UI/Modal/Modal";
+import { ServerURL } from "../constraint/ServerURL";
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
+  const [valid, setValid] = useState(true);
+
+          <div className={`form-floating form-fl`}>
+            <input className="form-control" id="name" placeholder="Name" type="text" />
+            <label htmlFor="name">Name</label>
+          </div>
+    <main className="form-signin">
+      <div>
+      <Card className="form-signin">
+        <form >
+        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <InputRequired 
+        inputtype={'email'}
+        setTxt={setEmail} 
+        val={email} 
+        txt={'Email'}
+        setValid={setValid}
+        valid={valid}
+        />
+        <InputRequired 
+        inputtype={'password'}
+        setTxt={setPassword} 
+        val={password} 
+        txt={'Password'}
+        setValid={setValid}
+        valid={valid}
+        />
+        <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
+      </form>
+    </Card>
+    </div>
+    </main>
+      {error.content && <Modal title={error.title} content={error.content} onConfirm={errorHandler}/>}
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthState } from '../store/redux/slice/AuthSlice';
+import { setguid } from "../store/redux/slice/CartSlice";
+import { setTransport } from "../store/redux/slice/UserSlice";
+  const [error, setError] = useState({
+    title: '',
+    content: '',
+  });
+
+  const dispatch = useDispatch();
+
+  const submit = async (e) => {
+    try {
+      e.preventDefault();
+      //await fetch("http://localhost:2020/api/login", {
+      //const response = await fetch("http://pecan.local:2023/api/signin", {
+      const response = await fetch(ServerURL+'/api/signin', {
+        //const response = await fetch("http://pecan.local:2019/api/clients/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          //"Access-Control-Allow-Origin":"*"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+      const content = await response.json();
+      console.log(content);
+      setRedirect(true);
+      props.setName(content.name);
+      props.setCartuid(content.cartuid)
+      props.setUid(content.uid)
+      dispatch(setAuthState({
+        username:content.name,
+        uid: content.uid,
+        cartuid: content.cartuid,
+      }));
+      dispatch(setguid(content.cart));
+      dispatch(setTransport({id:1,content}));
+    } catch (e) {
+      let result;// = (e as Error).message;
+      if (e instanceof Error) {
+        result = e.message; // works, `e` narrowed to Error
+        console.log(result);
+        setError({
+          title: "An error occured.",
+          content: `The system encountered an unexpected error:\n ${e} \n Please try again later.`,
+        });
+      }
+    }
+  }
+  const errorHandler = () => {
+    setError({
+      title: '',
+      content: '',
+    })
+  };
+
+  if (redirect) {
+    return <Navigate to="/account/user" />
+  }
+
+*/

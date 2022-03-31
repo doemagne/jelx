@@ -7,7 +7,6 @@ const initialAuthState = {
     authenticated: false,
     uid: '',
     cartuid: '',
-
 }
 
 export const authSlice = createSlice({
@@ -24,7 +23,8 @@ export const authSlice = createSlice({
                 window.sessionStorage.setItem("user", state.username);
                 window.sessionStorage.setItem("useruid", state.uid);
                 window.sessionStorage.setItem("cartuid", state.cartuid);
-                //console.log('chek session storage.');
+
+                console.log(state);
             } else {
                 state.authenticated = false;
                 console.log("clearing the session storage.")
