@@ -3,28 +3,28 @@ import indexdb from "../../indexdb/indexdb";
 
 
 const tx = {
-    uid: "",
-    name: "",
-    username: "",
-    email: "",
-    cartuid: "",
+    uid: null,
+    name: null,
+    username: null,
+    email: null,
+    cartuid: null,
     authenticated: false,
     cart: {
-        uid: "",
+        uid: null,
         items: [
             {
-                uid: "",
+                uid: null,
                 merchandise: {
                     id: 0,
-                    uid: "",
-                    name: "",
-                    description: "",
+                    uid: null,
+                    name: null,
+                    description: null,
                     price: 0.00,
-                    iref: ""
+                    iref: null
                 },
                 quantity: 0,
                 total: 0.00,
-                cartuid: "",
+                cartuid: null,
                 latched: false,
             }
         ],
@@ -39,11 +39,28 @@ export const userSlice = createSlice({
     initialState: initialState,
     reducers: {
         setTransport: (state, action) => {
+            console.log(action.payload)
             //const tx = action.payload;
-            state = action.payload;
-            const idx = indexdb.transport.put(state);
-            console.log(state);
+            state = action.payload.content;
+            const idx = indexdb.transport.put(action.payload);
+            //console.log(state);
+            if (state.authenticated) {
+                window.sessionStorage.setItem("user", state.username);
+                window.sessionStorage.setItem("useruid", state.uid);
+                window.sessionStorage.setItem("cartuid", state.cartuid);
+                //console.log(state);
+            } else {
+                state.authenticated = false;
+                console.log("clearing the session storage.")
+                window.sessionStorage.setItem("user", "");
+                window.sessionStorage.setItem("useruid", "");
+                window.sessionStorage.setItem("cartuid", "");
+            }
 
+        },
+        authenticator: (state, action) => {
+            console.log(action.payload)
+            state.authenticated = action.payload.authenticated;
         },
         yieldTransport: (state) => {
 
@@ -69,9 +86,6 @@ export const userSlice = createSlice({
                 window.sessionStorage.setItem("cartuid", "");
             }
         },
-        signin: (state) => {
-            state.authenticated = true
-        },
         signout: (state) => {
             state.authenticated = false
             window.sessionStorage.setItem("user", null);
@@ -81,5 +95,5 @@ export const userSlice = createSlice({
     },
 })
 
-export const { setTransport, signin, setAuthenticationState, signout } = userSlice.actions;
+export const { setTransport, authenticator, setAuthenticationState, signout } = userSlice.actions;
 export default userSlice.reducer

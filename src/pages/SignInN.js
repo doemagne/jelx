@@ -1,25 +1,51 @@
 import Card from "../components/UI/Card/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { Fragment, useRef } from "react";
+import { authenticateUser } from "../store/redux/action/userAction";
+import { setredirect } from "../store/redux/slice/UISlice";
+import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 const SignInN = (props) => {
-  return (
-    <main className="form-signin">
-      <Card className="form-signin">
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-        <form >
-          <div className={`form-floating form-fl`}>
-            <input className="form-control" id="email" placeholder="Email" type="email" />
-            <label htmlFor="email">Email</label>
-          </div>
-          <div className={`form-floating form-fl`}>
-            <input className="form-control" id="password" placeholder="Password" type="password" />
-            <label htmlFor="password">Password</label>
-          </div>
-          <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-          <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
-        </form>
-      </Card>
-    </main>
+  const authenticated = useSelector(state => state.user.content.authenticated);
+  const dispatch = useDispatch();
+  const emailref = useRef();
+  const passwordref = useRef();
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const credentials = {
+      email: emailref.current.value,
+      password: passwordref.current.value,
+    }
+    console.log('registring user')
+    dispatch(authenticateUser(credentials));
+  }
+  if (authenticated) {
+    return <Navigate to="account/user" />
+  }
+
+  return (
+    <Fragment>
+      {authenticated && <Navigate to="/account/user"/>}
+      <main className="form-signin">
+        <Card className="form-signin">
+          <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+          <form onSubmit={submitHandler}>
+            <div className={`form-floating form-fl`}>
+              <input ref={emailref} className="form-control" id="email" placeholder="Email" type="email" required />
+              <label htmlFor="email">Email</label>
+            </div>
+            <div className={`form-floating form-fl`}>
+              <input ref={passwordref} className="form-control" id="password" placeholder="Password" type="password" required />
+              <label htmlFor="password">Password</label>
+            </div>
+            <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
+          </form>
+        </Card>
+      </main>
+    </Fragment>
   )
 }
 

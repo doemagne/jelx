@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     cartToggle: false,
     notification: null,
+    loadstate: false,
+    redirectstate: false,
 };
 
 const uiSlice = createSlice({
@@ -19,9 +21,15 @@ const uiSlice = createSlice({
                 message: action.payload.message,
             };
         },
+        setloading: (state, action) => {
+          state.loadstate = action.payload;
+        },
+        setredirect: (state, action) => {
+          state.redirectstate = action.payload;
+        },
     }
 });
 
-export const { toggle, notify } = uiSlice.actions;
+export const { setredirect, setloading, toggle, notify } = uiSlice.actions;
 
 export default uiSlice.reducer;

@@ -13,3 +13,12 @@ const AnonymousBar = () => {
 }
 
 export default AnonymousBar;
+/*
+
+            <li className="nav-item">
+                <Link to="/account/signin" className="nav-link active" aria-current="page">Sign In</Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/account/signup" className="nav-link active" aria-current="page" >Sign Up</Link>
+            </li>
+*/

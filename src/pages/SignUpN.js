@@ -1,49 +1,51 @@
 import { ServerURL } from "../constraint/ServerURL";
 import Card from "../components/UI/Card/Card";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from "../store/redux/action/userAction";
+import { Navigate } from "react-router-dom";
+import { setredirect } from "../store/redux/slice/UISlice";
+
+let initialload = true;
 
 const SignUpN = (props) => {
-
+  const redirect = useSelector(state => state.ui.redirectstate);
+  const dispatch = useDispatch();
   const nameref = useRef();
   const emailref = useRef();
   const passwordref = useRef();
 
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const credentials = {
       name: nameref.current.value,
       email: emailref.current.value,
       password: passwordref.current.value,
     }
-    const stimulus = await fetch(ServerURL+'/api/signup', {
-      method: "POST",
-      headers: {"Content-Type": "application/json",},
-      credentials: "include",
-      body: JSON.stringify(credentials),
-    });
-    if (!stimulus.ok) {
-      throw new Error('an error occured when the sending request.')
-    }
-    const response = await stimulus.json();
-    console.log(response);
-
+    console.log('registring user')
+    dispatch(registerUser(credentials));
+    initialload = false;
   }
 
+  if (redirect) {
+    return <Navigate to="/account/signinN"/>
+  }
+  
   return (
     <main className="form-signin">
       <Card className="form-signin">
         <h1 className="h3 mb-3 fw-normal">Please sign up</h1>
         <form onSubmit={submitHandler} >
           <div className={`form-floating form-fl`}>
-            <input ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required/>
+            <input ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required />
             <label htmlFor="name">Name</label>
           </div>
           <div className={`form-floating form-fl`}>
-            <input ref={emailref} className="form-control" id="email" placeholder="Email" type="email" required/>
+            <input ref={emailref} className="form-control" id="email" placeholder="Email" type="email" required />
             <label htmlFor="email">Email</label>
           </div>
           <div className={`form-floating form-fl`}>
-            <input ref={passwordref} className="form-control" id="password" placeholder="Password" type="password" required/>
+            <input ref={passwordref} className="form-control" id="password" placeholder="Password" type="password" required />
             <label htmlFor="password">Password</label>
           </div>
           <button className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
@@ -55,6 +57,19 @@ const SignUpN = (props) => {
 }
 
 export default SignUpN;
+  /*
+  const stimulus = await fetch(ServerURL+'/api/signup', {
+    method: "POST",
+    headers: {"Content-Type": "application/json",},
+    credentials: "include",
+    body: JSON.stringify(credentials),
+  });
+  if (!stimulus.ok) {
+    throw new Error('an error occured when the sending request.')
+  }
+  const response = await stimulus.json();
+  console.log(response);*/
+
 /*
 //import { Navigate } from "react-router";
 import React, { useState } from "react";
