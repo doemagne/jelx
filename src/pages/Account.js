@@ -35,6 +35,7 @@ const Account = (props) => {
     fetchTransport()
   }, []);
 
+
   return (
     <>
       {!props.authenticated && <Navigate to="/" />}
