@@ -9,30 +9,9 @@ const tx = {
     email: null,
     cartuid: null,
     authenticated: false,
-    cart: {
-        uid: null,
-        items: [
-            {
-                uid: null,
-                merchandise: {
-                    id: 0,
-                    uid: null,
-                    name: null,
-                    description: null,
-                    price: 0.00,
-                    iref: null
-                },
-                quantity: 0,
-                total: 0.00,
-                cartuid: null,
-                latched: false,
-            }
-        ],
-        totalAmount: 0.00,
-        totalItems: 0,
-    }
+    cart: null,
 }
-const initialState = {};//tx;
+const initialState = tx;
 
 export const userSlice = createSlice({
     name: 'user',
@@ -40,9 +19,15 @@ export const userSlice = createSlice({
     reducers: {
         setTransport: (state, action) => {
             console.log(action.payload)
-            //const tx = action.payload;
-            state = action.payload.content;
             const idx = indexdb.transport.put(action.payload);
+            const pay = action.payload.content;
+            state.uid = pay.uid;
+            state.name = pay.name;
+            state.username = pay.username;
+            state.email = pay.email;
+            state.cartuid = pay.cartuid
+            state.authenticated = pay.authenticated;
+            state.cart = pay.cart;
             //console.log(state);
             if (state.authenticated) {
                 window.sessionStorage.setItem("user", state.username);
@@ -59,8 +44,13 @@ export const userSlice = createSlice({
 
         },
         authenticator: (state, action) => {
-            console.log(action.payload)
-            state.authenticated = action.payload.authenticated;
+            if (!state.authenticated) {
+                console.log(action.payload)
+                if (action.payload.authenticated) {
+                    state.authenticated = action.payload.authenticated;
+                }
+
+            }
         },
         yieldTransport: (state) => {
 
@@ -84,10 +74,13 @@ export const userSlice = createSlice({
                 window.sessionStorage.setItem("user", "");
                 window.sessionStorage.setItem("useruid", "");
                 window.sessionStorage.setItem("cartuid", "");
+                indexdb.delete();
+                window.location.reload();
             }
         },
         signout: (state) => {
             state.authenticated = false
+            state = tx;
             window.sessionStorage.setItem("user", null);
             window.sessionStorage.setItem("useruid", null);
             window.sessionStorage.setItem("cartuid", null);
@@ -97,3 +90,36 @@ export const userSlice = createSlice({
 
 export const { setTransport, authenticator, setAuthenticationState, signout } = userSlice.actions;
 export default userSlice.reducer
+/*
+
+const tx = {
+    uid: null,
+    name: null,
+    username: null,
+    email: null,
+    cartuid: null,
+    authenticated: false,
+    cart: {
+        uid: null,
+        items: [
+            {
+                uid: null,
+                merchandise: {
+                    id: 0,
+                    uid: null,
+                    name: null,
+                    description: null,
+                    price: 0.00,
+                    iref: null
+                },
+                quantity: 0,
+                total: 0.00,
+                cartuid: null,
+                latched: false,
+            }
+        ],
+        totalAmount: 0.00,
+        totalItems: 0,
+    }
+}
+*/

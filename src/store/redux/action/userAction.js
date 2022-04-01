@@ -1,5 +1,5 @@
 import { ServerURL } from "../../../constraint/ServerURL";
-import { authenticator, setAuthenticationState, setTransport } from "../slice/UserSlice";
+import { authenticator, setAuthenticationState, setTransport, signout } from "../slice/UserSlice";
 import { setguid } from "../slice/CartSlice";
 import { setredirect, notify, setloading } from '../slice/UISlice';
 
@@ -53,7 +53,7 @@ export const fetchTransportData = () => {
             const endpoint = '/api/user';
             const content = await sendGetRequest(endpoint);
             //console.log({id:1, transport:content});
-            dispatch(setTransport({id:1, content:content}));
+            dispatch(setTransport({ id: 1, content: content }));
             dispatch(authenticator(content.authenticated));
             dispatch(setloading(false));
             dispatch(notify(notificationsent));
@@ -68,18 +68,14 @@ export const authenticateUser = (credentials) => {
     return (async (dispatch) => {
         dispatch(setloading(true));
         try {
+            dispatch(setloading(true));
             const endpoint = '/api/signin';
             const content = await sendPostRequest(credentials, endpoint);
-            //console.log('STATE');
-            //dispatch(setAuthenticationState(content));
+            dispatch(setTransport({ id: 1, content: content }));
             dispatch(authenticator(content.authenticated));
-            //console.log('TRANSPORT');
-            //dispatch(setTransport({ id: 1, content }));
-            //dispatch(setguid(content.cart));
             dispatch(notify(notificationsent));
             dispatch(setredirect(true));
             dispatch(setloading(false));
-            //window.location.reload();//workaround
         } catch (error) {
             dispatch(notify({
                 status: 'failed',
@@ -94,8 +90,8 @@ export const authenticateUser = (credentials) => {
 export const registerUser = (credentials) => {
     return (async (dispatch) => {
         try {
-            const endpoint = '/api/signup';
             dispatch(setloading(true));
+            const endpoint = '/api/signup';
             const content = await sendPostRequest(credentials, endpoint);
             console.log(content);
             dispatch(notify(notificationsent));
@@ -106,6 +102,27 @@ export const registerUser = (credentials) => {
             dispatch(setloading(false));
         }
     });
+}
+export const signoutUser = () => {
+    return (async (dispatch) => {
+        try {
+            dispatch(setloading(true));
+            const endpoint = '/api/signout';
+            const response = await sendPostRequest(null, endpoint)
+            dispatch(signout());
+            dispatch(notify({
+                status: 'unauthenticated',
+                title: 'you are now signed out',
+                message: response.message,
+            }));
+            dispatch(setloading(false));
+            window.location.reload();
+        } catch (error) {
+            dispatch(notify(notificationfailed));
+            dispatch(setloading(false));
+
+        }
+    })
 }
 
 

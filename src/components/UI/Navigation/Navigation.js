@@ -8,61 +8,28 @@ import SearchBar from './Anonymous/SearchBar';
 import BrandBar from './BrandBar';
 import { ServerURL } from '../../../constraint/ServerURL';
 import { useDispatch } from 'react-redux';
+import { signoutUser } from '../../../store/redux/action/userAction';
+import { Navigate } from 'react-router-dom';
 //import { signout } from '../../../store/slice/AuthSlice';
+let nav;
+let menu = (<AnonymousBar />);
+let leftmenu = (<Anonymous />);
+let searchform = (<SearchBar />);
 const Nav = (props) => {
-    const [exited, setExited] = useState(false);
-    const [error, setError] = useState({
-        title: '',
-        content: '',
-    });
     const dispatch = useDispatch();
 
-
-    const logout = async (e) => {
-        props.setName('');
-        setExited(true);
+    const signouHandler = async (e) => {
         e.preventDefault();
-        try {
-            await fetch(ServerURL + '/api/signout', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    //"Access-Control-Allow-Origin": "*"
-                },
-                credentials: "include",
-            });
-            window.location.reload();
-            return;
-        } catch (e) {
-            if (e instanceof Error) {
-                setError({
-                    title: "An error occured.",
-                    content: `The system encountered an unexpected error:[${e}] Please try again later.`,
-                });
-                console.log(error);
-            }
-            props.setName('');
-            setExited(true);
-            return;
-
-        }
+        dispatch(signoutUser());
     }
-    const signout = (e) => {
-        dispatch(logout());
-        logout(e);
-    }
-
-    let nav;
-    let menu = (<AnonymousBar />);
-    let leftmenu = (<Anonymous />);
-    let searchform = (<SearchBar />);
-    if (!props.name) {
-        console.log(`Rerunning Asyncronous SideEffect => ${props.name}`);
+    if (props.authenticated) {
+        leftmenu = (<NavAuthBar />);
+        menu = (<AuthLogout onClick={signouHandler} />);
+    } else {
+        console.log(`Rerunning Asyncronous SideEffect => `);
         leftmenu = (<Anonymous />);
         menu = (<AnonymousBar />);
-    } else {
-        leftmenu = (<NavAuthBar />);
-        menu = (<AuthLogout onClick={logout} />);
+        //return <Navigate to="/"/>
     }
 
     nav = (
@@ -77,16 +44,6 @@ const Nav = (props) => {
             </div>
         </nav>
     );
-    if (exited) {
-        console.log("redirecting");
-        return (
-            <Fragment>
-                {nav}
-            </Fragment>
-        );
-    }
-
-
     return (
         <Fragment>
             {nav}
@@ -95,3 +52,43 @@ const Nav = (props) => {
 }
 
 export default Nav;
+
+/*
+ 
+//const [exited, setExited] = useState(false);
+/const [error, setError] = useState({
+title: '',
+content: '',
+});/
+if (exited) {
+console.log("redirecting");
+return (
+    <Fragment>
+        {nav}
+    </Fragment>
+);
+}
+props.setName('');
+setExited(true);
+try {
+    await fetch(ServerURL + '/api/signout', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            //"Access-Control-Allow-Origin": "*"
+        },
+        credentials: "include",
+    });
+    window.location.reload();
+    return;
+} catch (e) {
+    if (e instanceof Error) {
+        setError({
+            title: "An error occured.",
+            content: `The system encountered an unexpected error:[${e}] Please try again later.`,
+        });
+        console.log(error);
+    }
+    //props.setName('');
+    setExited(true);
+    return;*/

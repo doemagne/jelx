@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 const SignInN = (props) => {
-  const authenticated = useSelector(state => state.user.content.authenticated);
+  const authenticated = useSelector(state => state.user.authenticated);
+  const notification = useSelector(state => state.ui.notification);
   const dispatch = useDispatch();
   const emailref = useRef();
   const passwordref = useRef();
@@ -22,12 +23,11 @@ const SignInN = (props) => {
     dispatch(authenticateUser(credentials));
   }
   if (authenticated) {
-    return <Navigate to="account/user" />
+    return <Navigate to="/account/user" />
   }
-
+//{notification && notification.status == 'success' && <Navigate to='/account/user'/>}
   return (
     <Fragment>
-      {authenticated && <Navigate to="/account/user"/>}
       <main className="form-signin">
         <Card className="form-signin">
           <h1 className="h3 mb-3 fw-normal">Please sign in</h1>

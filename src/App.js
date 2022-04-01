@@ -66,7 +66,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/account/signinN" element={<SignInN />} />
             <Route path="/account/signupN" element={<SignUpN />} />
-            <Route path="/account/user" element={<Account name={name} />} />
+            <Route path="/account/user" element={<Account authenticated={authenticated} />} />
             <Route path="/account/signout" element={<SignOut />} />
             <Route path="/config" element={<Config />} />
             <Route path="/merchandise/cart" element={<StockJ />} />
