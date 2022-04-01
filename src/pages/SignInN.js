@@ -2,13 +2,10 @@ import Card from "../components/UI/Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { Fragment, useRef } from "react";
 import { authenticateUser } from "../store/redux/action/userAction";
-import { setredirect } from "../store/redux/slice/UISlice";
-import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 const SignInN = (props) => {
   const authenticated = useSelector(state => state.user.authenticated);
-  const notification = useSelector(state => state.ui.notification);
   const dispatch = useDispatch();
   const emailref = useRef();
   const passwordref = useRef();

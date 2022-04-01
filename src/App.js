@@ -1,54 +1,38 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navigation from './components/UI/Navigation/Navigation';
 import Account from './pages/Account';
 import Home from './pages/Home';
 import SignInN from './pages/SignInN';
 import SignUpN from './pages/SignUpN';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
 import SignOut from './pages/SignOut';
+import BackdropJ from './components/UI/Modal/Modal';
+import Notification from "./components/js/UI/Notification/Notification";
 import Config from './pages/Config';
+import MerchandiseR from './pages/MerchandiseR';
+import { Fragment, useCallback, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { fetchTransportData } from './store/redux/action/userAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthState, signout } from './store/redux/slice/AuthSlice';
+//OLD
 import StockJ from './pages/StockJ';
 import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
 import ExpenseJournal from './pages/ExpenseJournal';
 import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
 import Warehouse from './components/old/whcomponents/Warehouse';
-import MerchandiseR from './pages/MerchandiseR';
 import Offline from './components/js/offline/Offline';
-import { ServerURL } from './constraint/ServerURL';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAuthState, signout } from './store/redux/slice/AuthSlice';
-import { setguid } from './store/redux/slice/CartSlice';
-import { BackdropJ } from './components/UI/Modal/Modal';
-import Authentication from './components/old/authentication/Authentication';
-import { fetchTransportData } from './store/redux/action/userAction';
-let namec = '';
-//let uidc = '';//let cartuidc = '';//let amountc = '';//let quantityc = 0;
-let transport = {};
 function App() {
   const dispatch = useDispatch(setAuthState);
-  //const accuser = useSelector(state => state.auth);
   const loader = useSelector(state => state.ui.loadstate);
-  //const [name, setName] = useState(namec);
-  //const [cartuid, setCartuid] = useState('')
-  //const [amount, setAmount] = useState(0);//const [quantity, setQuantity] = useState(0);
-  //const [uid, setUid] = useState('')
-  //const [authenticated, setAuthenticated] = useState(false);
+  const notification = useSelector(state => state.ui.notification);
   const authenticated = useSelector(state => state.user.authenticated)
   const name = useSelector(state => state.user.name);
   const cartuid = useSelector(state => state.user.cartuid);
-  /*const [error, setError] = useState({
-    title: '',
-    content: '',
-  });*/
 
   const fetchUserHandler = useCallback(async () => {
     dispatch(fetchTransportData())
   }, [])
   useEffect(() => {
-    //console.log('useEffect -> fetchUserHandler')
     fetchUserHandler();
     if (!authenticated) {
       dispatch(signout());
@@ -58,6 +42,7 @@ function App() {
 
   return (
     <Fragment>
+      {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
       {loader && <BackdropJ />}
       <div className="App">
         <BrowserRouter>
@@ -76,7 +61,6 @@ function App() {
             <Route path="/redux/starter" element={<ReduxStarter />} />
             <Route path="/ware/house" element={<Warehouse />} />
             <Route path="/index/offline" element={<Offline />} />
-            <Route path="/tication" element={<Authentication />} />
           </Routes>
         </BrowserRouter>
       </div>

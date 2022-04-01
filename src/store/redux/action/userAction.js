@@ -1,50 +1,8 @@
-import { ServerURL } from "../../../constraint/ServerURL";
-import { authenticator, setAuthenticationState, setTransport, signout } from "../slice/UserSlice";
-import { setguid } from "../slice/CartSlice";
+import { authenticator, setTransport, signout } from "../slice/UserSlice";
 import { setredirect, notify, setloading } from '../slice/UISlice';
-
+import { sendGetRequest, sendPostRequest } from "./Request";
+import { notificationpending, notificationsent, notificationsignedin, notificationsignedup, notificationfailed } from "../structure/NotifyTPL";
 //let endpoint;//'/api/signup'
-const notificationsent = {
-    status: 'success',
-    title: 'success',
-    message: 'Request was sent.',
-}
-
-const notificationfailed = {
-    status: 'failed',
-    title: 'failed to send request',
-    message: `an error occured`,
-}
-
-const sendGetRequest = async (endpoint) => {
-    console.log(endpoint);
-    const stimulus = await fetch(`${ServerURL}${endpoint}`, {
-        headers: { "Content-Type": "application/json", },
-        credentials: "include",
-    });
-    if (!stimulus.ok) {
-        throw new Error('an error occured when the sending get request.');
-    }
-    const response = await stimulus.json();
-    //console.log(response);
-    return response;
-}
-
-const sendPostRequest = async (data, endpoint) => {
-    console.log(endpoint);
-    const stimulus = await fetch(`${ServerURL}${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", },
-        credentials: "include",
-        body: JSON.stringify(data),
-    });
-    if (!stimulus.ok) {
-        throw new Error('an error occured when the sending post request.');
-    }
-    const response = await stimulus.json();
-    console.log(response);
-    return response;
-}
 
 export const fetchTransportData = () => {
     return (async (dispatch) => {
@@ -57,6 +15,22 @@ export const fetchTransportData = () => {
             dispatch(authenticator(content.authenticated));
             dispatch(setloading(false));
             dispatch(notify(notificationsent));
+        } catch (error) {
+            dispatch(notify(notificationpending));
+            dispatch(setloading(false));
+        }
+    });
+}
+export const registerUser = (credentials) => {
+    return (async (dispatch) => {
+        try {
+            dispatch(setloading(true));
+            const endpoint = '/api/signup';
+            const content = await sendPostRequest(credentials, endpoint);
+            //console.log(content);
+            dispatch(notify(notificationsignedup));
+            dispatch(setloading(false));
+            dispatch(setredirect(true));
         } catch (error) {
             dispatch(notify(notificationfailed));
             dispatch(setloading(false));
@@ -73,7 +47,7 @@ export const authenticateUser = (credentials) => {
             const content = await sendPostRequest(credentials, endpoint);
             dispatch(setTransport({ id: 1, content: content }));
             dispatch(authenticator(content.authenticated));
-            dispatch(notify(notificationsent));
+            dispatch(notify(notificationsignedin));
             dispatch(setredirect(true));
             dispatch(setloading(false));
         } catch (error) {
@@ -87,22 +61,6 @@ export const authenticateUser = (credentials) => {
     });
 }
 
-export const registerUser = (credentials) => {
-    return (async (dispatch) => {
-        try {
-            dispatch(setloading(true));
-            const endpoint = '/api/signup';
-            const content = await sendPostRequest(credentials, endpoint);
-            console.log(content);
-            dispatch(notify(notificationsent));
-            dispatch(setloading(false));
-            dispatch(setredirect(true));
-        } catch (error) {
-            dispatch(notify(notificationfailed));
-            dispatch(setloading(false));
-        }
-    });
-}
 export const signoutUser = () => {
     return (async (dispatch) => {
         try {

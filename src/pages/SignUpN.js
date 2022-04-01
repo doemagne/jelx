@@ -1,10 +1,8 @@
-import { ServerURL } from "../constraint/ServerURL";
 import Card from "../components/UI/Card/Card";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from "../store/redux/action/userAction";
 import { Navigate } from "react-router-dom";
-import { setredirect } from "../store/redux/slice/UISlice";
 
 let initialload = true;
 

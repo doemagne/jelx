@@ -3,16 +3,13 @@ import CartJ from "../components/js/CartR/CartR";
 import HeaderR from "../components/js/Layout/Header/HeaderR";
 import MerchandiseJ from "../components/js/MerchandiseR/MerchandiseJ";
 import { useSelector, useDispatch } from 'react-redux';
-import Notification from "../components/js/UI/Notification";
 import { fetchCartData } from "../store/redux/action/CartAction";
+import { Navigate } from "react-router-dom";
 let isInitial = true;
 //let cartuid = '';
-const MerchandiseR = props => {
+const MerchandiseR = (props) => {
     const [cartShown, setCartShown] = useState(false);
-    //const cartShown = useSelector(state => state.ui.cartToggle)
-    //const [uid, setUID] = useState(cartuid);
     const cart = useSelector((state) => state.cart);
-    const notification = useSelector(state => state.ui.notification);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -33,7 +30,7 @@ const MerchandiseR = props => {
     };
     return (
         <Fragment>
-            {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
+            {!props.authenticated && <Navigate to='/'/>}
             {cartShown && <CartJ onClose={hideCartHandler} />}
             <HeaderR onShowCart={showCartHandler} />
             <main>
@@ -46,7 +43,9 @@ const MerchandiseR = props => {
 
 export default MerchandiseR;
 
-/*setUID(props.cartuid);
+/*
+            {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
+setUID(props.cartuid);
 updateCartID().catch(error => {
     dispatch(notify({
         status: 'failed',

@@ -1,3 +1,4 @@
+import './Navigation.module.css';
 import React, { Fragment, useState } from 'react';
 //import { Navigate } from 'react-router';
 import NavAuthBar from './NavAuthBar';
@@ -6,10 +7,8 @@ import Anonymous from './Anonymous/Anonymous';
 import AuthLogout from './AuthLogout';
 import SearchBar from './Anonymous/SearchBar';
 import BrandBar from './BrandBar';
-import { ServerURL } from '../../../constraint/ServerURL';
 import { useDispatch } from 'react-redux';
 import { signoutUser } from '../../../store/redux/action/userAction';
-import { Navigate } from 'react-router-dom';
 //import { signout } from '../../../store/slice/AuthSlice';
 let nav;
 let menu = (<AnonymousBar />);

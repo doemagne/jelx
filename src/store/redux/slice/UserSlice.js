@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import indexdb from "../../indexdb/indexdb";
 
-
 const tx = {
     uid: null,
     name: null,
@@ -35,13 +34,13 @@ export const userSlice = createSlice({
                 window.sessionStorage.setItem("cartuid", state.cartuid);
                 //console.log(state);
             } else {
+                indexdb.delete();
                 state.authenticated = false;
                 console.log("clearing the session storage.")
                 window.sessionStorage.setItem("user", "");
                 window.sessionStorage.setItem("useruid", "");
                 window.sessionStorage.setItem("cartuid", "");
             }
-
         },
         authenticator: (state, action) => {
             if (!state.authenticated) {
@@ -51,6 +50,25 @@ export const userSlice = createSlice({
                 }
 
             }
+        },
+        signout: (state) => {
+            state.authenticated = false
+            state = tx;
+            indexdb.delete();
+            /*let req = indexedDB.deleteDatabase('Merchandiser');
+            req.onsuccess = () => {
+                console.log('deleted indexedDB database.')
+            }
+            req.onerror = () => {
+                console.log('could not delete indexedDB database.')
+            }
+            req.onblocked = () => {
+                console.log('blocked indexedDB database deletion.')
+            }*/
+            window.location.reload();
+            window.sessionStorage.setItem("user", null);
+            window.sessionStorage.setItem("useruid", null);
+            window.sessionStorage.setItem("cartuid", null);
         },
         yieldTransport: (state) => {
 
@@ -75,15 +93,7 @@ export const userSlice = createSlice({
                 window.sessionStorage.setItem("useruid", "");
                 window.sessionStorage.setItem("cartuid", "");
                 indexdb.delete();
-                window.location.reload();
             }
-        },
-        signout: (state) => {
-            state.authenticated = false
-            state = tx;
-            window.sessionStorage.setItem("user", null);
-            window.sessionStorage.setItem("useruid", null);
-            window.sessionStorage.setItem("cartuid", null);
         },
     },
 })
