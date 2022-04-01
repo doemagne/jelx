@@ -16,7 +16,6 @@ const SignInN = (props) => {
       email: emailref.current.value,
       password: passwordref.current.value,
     }
-    console.log('registring user')
     dispatch(authenticateUser(credentials));
   }
   if (authenticated) {
