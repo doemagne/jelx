@@ -1,6 +1,6 @@
 import { setMerchandise } from "../slice/MerchandiseSlice";
 import { setloading } from "../slice/UISlice";
-import { sendGetRequest } from "./Request";
+import { sendGetRequest, uploadMediaForm } from "./Request";
 
 
 export const fetchMerchandiseData = () => {
@@ -30,6 +30,18 @@ export const fetchMerchandiseData = () => {
     });
 }
 
+
+export const uploadMerchandiseData = (formdata) => {
+    return (async (dispatch) => {
+        try {
+            dispatch(setloading(true));
+            const endpoint = '/api/merchandise/upload';               
+            uploadMediaForm(formdata, endpoint)
+        } catch (error) {
+            dispatch(setloading(false));
+        }
+    });
+}
 //
 /*
 const fetchMerchandise = async () => {

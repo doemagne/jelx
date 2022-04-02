@@ -60,3 +60,39 @@ export const sendGenericRequest = async (data, endpoint, method) => {
     //console.log(response);
     return response;
 }
+
+export const uploadMediaForm = async (formdata, endpoint) => {
+    //try {
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), 5000);
+    const stimulus = await fetch(endpoint, {
+        method: 'POST',
+        body: formdata,
+        signal: ctrl.signal,
+    });
+    console.log(stimulus.status);
+    if (!stimulus.ok) {
+        throw new Error('an error occured when the sending post request.');
+    }
+    //} catch (error) {
+    //console.log("An error occured when uploading the form data.", error);
+    //}
+}
+/*
+
+        const ctrl = new AbortController();
+        setTimeout(() => ctrl.abort(), 5000);
+        const formdata = new FormData();
+        formdata.append("merchandise", JSON.stringify(itemdata));
+        formdata.append("photo", imageref.current.files[0]);
+        try {
+            const stimulus = await fetch(ServerURL + '/api/merchandise/upload', {
+                method: 'POST',
+                body: formdata,
+                signal: ctrl.signal,
+            });
+            console.log(stimulus.status);
+        } catch (error) {
+            console.log("An error occured when uploading the form data.",error);
+        }
+*/

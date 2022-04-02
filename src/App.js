@@ -14,9 +14,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { fetchTransportData } from './store/redux/action/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
+import RegisterMerchandise from './pages/RegisterMerchandise';
 //OLD
 import StockJ from './pages/StockJ';
-import MerchandiseRegisterJ from './components/js/Merchandise/Register/MerchandiseRegisterJ';
 import ExpenseJournal from './pages/ExpenseJournal';
 import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
 import Warehouse from './components/old/whcomponents/Warehouse';
@@ -54,9 +54,9 @@ function App() {
             <Route path="/account/user" element={<Account authenticated={authenticated} />} />
             <Route path="/account/signout" element={<SignOut />} />
             <Route path="/config" element={<Config />} />
-            <Route path="/merchandise/cart" element={<StockJ />} />
             <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
-            <Route path="/merchandise/register" element={<MerchandiseRegisterJ />} />
+            <Route path="/merchandise/register" element={<RegisterMerchandise />} />
+            <Route path="/merchandise/cart" element={<StockJ />} />
             <Route path="/expensesjournal" element={<ExpenseJournal />} />
             <Route path="/redux/starter" element={<ReduxStarter />} />
             <Route path="/ware/house" element={<Warehouse />} />
