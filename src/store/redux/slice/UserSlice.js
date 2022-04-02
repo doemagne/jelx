@@ -33,6 +33,7 @@ export const userSlice = createSlice({
                 window.sessionStorage.setItem("useruid", state.uid);
                 window.sessionStorage.setItem("cartuid", state.cartuid);
                 //console.log(state);
+                
             } else {
                 indexdb.delete();
                 state.authenticated = false;

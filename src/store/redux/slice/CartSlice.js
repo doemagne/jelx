@@ -5,6 +5,7 @@ const initialState = {
     totalAmount: 0.00,
     uid: '',
     user: '',
+    merchandise: [],
 };
 
 const cartSlice = createSlice({
@@ -77,28 +78,31 @@ const cartSlice = createSlice({
             state.items = action.payload.items;
             state.totalItems = action.payload.totalItems;
         },
-        setguid: (state, action) => {
+        updateCart: (state, action) => {
             const pay = action.payload;
             state.uid = pay.uid;
             state.totalAmount = pay.totalAmount;
             state.totalItems = pay.totalItems;
             if (state.items.length == 0) {
                 for (const i in pay.items) {
-                    state.items.push({
-                        id: pay.items[i].merchandise.id,
-                        name: pay.items[i].merchandise.name,
-                        quantity: pay.items[i].quantity,
-                        price: pay.items[i].merchandise.price,
-                        total: pay.items[i].total,
-                        uid: pay.items[i].merchandise.uid,
-                        iref: pay.items[i].uid,
-                    });
+                    if (pay.items[i].latched) {
+                        state.items.push({
+                            id: pay.items[i].merchandise.id,
+                            name: pay.items[i].merchandise.name,
+                            quantity: pay.items[i].quantity,
+                            price: pay.items[i].merchandise.price,
+                            total: pay.items[i].total,
+                            uid: pay.items[i].merchandise.uid,
+                            iref: pay.items[i].uid,
+                        });
+                    }
+                    //state.merchandise.push()
                 }
             }
         },
     },
 });
-export const { addItemToCart, removeItemFromCart, replaceCart, setguid } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, replaceCart, updateCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
 /*
