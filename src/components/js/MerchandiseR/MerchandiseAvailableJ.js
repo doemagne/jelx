@@ -1,66 +1,22 @@
 import CardJ from '../UI/CardJ';
 import classes from './MerchandiseAvailable.module.css';
 import ItemJ from './Item/ItemJ';
-import { useEffect, useState } from 'react';
-import { ServerURL } from '../../../constraint/ServerURL';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMerchandiseData } from '../../../store/redux/action/MerchandiseAction';
 
 const AvailableMerchandiseJ = () => {
-  const [httpError, setHttpError] = useState();
-  const [merchandisel, setMerchandiseList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const merchandisel = useSelector(state => state.merchandise.merchandise);
 
   const fetchMerchandise = async () => {
-    //const stimulus = await fetch("https://merchandise-74a85-default-rtdb.firebaseio.com/merchandise.json").then();
-    const uuid = window.sessionStorage.getItem("useruid");
-    const stimulus = await fetch(ServerURL + `/api/merchandise/map/${uuid}`);
-    if (!stimulus.ok) {
-      throw new Error(`Something went wrong.Please reload this tab or try again later.`);
-    }
-    const response = await stimulus.json();
-    const transformation = [];
-    for (const key in response) {
-      transformation.push({
-        //id: key,//firebase
-        id: response[key].id,
-        name: response[key].name,
-        description: response[key].description,
-        price: response[key].price,
-        uid: response[key].uid,
-        iref: response[key].iref,
-      })
-    }
-    setMerchandiseList(transformation);
-    setIsLoading(false);
+    dispatch(fetchMerchandiseData());
   };
   useEffect(() => {
-    fetchMerchandise().catch((error) => {
-      setIsLoading(false);
-      setHttpError(error.message);
-    });
+    if (merchandisel.length == 0) {
+      fetchMerchandise();
+    }
   }, []);
-  if (isLoading) {
-    return (
-      <CardJ>
-        <section className={classes.merchandiseLoading}>
-          <p>
-            Loading Merchandise.
-          </p>
-        </section>
-      </CardJ>
-    );
-  }
-
-  if (httpError) {
-    return (
-      <CardJ>
-        <section className={classes.merchandiseLoading}>
-          <p>
-            {httpError}
-          </p>
-        </section>
-      </CardJ>
-    );
-  }
 
   const merchandiseList = merchandisel.map((merchandise) => (
     <ItemJ
@@ -84,31 +40,56 @@ const AvailableMerchandiseJ = () => {
 };
 
 export default AvailableMerchandiseJ;
-/*
-const DUMMY_MERCHANDISE = [
-  {
-    id: 'm1',
-    name: 'Sushi',
-    description: 'Finest fish and veggies',
-    price: 22.99,
-  },
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-  {
-    id: 'm3',
-    name: 'Barbecue Burger',
-    description: 'American, raw, meaty',
-    price: 12.99,
-  },
-  {
-    id: 'm4',
-    name: 'Green Bowl',
-    description: 'Healthy...and green...',
-    price: 18.99,
-  },
-];
-*/
+
+//import { ServerURL } from '../../../constraint/ServerURL';
+  //const [isLoading, setIsLoading] = useState(true);
+        //setIsLoading(false);
+        //setHttpError(error.message);
+  //const [httpError, setHttpError] = useState();
+  //const [merchandisel, setMerchandiseList] = useState([]);
+    //const stimulus = await fetch("https://merchandise-74a85-default-rtdb.firebaseio.com/merchandise.json").then();
+/*const uuid = window.sessionStorage.getItem("useruid");
+const stimulus = await fetch(ServerURL + `/api/merchandise/map/${uuid}`);
+if (!stimulus.ok) {
+  throw new Error(`Something went wrong.Please reload this tab or try again later.`);
+}
+const response = await stimulus.json();
+const transformation = [];
+for (const key in response) {
+  transformation.push({
+    //id: key,//firebase
+    id: response[key].id,
+    name: response[key].name,
+    description: response[key].description,
+    price: response[key].price,
+    uid: response[key].uid,
+    iref: response[key].iref,
+  })
+}
+setMerchandiseList(transformation);
+setIsLoading(false);
+};
+
+if (isLoading) {
+  return (
+    <CardJ>
+      <section className={classes.merchandiseLoading}>
+        <p>
+          Loading Merchandise.
+        </p>
+      </section>
+    </CardJ>
+  );
+}
+
+if (httpError) {
+  return (
+    <CardJ>
+      <section className={classes.merchandiseLoading}>
+        <p>
+          {httpError}
+        </p>
+      </section>
+    </CardJ>
+  );
+}*/

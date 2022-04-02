@@ -2,6 +2,7 @@ import { authenticator, setTransport, signout } from "../slice/UserSlice";
 import { setredirect, notify, setloading } from '../slice/UISlice';
 import { sendGetRequest, sendPostRequest } from "./Request";
 import { notificationpending, notificationsent, notificationsignedin, notificationsignedup, notificationfailed } from "../structure/NotifyTPL";
+import { updateCart } from "../slice/CartSlice";
 //let endpoint;//'/api/signup'
 
 export const fetchTransportData = () => {
@@ -13,6 +14,7 @@ export const fetchTransportData = () => {
             //console.log({id:1, transport:content});
             dispatch(setTransport({ id: 1, content: content }));
             dispatch(authenticator(content.authenticated));
+            dispatch(updateCart(content.cart));
             dispatch(setloading(false));
             dispatch(notify(notificationsent));
         } catch (error) {
@@ -47,6 +49,7 @@ export const authenticateUser = (credentials) => {
             const content = await sendPostRequest(credentials, endpoint);
             dispatch(setTransport({ id: 1, content: content }));
             dispatch(authenticator(content.authenticated));
+            dispatch(updateCart(content.cart));
             dispatch(notify(notificationsignedin));
             dispatch(setredirect(true));
             dispatch(setloading(false));

@@ -13,12 +13,9 @@ const MerchandiseR = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (isInitial) {
-            isInitial = false;
-            return;
+        if (cart.uid.length != 0) {
+            dispatch(fetchCartData(cart))
         }
-        dispatch(fetchCartData(cart))
-        console.log("sendCartData was called.");
         return;
     }, [cart, dispatch]);
 
@@ -30,7 +27,7 @@ const MerchandiseR = (props) => {
     };
     return (
         <Fragment>
-            {!props.authenticated && <Navigate to='/'/>}
+            {!props.authenticated && <Navigate to='/' />}
             {cartShown && <CartJ onClose={hideCartHandler} />}
             <HeaderR onShowCart={showCartHandler} />
             <main>

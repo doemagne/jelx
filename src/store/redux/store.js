@@ -6,16 +6,18 @@ import uiReducer from './slice/UISlice';
 import whcartReducer from './slice/WHCartSlice';
 import cartReducer from './slice/CartSlice';
 import userReducer from './slice/UserSlice';
+import merchandiseReducer from './slice/MerchandiseSlice';
 
 const Store = configureStore({
     reducer: {
+        ui: uiReducer,
+        cart: cartReducer,
+        user: userReducer,
+        merchandise: merchandiseReducer,
         counter: counterReducer,
         auth: authReducer,
         whui: whuiReducer,
-        ui: uiReducer,
         whcart: whcartReducer,
-        cart: cartReducer,
-        user: userReducer,
     },
 })
 

@@ -5,7 +5,6 @@ const initialState = {
     totalAmount: 0.00,
     uid: '',
     user: '',
-    merchandise: [],
 };
 
 const cartSlice = createSlice({
@@ -80,6 +79,7 @@ const cartSlice = createSlice({
         },
         updateCart: (state, action) => {
             const pay = action.payload;
+            console.log(pay);
             state.uid = pay.uid;
             state.totalAmount = pay.totalAmount;
             state.totalItems = pay.totalItems;

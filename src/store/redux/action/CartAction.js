@@ -1,4 +1,4 @@
-import { addItemToCart } from "../slice/CartSlice";
+import { addItemToCart, updateCart } from "../slice/CartSlice";
 import { notify } from "../slice/UISlice";
 import { sendPutRequest, sendPostRequest } from "./Request";
 import { setloading } from "../slice/UISlice";
@@ -14,14 +14,17 @@ export const fetchCartData = (cart) => {
         try {
             dispatch(setloading(true));
             const endpoint = '/api/cart/update';
-            await sendPutRequest(cart, endpoint);
+            const content = await sendPutRequest(cart, endpoint);
             dispatch(notify({
                 status: 'success',
                 title: 'success',
                 message: 'cart data was fetched successfully.',
             }));
+            console.log(content);
+            dispatch(updateCart(content.cart));
             dispatch(setloading(false));
         } catch (error) {
+            console.log(error)
             dispatch(notify({
                 status: 'error',
                 title: 'failed to send',
