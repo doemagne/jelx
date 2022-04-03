@@ -1,10 +1,10 @@
 import { Fragment, useState, useEffect, useCallback } from "react";
-import CartJ from "../components/js/CartR/CartR";
-import HeaderR from "../components/js/Layout/Header/HeaderR";
-import MerchandiseJ from "../components/js/MerchandiseR/MerchandiseJ";
+import CartJ from "../../components/js/CartR/CartR";
+import HeaderR from "../../components/js/Layout/Header/HeaderR";
+import MerchandiseJ from "../../components/js/MerchandiseR/MerchandiseJ";
 import { useSelector, useDispatch } from 'react-redux';
-import { ServerURL, WHCartURL } from '../constraint/ServerURL';
-import { notify } from '../store/redux/slice/UISlice';
+import { ServerURL, WHCartURL } from '../../constraint/ServerURL';
+import { notify } from '../../store/redux/slice/UISlice';
 import Notification from "../components/js/UI/Notification";
 let isInitial = true;
 let cartuid = '';

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Navigate } from 'react-router';
-import Card from "../components/UI/Card/Card";
-import InputRequired from "../components/UI/Form/InputRequired";
-import Modal from "../components/UI/Modal/Modal";
-import { ServerURL } from "../constraint/ServerURL";
+import Card from "../../components/UI/Card/Card";
+import InputRequired from "../../components/UI/Form/InputRequired";
+import Modal from "../../components/UI/Modal/Modal";
+import { ServerURL } from "../../constraint/ServerURL";
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuthState } from '../store/redux/slice/AuthSlice';
-import { setguid } from "../store/redux/slice/CartSlice";
-import { setTransport } from "../store/redux/slice/UserSlice";
+import { setAuthState } from '../../store/redux/slice/AuthSlice';
+import { setguid } from "../../store/redux/slice/CartSlice";
+import { setTransport } from "../../store/redux/slice/UserSlice";
 
 const SignIn = (props) => {
   const [error, setError] = useState({

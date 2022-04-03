@@ -14,7 +14,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { fetchTransportData } from './store/redux/action/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
-import RegisterMerchandise from './pages/RegisterMerchandise';
+import RegisterMerchandise from './pages/admin/RegisterMerchandise';
 //OLD
 import StockJ from './pages/StockJ';
 import ExpenseJournal from './pages/ExpenseJournal';

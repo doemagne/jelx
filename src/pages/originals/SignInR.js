@@ -1,7 +1,7 @@
-import Card from "../components/UI/Card/Card";
-import InputRequired from "../components/UI/Form/InputRequired";
+import Card from "../../components/UI/Card/Card";
+import InputRequired from "../../components/UI/Form/InputRequired";
 import { useDispatch, useSelector } from 'react-redux';
-import { authenticateUser } from "../store/redux/action/userAction";
+import { authenticateUser } from "../../store/redux/action/userAction";
 import { Fragment, useEffect, useState } from "react";
 import { Navigate } from 'react-router';
 import Notification from "../components/js/UI/Notification";

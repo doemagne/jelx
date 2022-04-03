@@ -1,11 +1,14 @@
-import { Fragment, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import CardJ from '../components/js/UI/CardJ';
-import { ServerURL } from '../constraint/ServerURL';
-import { uploadMerchandiseData } from '../store/redux/action/MerchandiseAction';
+import { Fragment, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import ItemU from '../../components/js/MerchandiseR/Item/ItemU';
+import CardJ from '../../components/js/UI/CardJ';
+import { ServerURL } from '../../constraint/ServerURL';
+import { uploadMerchandiseData } from '../../store/redux/action/MerchandiseAction';
+import { fetchMerchandiseData } from '../../store/redux/action/MerchandiseAction';
 //import { CardJ } from '../components/js/UI/CardJ';
 const RegisterMerchandise = () => {
     const dispatch = useDispatch();
+    const merchandisel = useSelector(state => state.merchandise.merchandise);
     const nameref = useRef();
     const priceref = useRef();
     const descriptionref = useRef();
@@ -36,8 +39,30 @@ const RegisterMerchandise = () => {
         }
 
 
+
         //const fileReader = new FileReader();//will read contents of file and encode to string.
     };
+    const fetchMerchandise = async () => {
+        dispatch(fetchMerchandiseData());
+    };
+
+    useEffect(() => {
+        if (merchandisel.length == 0) {
+            fetchMerchandise();
+        }
+    }, []);
+
+    const merchandiseList = merchandisel.map((merchandise) => (
+        <ItemU
+            id={merchandise.id}
+            key={merchandise.id}
+            name={merchandise.name}
+            description={merchandise.description}
+            price={merchandise.price}
+            uid={merchandise.uid}
+            iref={merchandise.iref}
+        />
+    ));
 
     return (
         <Fragment>
@@ -50,7 +75,7 @@ const RegisterMerchandise = () => {
                             <div className="row">
                                 <div className="col">
                                     <div className={`form-floating form-fl`}>
-                                        <input ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required />
+                                        <input readOnly={false} ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required />
                                         <label htmlFor="name">Name</label>
                                     </div>
                                 </div>
@@ -84,6 +109,9 @@ const RegisterMerchandise = () => {
                         <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
                     </form>
                 </main >
+            </CardJ>
+            <CardJ>
+                {merchandiseList}
             </CardJ>
         </Fragment>
     );

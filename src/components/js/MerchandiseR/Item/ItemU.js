@@ -9,60 +9,16 @@ const ItemJ = (props) => {
     const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
 
-    const fetchItemHandler = async (quantity) => {
-        const tmpi = {
-            cartuid: props.cartuid,
-            itemuid: props.uid,
-            quantity: quantity.toString(),
-            iref: props.iref,
-        };
-        const stimulus = await fetch(ServerURL + '/api/cart/item/register',
-            {
-                method: 'POST',//body: JSON.stringify(cart),
-                body: JSON.stringify(tmpi),
-                headers: { "Content-Type": "application/json" },
-                //credentials: 'include',
-            });
-        const response = await stimulus.json();
-
-    };
-
-    const addToCartHandler = async(quantity) => {
-        const titem = {
-            cartuid: props.cartuid,
-            id: props.id,
-            name: props.name,
-            quantity: quantity,
-            price: props.price,
-            uid: props.uid,
-            iref: props.iref,
-        }
-        //console.log(titem);
-        //fetchItemHandler(quantity);
-        //dispatch(addItemToCart(titem));
-        await dispatch(sendCartItem(titem));
-        /*dispatch(addItemToCart({
-            id: props.id,
-            name: props.name,
-            quantity: quantity,
-            price: props.price,
-            uid: props.uid,
-            iref: props.iref,
-        }));*/
-    };
     return (
         <Fragment>
             <li className={classes.item}>
-                <div className={classes.imgcarry}>
-                    <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
-                </div>
                 <div>
                     <h3>{props.name}</h3>
                     <div className={classes.description}>{props.description}</div>
                     <div className={classes.price}>{price}</div>
                 </div>
                 <div>
-                    <ItemFormJ onAddToCart={addToCartHandler} />
+                    <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
                 </div>
             </li>
         </Fragment>
@@ -72,7 +28,48 @@ const ItemJ = (props) => {
 //<ItemFormJ/>
 export default ItemJ;
 
+/*const fetchItemHandler = async (quantity) => {
+    const tmpi = {
+        cartuid: props.cartuid,
+        itemuid: props.uid,
+        quantity: quantity.toString(),
+        iref: props.iref,
+    };
+    const stimulus = await fetch(ServerURL + '/api/cart/item/register',
+        {
+            method: 'POST',//body: JSON.stringify(cart),
+            body: JSON.stringify(tmpi),
+            headers: { "Content-Type": "application/json" },
+            //credentials: 'include',
+        });
+    const response = await stimulus.json();
+
+};
+
+const addToCartHandler = async(quantity) => {
+    const titem = {
+        cartuid: props.cartuid,
+        id: props.id,
+        name: props.name,
+        quantity: quantity,
+        price: props.price,
+        uid: props.uid,
+        iref: props.iref,
+    }
+    //console.log(titem);
+    //fetchItemHandler(quantity);
+    //dispatch(addItemToCart(titem));
+    dispatch(sendCartItem(titem));
+    //dispatch(addItemToCart({
+        id: props.id,
+        name: props.name,
+        quantity: quantity,
+        price: props.price,
+        uid: props.uid,
+        iref: props.iref,
+    }));*/
 /*
+                    <ItemFormJ onAddToCart={addToCartHandler} />
 SYNCHOUS FETCH
 
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
 //import CardJ from "../../UI/CardJ";
-import InputRequired from "../../../UI/Form/InputRequired";
-import InputArea from "../../../UI/Form/InputArea";
-import Button from "../../../UI/Button/Button";
-import ModalJ from "../../UI/ModalJ";
+import InputRequired from "../../UI/Form/InputRequired";
+import InputArea from "../../UI/Form/InputArea";
+import Button from "../../UI/Button/Button";
+import ModalJ from "../../js/UI/ModalJ";
 //import TextFieldJ from "../../UI/TextFieldJ";
 //import classes from '../../UI/TextField.module.css';
 

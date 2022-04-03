@@ -1,8 +1,8 @@
 import { useLiveQuery } from 'dexie-react-hooks';
-import indexdb from '../store/indexdb/indexdb';
+import indexdb from '../../store/indexdb/indexdb';
 import { useEffect } from 'react';
 import classes from './Account.module.css';
-import CardJ from '../components/js/UI/CardJ';
+import CardJ from '../../components/js/UI/CardJ';
 import { useSelector } from 'react-redux';
 
 let acc = {};

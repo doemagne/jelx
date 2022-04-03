@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router";
-import Button from "../components/UI/Button/Button";
-import Card from "../components/UI/Card/Card";
-import InputRequired from "../components/UI/Form/InputRequired";
-import { ServerURL } from "../constraint/ServerURL";
+import Button from "../../components/UI/Button/Button";
+import Card from "../../components/UI/Card/Card";
+import InputRequired from "../../components/UI/Form/InputRequired";
+import { ServerURL } from "../../constraint/ServerURL";
 const SignUp = (props) => {
 
   const [name, setName] = useState("");

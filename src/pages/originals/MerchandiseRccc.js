@@ -1,10 +1,10 @@
 import { Fragment, useState, useEffect, useCallback } from "react";
-import CartJ from "../components/js/CartR/CartR";
-import HeaderR from "../components/js/Layout/Header/HeaderR";
-import MerchandiseJ from "../components/js/MerchandiseR/MerchandiseJ";
+import CartJ from "../../components/js/CartR/CartR";
+import HeaderR from "../../components/js/Layout/Header/HeaderR";
+import MerchandiseJ from "../../components/js/MerchandiseR/MerchandiseJ";
 import { setguid } from "../store/slice/CartSlice";
 import { useSelector, useDispatch } from 'react-redux';
-import { ServerURL, WHCartURL } from '../constraint/ServerURL';
+import { ServerURL, WHCartURL } from '../../constraint/ServerURL';
 
 let cartuid = '';
 const MerchandiseR = props => {
