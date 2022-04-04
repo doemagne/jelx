@@ -14,7 +14,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { fetchTransportData } from './store/redux/action/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
-import RegisterMerchandise from './pages/admin/RegisterMerchandise';
+//import RegisterMerchandise from './pages/admin/RegisterMerchandise';
+import MerchandiseConfig from './pages/admin/MerchandiseConfig';
 //OLD
 import StockJ from './pages/StockJ';
 import ExpenseJournal from './pages/ExpenseJournal';
@@ -55,7 +56,7 @@ function App() {
             <Route path="/account/signout" element={<SignOut />} />
             <Route path="/config" element={<Config />} />
             <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
-            <Route path="/merchandise/register" element={<RegisterMerchandise />} />
+            <Route path="/merchandise/register" element={<MerchandiseConfig />} />
             <Route path="/merchandise/cart" element={<StockJ />} />
             <Route path="/expensesjournal" element={<ExpenseJournal />} />
             <Route path="/redux/starter" element={<ReduxStarter />} />

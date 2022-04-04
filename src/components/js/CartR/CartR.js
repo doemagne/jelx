@@ -25,9 +25,9 @@ const CartJ = props => {
     const deductItemHandler = async(item) => {
         const tmpi = {
             cartuid: item.cartuid,
-            itemuid: item.uid,
+            uid: item.uid,
             //quantity: quantity.toString(),
-            quantity: `1`,
+            quantity: 1,
             iref: item.iref,
         };
         const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
@@ -43,11 +43,11 @@ const CartJ = props => {
     const registerItemHandler = async(item) => {
         const tmpi = {
             cartuid: item.cartuid,
-            itemuid: item.uid,
+            uid: item.uid,
             //quantity: quantity.toString(),
-            quantity: `1`,
-            iref: props.iref,
-        };
+            quantity: 1,
+            iref: item.iref,
+        }
         const stimulus = await fetch(ServerURL + '/api/cart/item/register',
             {
                 method: 'POST',//body: JSON.stringify(cart),

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     merchandise: [],
+    currentItem: null,
 };
 
 const merchandiseSlice = createSlice({
@@ -11,8 +12,13 @@ const merchandiseSlice = createSlice({
             state.merchandise = action.payload;
             console.log(state.merchandise);
         },
+        yieldCurrentItem: (state, action) => {
+            if (action.payload) {
+                state.currentItem = action.payload;
+            }
+        },
     }
 });
-export const { setMerchandise } = merchandiseSlice.actions;
+export const { setMerchandise, yieldCurrentItem } = merchandiseSlice.actions;
 
 export default merchandiseSlice.reducer;

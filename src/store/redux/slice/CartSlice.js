@@ -78,25 +78,27 @@ const cartSlice = createSlice({
             state.totalItems = action.payload.totalItems;
         },
         updateCart: (state, action) => {
-            const pay = action.payload;
-            console.log(pay);
-            state.uid = pay.uid;
-            state.totalAmount = pay.totalAmount;
-            state.totalItems = pay.totalItems;
-            if (state.items.length == 0) {
-                for (const i in pay.items) {
-                    if (pay.items[i].latched) {
-                        state.items.push({
-                            id: pay.items[i].merchandise.id,
-                            name: pay.items[i].merchandise.name,
-                            quantity: pay.items[i].quantity,
-                            price: pay.items[i].merchandise.price,
-                            total: pay.items[i].total,
-                            uid: pay.items[i].merchandise.uid,
-                            iref: pay.items[i].uid,
-                        });
+            //const pay = action.payload;
+            //console.log(pay);
+            if (action.payload) {
+                state.uid = action.payload.uid;
+                state.totalAmount = action.payload.totalAmount;
+                state.totalItems = action.payload.totalItems;
+                if (state.items.length == 0) {
+                    for (const i in action.payload.items) {
+                        if (action.payload.items[i].latched) {
+                            state.items.push({
+                                id: action.payload.items[i].merchandise.id,
+                                name: action.payload.items[i].merchandise.name,
+                                quantity: action.payload.items[i].quantity,
+                                price: action.payload.items[i].merchandise.price,
+                                total: action.payload.items[i].total,
+                                uid: action.payload.items[i].merchandise.uid,
+                                iref: action.payload.items[i].uid,
+                            });
+                        }
+                        //state.merchandise.push()
                     }
-                    //state.merchandise.push()
                 }
             }
         },

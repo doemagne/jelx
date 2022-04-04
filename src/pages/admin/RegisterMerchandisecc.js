@@ -1,5 +1,5 @@
 import classes from "./RegisterMerchandise.module.css";
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import CardJ from '../../components/js/UI/CardJ';
 import ModalJ from '../../components/js/UI/ModalJ';
@@ -37,90 +37,85 @@ const RegisterMerchandise = (props) => {
             console.log("An error occured when uploading the form data.", error);
         }
         console.log(props);
-    };
-    const removeHandler = () => {
-        let confirmation = "This item will be removed from the merchandise list. Are you sure you want to proceed?";
-        let removal = window.confirm(confirmation, "Are you sure");
-        if (removal) {
-            props.onClose()
-            alert("The item has been removed successfully");
-        }
-        props.setNewItem(false);
 
+        //const fileReader = new FileReader();//will read contents of file and encode to string.
     };
+
 
     return (
         <ModalJ>
             <main>
                 <CardJ>
                     <div className={classes.imgcarry}>
-                        <h1 className="h3 mb-3 fw-normal">{props.newItem ? "Add New Merchandise" : "Update Merchandise"}</h1>
+                        <h1 className="h3 mb-3 fw-normal">Update Merchandise</h1>
                     </div>
+
                 </CardJ>
+                <br />
                 <form onSubmit={submitHandler}>
                     <CardJ>
-                        <div className="row">
-                            <div className="col">
-                                <div className="row">
+                        <section>
+                            <div className="row">
+                                <div className="col">
                                     <div className={`form-floating form-fl`}>
                                         <input readOnly={false} ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required defaultValue={currentItem.name} />
                                         <label htmlFor="name">Name</label>
                                     </div>
                                 </div>
-                                <div className="row">
+                                <div className="col">
                                     <div className={`form-floating form-fl`}>
                                         <input ref={priceref} className="form-control" id="price" placeholder="Price" step={0.01} type="number" required defaultValue={currentItem.price} />
                                         <label htmlFor="price">$ Price</label>
                                     </div>
                                 </div>
-                                <div className="row">
+                            </div>
+                            <br />
+                            <div className="row">
+                                <div className="col">
                                     <div className={`form-floating form-fl`}>
                                         <textarea rows="3" ref={descriptionref} className="form-control" id="description" placeholder="Description" required defaultValue={currentItem.description} />
                                         <label htmlFor="description">Description</label>
                                     </div>
                                 </div>
-                                <div className="row">
+                                <div className="col">
                                     <div className={`form-floating form-fl`}>
                                         <input readOnly ref={uidref} className="form-control" id="uid" placeholder="UID" type="text" required defaultValue={currentItem.uid} />
                                         <label htmlFor="UID">UID</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col">
                                 <div className="row">
-                                    <br />
-                                    <div className={`form-floating form-fl`}>
-                                        <CardJ>
-                                            <div className={classes.imgcarry}>
+                                    <div className="col">
+                                        <br />
+                                        <div className={`form-floating form-fl`}>
+                                            <CardJ>
+                                                <label style={{ "top": "50%" }} htmlFor="image">Upload Image</label>
                                                 <input ref={imageref} className="form-control-file" id="image" placeholder="Image" type="file" required />
-                                            </div>
-                                        </CardJ>
+                                            </CardJ>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <div className={classes.imgcarry}>
-                                            {
-                                                !props.newItem &&
+                                    <div className="col">
+                                        <div className={`form-floating form-fl`}>
+                                            <div className={classes.imgcarry}>
+                                                <br />
                                                 <CardJ>
+                                                    <label htmlFor="photo">Photo</label>
+                                                    <br />
                                                     <img src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photo" />
                                                 </CardJ>
-                                            }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     </CardJ>
+                    <br />
                     <div className="row">
-                        {
-                            !props.newItem &&
-                            <div className="col">
-                                <CardJ>
-                                    <button className="w-100 btn btn-lg btn-danger" type="button" onClick={removeHandler}>Remove</button>
-                                </CardJ>
-                            </div>
-                        }
+                        <div className="col">
+                            <CardJ>
+                                <button className="w-100 btn btn-lg btn-danger" type="button" onClick={props.onClose}>Remove</button>
+                            </CardJ>
+                        </div>
                         <div className="col">
                             <CardJ>
                                 <button className="w-100 btn btn-lg btn-warning" type="button" onClick={props.onClose}>Cancel</button>

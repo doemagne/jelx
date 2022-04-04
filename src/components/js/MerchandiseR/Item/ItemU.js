@@ -1,34 +1,55 @@
 import { /*useContext,*/Fragment } from "react";
-import ItemFormJ from "./ItemFormJ";
+import ItemFormEdit from "./ItemFormEdit";
 import classes from './Item.module.css';
-import { useDispatch } from "react-redux";
-import { addItemToCart } from "../../../../store/redux/slice/CartSlice";
 import { ServerURL } from "../../../../constraint/ServerURL";
-import { sendCartItem } from "../../../../store/redux/action/CartAction";
+import { yieldCurrentItem } from "../../../../store/redux/slice/MerchandiseSlice";
+import { useDispatch } from "react-redux";
+//import { sendCartItem } from "../../../../store/redux/action/CartAction";
 const ItemJ = (props) => {
+    
     const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
-
+    //dispatch - function that populates current item in slice
+    const setItemEditableHandler = async () => {
+        props.setNewItem(false);
+        const selecteditem = {
+            cartuid: props.cartuid,
+            id: props.id,
+            name: props.name,
+            //quantity: quantity,
+            description: props.description,
+            price: props.price,
+            uid: props.uid,
+            iref: props.iref,
+        };
+        dispatch(yieldCurrentItem(selecteditem));
+    }
     return (
         <Fragment>
             <li className={classes.item}>
+                <div className={classes.imgcarry}>
+                    <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
+                </div>
                 <div>
                     <h3>{props.name}</h3>
                     <div className={classes.description}>{props.description}</div>
                     <div className={classes.price}>{price}</div>
                 </div>
                 <div>
-                    <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
+                    <ItemFormEdit setItemEditable={setItemEditableHandler}/>
                 </div>
             </li>
         </Fragment>
     );
 };
 
-//<ItemFormJ/>
 export default ItemJ;
 
-/*const fetchItemHandler = async (quantity) => {
+/*
+
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../../../../store/redux/slice/CartSlice";
+const fetchItemHandler = async (quantity) => {
     const tmpi = {
         cartuid: props.cartuid,
         itemuid: props.uid,
