@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 //import { addItemToCart } from "../../../../store/redux/slice/CartSlice";
 import { ServerURL } from "../../../../constraint/ServerURL";
 import { sendCartItem } from "../../../../store/redux/action/CartAction";
+import { yieldCurrentItem } from "../../../../store/redux/slice/MerchandiseSlice";
+import { toggle } from "../../../../store/redux/slice/UISlice";
 const ItemJ = (props) => {
     const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
@@ -22,6 +24,22 @@ const ItemJ = (props) => {
         }
         dispatch(sendCartItem(titem));
     };
+    const viewItemHandler = () => {
+
+        dispatch(toggle());
+        const selecteditem = {
+            cartuid: props.cartuid,
+            id: props.id,
+            name: props.name,
+            //quantity: quantity,
+            description: props.description,
+            price: props.price,
+            uid: props.uid,
+            iref: props.iref,
+        };
+        dispatch(yieldCurrentItem(selecteditem));
+
+    };
     return (
         <Fragment>
             <li className={classes.item}>
@@ -29,7 +47,7 @@ const ItemJ = (props) => {
                     <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
                 </div>
                 <div>
-                    <h3>{props.name}</h3>
+                    <button onClick={viewItemHandler} className="btn btn-default btn-outline-success"><h3>{props.name}</h3></button>
                     <div className={classes.description}>{props.description}</div>
                     <div className={classes.price}>{price}</div>
                 </div>

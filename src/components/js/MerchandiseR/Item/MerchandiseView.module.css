@@ -1,0 +1,20 @@
+
+  .imgcarry img {
+    width: 25%;
+    height: 25%;
+  }
+
+  .imgcarry {
+    text-align: center;
+  }
+
+  .description {
+    font-style: italic;
+  }
+  
+  .price {
+    margin-top: 0.25rem;
+    font-weight: bold;
+    color: #ad5502;
+    font-size: 1.25rem;
+  }

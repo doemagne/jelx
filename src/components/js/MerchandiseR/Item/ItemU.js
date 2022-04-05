@@ -1,4 +1,4 @@
-import { /*useContext,*/Fragment } from "react";
+import { /*useContext,*/Fragment, useEffect, useRef, useState } from "react";
 import ItemFormEdit from "./ItemFormEdit";
 import classes from './Item.module.css';
 import { ServerURL } from "../../../../constraint/ServerURL";
@@ -6,10 +6,25 @@ import { yieldCurrentItem } from "../../../../store/redux/slice/MerchandiseSlice
 import { useDispatch } from "react-redux";
 //import { sendCartItem } from "../../../../store/redux/action/CartAction";
 const ItemJ = (props) => {
-    
+    const imgref = useRef();
+    const [blobUrl, setBlobUrl] = useState('')
     const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
     //dispatch - function that populates current item in slice
+
+    const url = `${ServerURL}/assets/media/merchandise/${props.uid}/i.png`;
+    const asyncToDataUrl = async (url) =>
+        await fetch(url)
+            .then(stimulus => stimulus.blob())
+            .then(blob => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    resolve(reader.result);
+                    setBlobUrl(reader.result);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            }))
     const setItemEditableHandler = async () => {
         props.setNewItem(false);
         const selecteditem = {
@@ -24,10 +39,16 @@ const ItemJ = (props) => {
         };
         dispatch(yieldCurrentItem(selecteditem));
     }
+    useEffect(() => {
+        //generateBlobFromURL();
+        asyncToDataUrl(url);
+        //toDataUrl(url);
+    }, []);
     return (
         <Fragment>
             <li className={classes.item}>
                 <div className={classes.imgcarry}>
+                    <img ref={imgref} src={blobUrl} onLoad={URL.revokeObjectURL(blobUrl)} />
                     <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
                 </div>
                 <div>
@@ -36,7 +57,7 @@ const ItemJ = (props) => {
                     <div className={classes.price}>{price}</div>
                 </div>
                 <div>
-                    <ItemFormEdit setItemEditable={setItemEditableHandler}/>
+                    <ItemFormEdit setItemEditable={setItemEditableHandler} />
                 </div>
             </li>
         </Fragment>
@@ -44,7 +65,45 @@ const ItemJ = (props) => {
 };
 
 export default ItemJ;
+/*
+    const toDataUrl = (url) =>
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    resolve(reader.result);
+                    setBlobUrl(reader.result);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            }))
 
+
+    const generateBlobFromURL = async () => {
+        const url = `${ServerURL}/assets/media/merchandise/${props.uid}/i.png`;
+        //console.log(url);
+        const blobpart = [url];
+        const blob = new Blob(blobpart, { type: "image/*" });//mime type
+        //const blob = new Blob(blobpart);//mime type
+        const urlobj = URL.createObjectURL(blob);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            console.log(reader.result);
+            //let contents = e.target.result;
+            //let contents = reader.result;
+            //let ascii = btoa(contents);
+            setBlobUrl(reader.result);
+        }
+        reader.readAsDataURL(blob);
+        //setBlobUrl(urlobj);
+
+        //console.log(blobUrl)
+        //reader.addEventListener("loadend", async function () {})
+        //return reader.result;
+        //return urlobj;
+    };
+    //generateBlobFromURL();*/
 /*
 
 import { useDispatch } from "react-redux";

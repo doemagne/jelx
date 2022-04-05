@@ -1,19 +1,22 @@
-import classes from "./RegisterMerchandise.module.css";
+import classes from "./MerchandiseView.module.css";
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CardJ from '../../components/js/UI/CardJ';
-import ModalJ from '../../components/js/UI/ModalJ';
-import { ServerURL } from '../../constraint/ServerURL';
-import { setloading } from "../../store/redux/slice/UISlice";
-const RegisterMerchandise = (props) => {
+import CardJ from '../../UI/CardJ';
+import ModalJ from '../../UI/ModalJ';
+import { ServerURL } from '../../../../constraint/ServerURL';
+import { setloading } from "../../../../store/redux/slice/UISlice";
+import InputJ from "../../UI/InputJ";
+const MerchandiseView = (props) => {
     const [imgSrc, setImgSrc] = useState('');
     const dispatch = useDispatch();
     const currentItem = useSelector(state => state.merchandise.currentItem);
     const nameref = useRef();
+    const quantityref = useRef();
     const uidref = useRef();
     const priceref = useRef();
     const descriptionref = useRef();
     const imageref = useRef();
+    const price = `Price: $${currentItem.price.toFixed(2)} / item`;
 
     const submitHandler = async (e) => {
         dispatch(setloading(true));
@@ -72,49 +75,13 @@ const RegisterMerchandise = (props) => {
             <main>
                 <CardJ>
                     <div className={classes.imgcarry}>
-                        <h1 className="h3 mb-3 fw-normal">{props.newItem ? "Add New Merchandise" : "Update Merchandise"}</h1>
+                        <h1 className="h3 mb-3 fw-normal">{currentItem.name}</h1>
                     </div>
                 </CardJ>
                 <form onSubmit={submitHandler}>
                     <CardJ>
                         <div className="row">
                             <div className="col">
-                                <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <input readOnly={false} ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required defaultValue={currentItem.name} />
-                                        <label htmlFor="name">Name</label>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <input ref={priceref} className="form-control" id="price" placeholder="Price" step={0.01} type="number" required defaultValue={currentItem.price} />
-                                        <label htmlFor="price">$ Price</label>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <textarea rows="3" ref={descriptionref} className="form-control" id="description" placeholder="Description" required defaultValue={currentItem.description} />
-                                        <label htmlFor="description">Description</label>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <input readOnly ref={uidref} className="form-control" id="uid" placeholder="UID" type="text" required defaultValue={currentItem.uid} />
-                                        <label htmlFor="UID">UID</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="row">
-                                    <br />
-                                    <div className={`form-floating form-fl`}>
-                                        <CardJ>
-                                            <div className={classes.imgcarry}>
-                                                <input ref={imageref} className="form-control-file" id="image" placeholder="Image" type="file" required onChange={ImageSrcHandler} />
-                                            </div>
-                                        </CardJ>
-                                    </div>
-                                </div>
                                 <div className="row">
                                     <div className={`form-floating form-fl`}>
                                         <div className={classes.imgcarry}>
@@ -134,25 +101,58 @@ const RegisterMerchandise = (props) => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="col">
+                                <div className="row">
+                                    <div className={`form-floating form-fl`}>
+                                        <InputJ
+                                            ref={quantityref}
+                                            label={`Quantity`}
+                                            input={{
+                                                id: 'quantity',
+                                                type: 'number',
+                                                min: '1',
+                                                max: '50',
+                                                step: '1',
+                                                defaultValue: '1'
+                                            }} />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <button className="btn btn-default btn-danger">
+                                        {price}
+                                    </button>
+                                </div>
+                                <div className="row">
+                                    <button type="button" className="btn btn-success">
+                                        Stock Available:
+                                        <span className="badge badge-light">
+                                            87
+                                        </span>
+                                    </button>
+                                </div>
+                                <div className="row">
+                                    <button type="button" className="btn btn-primary">
+                                        Add to wish list
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={`form-floating form-fl`}>
+                                <br />
+                                <div className={classes.description}>{currentItem.description}</div>
+                            </div>
                         </div>
                     </CardJ>
                     <div className="row">
-                        {
-                            !props.newItem &&
-                            <div className="col">
-                                <CardJ>
-                                    <button className="w-100 btn btn-lg btn-danger" type="button" onClick={removeHandler}>Remove</button>
-                                </CardJ>
-                            </div>
-                        }
                         <div className="col">
                             <CardJ>
-                                <button className="w-100 btn btn-lg btn-warning" type="button" onClick={props.onClose}>Cancel</button>
+                                <button className="w-100 btn btn-lg btn-danger" type="button" onClick={props.onClose}>Close</button>
                             </CardJ>
                         </div>
                         <div className="col">
                             <CardJ>
-                                <button className="w-100 btn btn-lg btn-primary" type="submit">Save</button>
+                                <button className="w-100 btn btn-lg btn-primary" type="submit">Add to cart</button>
                             </CardJ>
                         </div>
                     </div>
@@ -165,4 +165,4 @@ const RegisterMerchandise = (props) => {
 
 //<p className="mt-5 mb-3 text-muted">&copy; 2022</p>
 
-export default RegisterMerchandise;
+export default MerchandiseView;

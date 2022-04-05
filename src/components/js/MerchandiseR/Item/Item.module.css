@@ -25,3 +25,18 @@
     width: 7rem;
     height: 7rem;
   }
+  .btncarry {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+  .btncarry button {
+    font: inherit;
+    cursor: pointer;
+    background-color: #8a2b06;
+    border: 1px solid #8a2b06;
+    color: white;
+    padding: 0.25rem 2rem;
+    border-radius: 20px;
+    font-weight: bold;
+  }

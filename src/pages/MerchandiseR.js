@@ -5,6 +5,9 @@ import MerchandiseJ from "../components/js/MerchandiseR/MerchandiseJ";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCartData } from "../store/redux/action/CartAction";
 import { Navigate } from "react-router-dom";
+import MerchandiseView from "../components/js/MerchandiseR/Item/MerchandiseView";
+import { toggle } from "../store/redux/slice/UISlice";
+
 let isInitial = true;
 //let cartuid = '';
 const MerchandiseR = (props) => {
@@ -12,6 +15,7 @@ const MerchandiseR = (props) => {
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
+    const toggleModal = useSelector(state => state.ui.cartToggle);
     useEffect(() => {
         if (cart.uid.length != 0) {
             dispatch(fetchCartData(cart))
@@ -25,10 +29,14 @@ const MerchandiseR = (props) => {
     const hideCartHandler = () => {
         setCartShown(false);
     };
+    const modalToggle = () => {
+        dispatch(toggle());
+    };
     return (
         <Fragment>
             {!props.authenticated && <Navigate to='/' />}
             {cartShown && <CartJ onClose={hideCartHandler} />}
+            {toggleModal && <MerchandiseView onClose={modalToggle}/>}
             <HeaderR onShowCart={showCartHandler} />
             <main>
                 <MerchandiseJ />

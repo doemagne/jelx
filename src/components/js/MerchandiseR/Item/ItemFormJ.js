@@ -19,12 +19,17 @@ const ItemFormJ = props => {
         }
         props.onAddToCart(enteredAmountNumber);
     };
+
+    const viewItemHandler = () => {
+
+    };
+
     return (
         <Fragment>
             <form className={classes.form} onSubmit={submitHandler}>
                 <InputJ
                 ref={amountInputRef} 
-                label={`Amount`} 
+                label={`Quantity`} 
                 input={{
                     id: 'amount_'+props.id,
                     type: 'number',

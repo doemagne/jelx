@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ItemU from '../../components/js/MerchandiseR/Item/ItemU';
 import { toggle } from "../../store/redux/slice/UISlice";
 import { yieldCurrentItem } from "../../store/redux/slice/MerchandiseSlice";
+//import { ServerURL } from "../../constraint/ServerURL";
 
 const MerchandiseConfig = () => {
     const [newItem, setNewItem] = useState(false);
@@ -50,6 +51,7 @@ const MerchandiseConfig = () => {
             uid={merchandise.uid}
             iref={merchandise.iref}
             setNewItem={setNewItem}
+        //bloburl={generateBlobFromURL.bind(null, `${ServerURL}/assets/media/merchandise/${merchandise.uid}/i.png`)}
         />
     ));
     return (
@@ -65,3 +67,14 @@ const MerchandiseConfig = () => {
     )
 };
 export default MerchandiseConfig;
+    /*const generateBlobFromURL = async(url) => {
+    const blobpart = [url];
+    const blob = new Blob(blobpart, { type:"application/octet-binary" });//mime type
+    const urlobj = URL.createObjectURL(blob);
+    console.log(`bloburl:${urlobj}`)
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    console.log(`reader:${reader.result}`);
+    //return reader.result;
+    return urlobj;
+};*/
