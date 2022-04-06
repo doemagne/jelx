@@ -3,7 +3,9 @@ const Anonymous = () => {
     return (
         <ul className="navbar-nav me-auto mb-2 mb-md-0">
             <li className="nav-item">
-                <Link to="/" className="nav-link active" aria-current="page">Home</Link>
+                <Link to="/" className="nav-link active" aria-current="page">
+                    <span className="bi bi-house"></span>
+                </Link>
             </li>
             <li className="nav-item">
                 <a className="nav-link" href="/">    |</a>

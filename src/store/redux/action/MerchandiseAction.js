@@ -19,6 +19,8 @@ export const fetchMerchandiseData = () => {
                     description: response[key].description,
                     price: response[key].price,
                     uid: response[key].uid,
+                    quantity: response[key].quantity,
+                    active: response[key].active,
                     iref: response[key].iref,
                 })
             }

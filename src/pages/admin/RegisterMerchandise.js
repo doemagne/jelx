@@ -7,22 +7,43 @@ import { ServerURL } from '../../constraint/ServerURL';
 import { setloading } from "../../store/redux/slice/UISlice";
 const RegisterMerchandise = (props) => {
     const [imgSrc, setImgSrc] = useState('');
+    const [newImg, setNewImg] = useState(props.newItem);
     const dispatch = useDispatch();
     const currentItem = useSelector(state => state.merchandise.currentItem);
     const nameref = useRef();
     const uidref = useRef();
+    const activeref = useRef();
+    const quantityref = useRef();
     const priceref = useRef();
     const descriptionref = useRef();
     const imageref = useRef();
 
+    const deactivateMerchandiseHandler = async (e) => {
+        dispatch(setloading(true));
+        e.preventDefault();
+        const itemdata = {
+            uid: uidref.current.value,
+        };
+        const stimulus = await fetch(ServerURL + '/api/merchandise/deactivate', {
+            method: 'DELETE',
+            headers: { "Content-Type": "application/json", },
+            body: JSON.stringify(itemdata),
+            credentials: "include",
+        });
+        console.log(stimulus.status);
+        dispatch(setloading(false));
+
+    };
     const submitHandler = async (e) => {
         dispatch(setloading(true));
         e.preventDefault();
         const itemdata = {
             name: nameref.current.value,
             price: priceref.current.value,
+            quantity: quantityref.current.value,
             description: descriptionref.current.value,
             uid: uidref.current.value,
+            active: activeref.current.value,
         };
         const ctrl = new AbortController();
         setTimeout(() => ctrl.abort(), 5000);
@@ -31,12 +52,21 @@ const RegisterMerchandise = (props) => {
         formdata.append("photo", imageref.current.files[0]);
         //dispatch(uploadMerchandiseData(formdata));
         try {
-            const stimulus = await fetch(ServerURL + '/api/merchandise/upload', {
-                method: 'POST',
-                body: formdata,
-                signal: ctrl.signal,
-            });
-            console.log(stimulus.status);
+            if (props.newItem) {
+                const stimulus = await fetch(ServerURL + '/api/merchandise/upload', {
+                    method: 'POST',
+                    body: formdata,
+                    signal: ctrl.signal,
+                });
+                console.log(stimulus.status);
+            } else {
+                const stimulus = await fetch(ServerURL + '/api/merchandise/update', {
+                    method: 'PUT',
+                    body: formdata,
+                    signal: ctrl.signal,
+                });
+                console.log(stimulus.status);
+            }
         } catch (error) {
             console.log("An error occured when uploading the form data.", error);
         }
@@ -56,7 +86,17 @@ const RegisterMerchandise = (props) => {
 
     };
     const ImageSrcHandler = () => {
-        setImgSrc(URL.createObjectURL(imageref.current.files[0]));
+        if (props.newItem) {
+            setImgSrc(URL.createObjectURL(imageref.current.files[0]));
+        } else {
+            setImgSrc(`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`);
+        }
+        if (imageref.current.files.length > 0) {
+            setNewImg(true)
+            setImgSrc(URL.createObjectURL(imageref.current.files[0]));
+        } else {
+            setNewImg(false);
+        }
     };
     const imageViewHandler = () => {
         //for (const f of imageref.current.files){f}
@@ -87,6 +127,12 @@ const RegisterMerchandise = (props) => {
                                 </div>
                                 <div className="row">
                                     <div className={`form-floating form-fl`}>
+                                        <input ref={quantityref} className="form-control" id="quantity" placeholder="Available Quantity" step={1} type="number" required defaultValue={currentItem.quantity} />
+                                        <label htmlFor="price">Available Quantity</label>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className={`form-floating form-fl`}>
                                         <input ref={priceref} className="form-control" id="price" placeholder="Price" step={0.01} type="number" required defaultValue={currentItem.price} />
                                         <label htmlFor="price">$ Price</label>
                                     </div>
@@ -110,7 +156,10 @@ const RegisterMerchandise = (props) => {
                                     <div className={`form-floating form-fl`}>
                                         <CardJ>
                                             <div className={classes.imgcarry}>
-                                                <input ref={imageref} className="form-control-file" id="image" placeholder="Image" type="file" required onChange={ImageSrcHandler} />
+                                                <div className="btn btn-default btn-secondary">
+                                                    <span className="bi bi-camera2"></span>
+                                                    <input ref={imageref} className="btn btn-default btn-secondary" id="image" placeholder="Image" type="file" required onChange={ImageSrcHandler}></input>
+                                                </div>
                                             </div>
                                         </CardJ>
                                     </div>
@@ -121,6 +170,10 @@ const RegisterMerchandise = (props) => {
                                             {
                                                 !props.newItem &&
                                                 <CardJ>
+                                                    {
+                                                        newImg &&
+                                                        <img src={imgSrc} id="photo" onClick={imageViewHandler} />
+                                                    }
                                                     <img src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photo" onClick={imageViewHandler} />
                                                 </CardJ>
                                             }
@@ -132,6 +185,22 @@ const RegisterMerchandise = (props) => {
                                             }
                                         </div>
                                     </div>
+                                    <div className="row">
+                                        <div className="col">
+                                        </div>
+                                        <div className="col">
+                                            <div className="row">
+                                                <div className="form-floating form-fl">
+                                                    <div className="form-check form-switch">
+                                                        <input ref={activeref} className="form-check-input" id="active" type="checkbox" defaultChecked={currentItem.active}/>
+                                                        <label className="form-check-label" htmlFor="active">Active</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -141,18 +210,27 @@ const RegisterMerchandise = (props) => {
                             !props.newItem &&
                             <div className="col">
                                 <CardJ>
-                                    <button className="w-100 btn btn-lg btn-danger" type="button" onClick={removeHandler}>Remove</button>
+                                    <button className="w-100 btn btn-lg btn-danger" type="button" onClick={deactivateMerchandiseHandler}>
+                                        <span className="bi bi-trash3-fill"></span>
+                                        Remove
+                                    </button>
                                 </CardJ>
                             </div>
                         }
                         <div className="col">
                             <CardJ>
-                                <button className="w-100 btn btn-lg btn-warning" type="button" onClick={props.onClose}>Cancel</button>
+                                <button className="w-100 btn btn-lg btn-warning" type="button" onClick={props.onClose}>
+                                    <span className="bi bi-x-lg" />
+                                    Cancel
+                                </button>
                             </CardJ>
                         </div>
                         <div className="col">
                             <CardJ>
-                                <button className="w-100 btn btn-lg btn-primary" type="submit">Save</button>
+                                <button className="w-100 btn btn-lg btn-primary" type="submit">
+                                    <span className="bi bi-cloud-upload-fill" />
+                                    Save
+                                </button>
                             </CardJ>
                         </div>
                     </div>

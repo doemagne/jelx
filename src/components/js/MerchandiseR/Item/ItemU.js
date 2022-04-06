@@ -34,8 +34,10 @@ const ItemJ = (props) => {
             //quantity: quantity,
             description: props.description,
             price: props.price,
+            quantity: props.quantity,
             uid: props.uid,
             iref: props.iref,
+            active: props.active,
         };
         dispatch(yieldCurrentItem(selecteditem));
     }

@@ -10,56 +10,15 @@ const MerchandiseView = (props) => {
     const [imgSrc, setImgSrc] = useState('');
     const dispatch = useDispatch();
     const currentItem = useSelector(state => state.merchandise.currentItem);
-    const nameref = useRef();
+    //const nameref = useRef();
     const quantityref = useRef();
-    const uidref = useRef();
-    const priceref = useRef();
-    const descriptionref = useRef();
+    //const uidref = useRef();
+    //const priceref = useRef();
+    //const descriptionref = useRef();
     const imageref = useRef();
     const price = `Price: $${currentItem.price.toFixed(2)} / item`;
 
     const submitHandler = async (e) => {
-        dispatch(setloading(true));
-        e.preventDefault();
-        const itemdata = {
-            name: nameref.current.value,
-            price: priceref.current.value,
-            description: descriptionref.current.value,
-            uid: uidref.current.value,
-        };
-        const ctrl = new AbortController();
-        setTimeout(() => ctrl.abort(), 5000);
-        const formdata = new FormData();
-        formdata.append("merchandise", JSON.stringify(itemdata));
-        formdata.append("photo", imageref.current.files[0]);
-        //dispatch(uploadMerchandiseData(formdata));
-        try {
-            const stimulus = await fetch(ServerURL + '/api/merchandise/upload', {
-                method: 'POST',
-                body: formdata,
-                signal: ctrl.signal,
-            });
-            console.log(stimulus.status);
-        } catch (error) {
-            console.log("An error occured when uploading the form data.", error);
-        }
-        //console.log(props);
-        props.setNewItem(false);
-        props.onClose();
-        dispatch(setloading(false));
-    };
-    const removeHandler = () => {
-        let confirmation = "This item will be removed from the merchandise list. Are you sure you want to proceed?";
-        let removal = window.confirm(confirmation, "Are you sure");
-        if (removal) {
-            props.onClose()
-            alert("The item has been removed successfully");
-        }
-        props.setNewItem(false);
-
-    };
-    const ImageSrcHandler = () => {
-        setImgSrc(URL.createObjectURL(imageref.current.files[0]));
     };
     const imageViewHandler = () => {
         //for (const f of imageref.current.files){f}
@@ -119,11 +78,13 @@ const MerchandiseView = (props) => {
                                 </div>
                                 <div className="row">
                                     <button className="btn btn-default btn-danger">
+                                        <span className="bi bi-coin"></span>
                                         {price}
                                     </button>
                                 </div>
                                 <div className="row">
                                     <button type="button" className="btn btn-success">
+                                        <span className="bi bi-minecart-loaded"></span>
                                         Stock Available:
                                         <span className="badge badge-light">
                                             87
@@ -132,6 +93,7 @@ const MerchandiseView = (props) => {
                                 </div>
                                 <div className="row">
                                     <button type="button" className="btn btn-primary">
+                                        <span className="bi bi-star"></span>
                                         Add to wish list
                                     </button>
                                 </div>
@@ -147,12 +109,18 @@ const MerchandiseView = (props) => {
                     <div className="row">
                         <div className="col">
                             <CardJ>
-                                <button className="w-100 btn btn-lg btn-danger" type="button" onClick={props.onClose}>Close</button>
+                                <button className="w-100 btn btn-lg btn-danger" type="button" onClick={props.onClose}>
+                                    <span className="bi bi-x-circle-fill"></span>
+                                    Close
+                                </button>
                             </CardJ>
                         </div>
                         <div className="col">
                             <CardJ>
-                                <button className="w-100 btn btn-lg btn-primary" type="submit">Add to cart</button>
+                                <button className="w-100 btn btn-lg btn-primary" type="submit">
+                                    <span className="bi bi-cart-plus-fill"></span>
+                                    Add to cart
+                                </button>
                             </CardJ>
                         </div>
                     </div>
@@ -166,3 +134,48 @@ const MerchandiseView = (props) => {
 //<p className="mt-5 mb-3 text-muted">&copy; 2022</p>
 
 export default MerchandiseView;
+    /*const removeHandler = () => {
+let confirmation = "This item will be removed from the merchandise list. Are you sure you want to proceed?";
+let removal = window.confirm(confirmation, "Are you sure");
+if (removal) {
+props.onClose()
+alert("The item has been removed successfully");
+}
+props.setNewItem(false);
+
+};
+const ImageSrcHandler = () => {
+setImgSrc(URL.createObjectURL(imageref.current.files[0]));
+};*/
+/*
+const submitHandler = () => {
+
+    dispatch(setloading(true));
+    e.preventDefault();
+    const itemdata = {
+        name: nameref.current.value,
+        price: priceref.current.value,
+        description: descriptionref.current.value,
+        uid: uidref.current.value,
+    };
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), 5000);
+    const formdata = new FormData();
+    formdata.append("merchandise", JSON.stringify(itemdata));
+    formdata.append("photo", imageref.current.files[0]);
+    //dispatch(uploadMerchandiseData(formdata));
+    try {
+        const stimulus = await fetch(ServerURL + '/api/merchandise/upload', {
+            method: 'POST',
+            body: formdata,
+            signal: ctrl.signal,
+        });
+        console.log(stimulus.status);
+    } catch (error) {
+        console.log("An error occured when uploading the form data.", error);
+    }
+    //console.log(props);
+    props.setNewItem(false);
+    props.onClose();
+    dispatch(setloading(false));
+};*/

@@ -14,7 +14,10 @@ const ItemFormJ = props => {//KEEP props to pass item back up
     return (
         <Fragment>
             <form className={classes.form} onSubmit={selectEditHandler}>
-                <button className="btn btn-default btn-outline-success"><span className="glyphicon glyphicon-eye-open"></span>View</button>
+                <button className="btn btn-default btn-outline-success">
+                    <span className="bi bi-gear"></span>
+                    View
+                </button>
             </form>
         </Fragment>
     );

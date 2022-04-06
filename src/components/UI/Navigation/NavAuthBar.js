@@ -7,23 +7,28 @@ const NavAuthBar = () => {
     };
     return (
         <ul className="navbar-nav me-auto mb-2 mb-md-0">
-        <li className="nav-item">
-        <Link to="/" className="nav-link active" aria-current="page" >Home</Link>
-        </li>
-        <li className="nav-item">
-        <Link to="/account/user" className="nav-link active" aria-current="page">Account</Link>
-        </li>
-        <li className="nav-item">
-        <Link to="/config" className="nav-link active" aria-current="page">Config</Link>
-        </li>
-        <li className="nav-item">
-        <Link to="/merchandise/cartr" className="nav-link active" aria-current="page">Merchandise</Link>
-        </li>
-        <li className="nav-item">
-        <Link to="/merchandise/register" className="nav-link active" aria-current="page">Register Merchandise</Link>
-        </li>
-        <DropDownBar navHandler={dropDrownHandler}/>
-    </ul>
+            <li className="nav-item">
+                <Link to="/" className="nav-link active" aria-current="page" >
+                    <span className="bi bi-house" />
+                    </Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/account/user" className="nav-link active" aria-current="page">
+                    <span className="bi bi-person-circle" />
+                </Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/merchandise/cartr" className="nav-link active" aria-current="page">
+                    <span className="bi bi-cart" />
+                </Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/merchandise/register" className="nav-link active" aria-current="page">
+                    <span className="bi bi-gear" />
+                </Link>
+            </li>
+            <DropDownBar navHandler={dropDrownHandler} />
+        </ul>
     );
 }
 
