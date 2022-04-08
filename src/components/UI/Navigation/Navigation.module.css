@@ -1,3 +1,8 @@
-nav {
+nav div ul li{
     /*position: fixed;*/
+    display:flex;
+}
+
+ul {
+    display: flex;
 }

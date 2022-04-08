@@ -7,14 +7,17 @@ const Anonymous = () => {
                     <span className="bi bi-house"></span>
                 </Link>
             </li>
+        </ul>
+    );
+}
+
+export default Anonymous;
+/*
+
             <li className="nav-item">
                 <a className="nav-link" href="/">    |</a>
             </li>
             <li className="nav-item">
                 <a className="nav-link disabled" href="/">    |</a>
             </li>
-        </ul>
-    );
-}
-
-export default Anonymous;
+*/

@@ -7,9 +7,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import ItemU from '../../components/js/MerchandiseR/Item/ItemU';
 import { toggle } from "../../store/redux/slice/UISlice";
 import { yieldCurrentItem } from "../../store/redux/slice/MerchandiseSlice";
+import { Navigate } from "react-router-dom";
 //import { ServerURL } from "../../constraint/ServerURL";
 
-const MerchandiseConfig = () => {
+const MerchandiseConfig = (props) => {
     const [newItem, setNewItem] = useState(false);
     const dispatch = useDispatch();
     const merchandisel = useSelector(state => state.merchandise.merchandise);
@@ -59,6 +60,7 @@ const MerchandiseConfig = () => {
     ));
     return (
         <Fragment>
+            {!props.authenticated && <Navigate to="/" />}
             {toggleModal && <RegisterMerchandise setNewItem={setNewItem} newItem={newItem} onClose={modalToggle} />}
             <CardJ>
                 <button className="w-100 btn btn-lg btn-success" type="button" onClick={addNewMerchandiseHandler}>
@@ -68,6 +70,12 @@ const MerchandiseConfig = () => {
             </CardJ>
             <CardJ>
                 {merchandiseList}
+            </CardJ>
+            <CardJ>
+                <div>
+                    <span className="bi bi-gear" style={{ fontSize: "5rem" }} />
+                    <br />
+                </div>
             </CardJ>
         </Fragment>
     )

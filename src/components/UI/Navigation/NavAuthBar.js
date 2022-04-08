@@ -27,13 +27,13 @@ const NavAuthBar = () => {
                     <span className="bi bi-gear" />
                 </Link>
             </li>
-            <DropDownBar navHandler={dropDrownHandler} />
         </ul>
     );
 }
 
 export default NavAuthBar;
 /*
+            <DropDownBar navHandler={dropDrownHandler} />
 
         <li className="nav-item">
         <Link to="/account/journal" className="nav-link active" aria-current="page">Journal</Link>

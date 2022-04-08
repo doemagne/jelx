@@ -1,29 +1,14 @@
 import Card from "../components/UI/Card/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { authenticateUser } from "../store/redux/action/userAction";
 import { Navigate } from "react-router-dom";
 
 const SignInN = (props) => {
-  const [pV, setPV] = useState(false);
-  const [passwordText, setPasswordText] = useState('password')
   const authenticated = useSelector(state => state.user.authenticated);
-  const [eye,setEye] = useState('eye')
-
   const dispatch = useDispatch();
   const emailref = useRef();
   const passwordref = useRef();
-
-  const togglePasswordVisibility = () => {
-    setPV(!pV)
-    if (pV) {
-      setEye('eye-slash')
-      setPasswordText('text')
-    } else {
-      setEye('eye')
-      setPasswordText('password')
-    }
-  }
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -43,22 +28,13 @@ const SignInN = (props) => {
         <Card className="form-signin">
           <h1 className="h3 mb-3 fw-normal">Sign In</h1>
           <form onSubmit={submitHandler}>
-            <div className='input-group mb-2'>
-              <div className='input-group-prepend'></div>
-              <div className='input-group-text'>
-                <span className='bi bi-at' />
-              </div>
-              <input ref={emailref} className='form-control' type='text' id='email' placeholder='Email' required />
+            <div className={`form-floating form-fl`}>
+              <input ref={emailref} className="form-control" id="email" placeholder="Email" type="email" required />
+              <label htmlFor="email">Email</label>
             </div>
-            <div className='input-group mb-2'>
-              <div className='input-group-prepend'></div>
-              <div className='input-group-text'>
-                <span className='bi bi-key' />
-              </div>
-              <input ref={passwordref} className='form-control' type={passwordText} id='password' placeholder='Pasword' required/>
-              <button type='button' className='input-group-text' onClick={togglePasswordVisibility}>
-                <span className={`bi bi-${eye}`} />
-              </button>
+            <div className={`form-floating form-fl`}>
+              <input ref={passwordref} className="form-control" id="password" placeholder="Password" type="password" required />
+              <label htmlFor="password">Password</label>
             </div>
             <button className="w-100 btn btn-lg btn-secondary" type="submit">
               <span className="bi bi-door-open" />
@@ -73,14 +49,6 @@ const SignInN = (props) => {
 
 export default SignInN;
 /*
-            <div className={`form-floating form-fl`}>
-              <input ref={emailref} className="form-control" id="email" placeholder="Email" type="email" required />
-              <label htmlFor="email">Email</label>
-            </div>
-            <div className={`form-floating form-fl`}>
-              <input ref={passwordref} className="form-control" id="password" placeholder="Password" type="password" required />
-              <label htmlFor="password">Password</label>
-            </div>
 import React, { useState } from "react";
 import { Navigate } from 'react-router';
 import InputRequired from "../components/UI/Form/InputRequired";

@@ -6,7 +6,7 @@ import SignInN from './pages/SignInN';
 import SignUpN from './pages/SignUpN';
 import SignOut from './pages/SignOut';
 import BackdropJ from './components/UI/Modal/Modal';
-import Notification from "./components/js/UI/Notification/Notification";
+//import Notification from "./components/js/UI/Notification/Notification";
 import Config from './pages/Config';
 import MerchandiseR from './pages/MerchandiseR';
 import { Fragment, useCallback, useEffect } from 'react';
@@ -25,7 +25,7 @@ import Offline from './components/js/offline/Offline';
 function App() {
   const dispatch = useDispatch(setAuthState);
   const loader = useSelector(state => state.ui.loadstate);
-  const notification = useSelector(state => state.ui.notification);
+  //const notification = useSelector(state => state.ui.notification);
   const authenticated = useSelector(state => state.user.authenticated)
   const name = useSelector(state => state.user.name);
   const cartuid = useSelector(state => state.user.cartuid);
@@ -40,10 +40,9 @@ function App() {
     }
   }, [fetchUserHandler]);//WORKS -> RUNS ONCE
   // }, []);//ALSO WORKS -> RUNS ONCE//KEEP
-
+//{notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
   return (
     <Fragment>
-      {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
       {loader && <BackdropJ />}
       <div className="App">
         <BrowserRouter>
@@ -56,7 +55,7 @@ function App() {
             <Route path="/account/signout" element={<SignOut />} />
             <Route path="/config" element={<Config />} />
             <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
-            <Route path="/merchandise/register" element={<MerchandiseConfig />} />
+            <Route path="/merchandise/register" element={<MerchandiseConfig authenticated={authenticated}/>} />
             <Route path="/merchandise/cart" element={<StockJ />} />
             <Route path="/expensesjournal" element={<ExpenseJournal />} />
             <Route path="/redux/starter" element={<ReduxStarter />} />

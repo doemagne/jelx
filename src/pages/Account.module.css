@@ -11,8 +11,23 @@ cartul
     padding: 5%;
     margin: 15%;
     text-align: right;
+    background-image: url(../../node_modules/bootstrap-icons/icons/person-circle.svg) url(../assets/logo.svg);
+    border: 0.13em groove #eee;
+    border-radius: 50%;
 */
-
+.imgbackup{
+    background-image: url(../assets/person-circle.svg);
+    background-repeat: no-repeat ;
+    background-size: 33% auto;
+    background-position: center;
+    text-align: center;
+    width: 50%;
+    height: auto;
+    margin-top: .5rem;
+}
+.imgcarry {
+    text-align: center;
+}
 .profile section{
     display: flex;
     margin: 0.1%;

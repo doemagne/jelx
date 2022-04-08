@@ -7,6 +7,7 @@ import { fetchCartData } from "../store/redux/action/CartAction";
 import { Navigate } from "react-router-dom";
 import MerchandiseView from "../components/js/MerchandiseR/Item/MerchandiseView";
 import { toggle } from "../store/redux/slice/UISlice";
+import CardJ from "../components/js/UI/CardJ";
 
 let isInitial = true;
 //let cartuid = '';
@@ -36,11 +37,17 @@ const MerchandiseR = (props) => {
         <Fragment>
             {!props.authenticated && <Navigate to='/' />}
             {cartShown && <CartJ onClose={hideCartHandler} />}
-            {toggleModal && <MerchandiseView onClose={modalToggle}/>}
+            {toggleModal && <MerchandiseView onClose={modalToggle} />}
             <HeaderR onShowCart={showCartHandler} />
             <main>
                 <MerchandiseJ />
             </main>
+            <CardJ>
+                <div>
+                    <span className="bi bi-cart" style={{ fontSize: "5rem" }} />
+                    <br />
+                </div>
+            </CardJ>
 
         </Fragment>
     );
