@@ -40,28 +40,30 @@ function App() {
     }
   }, [fetchUserHandler]);//WORKS -> RUNS ONCE
   // }, []);//ALSO WORKS -> RUNS ONCE//KEEP
-//{notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
+  //{notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
   return (
     <Fragment>
       {loader && <BackdropJ />}
       <div className="App">
         <BrowserRouter>
           <Navigation name={name} authenticated={authenticated} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/account/signinN" element={<SignInN />} />
-            <Route path="/account/signupN" element={<SignUpN />} />
-            <Route path="/account/user" element={<Account authenticated={authenticated} />} />
-            <Route path="/account/signout" element={<SignOut />} />
-            <Route path="/config" element={<Config />} />
-            <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
-            <Route path="/merchandise/register" element={<MerchandiseConfig authenticated={authenticated}/>} />
-            <Route path="/merchandise/cart" element={<StockJ />} />
-            <Route path="/expensesjournal" element={<ExpenseJournal />} />
-            <Route path="/redux/starter" element={<ReduxStarter />} />
-            <Route path="/ware/house" element={<Warehouse />} />
-            <Route path="/index/offline" element={<Offline />} />
-          </Routes>
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/account/signinN" element={<SignInN />} />
+              <Route path="/account/signupN" element={<SignUpN />} />
+              <Route path="/account/user" element={<Account authenticated={authenticated} />} />
+              <Route path="/account/signout" element={<SignOut />} />
+              <Route path="/config" element={<Config />} />
+              <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
+              <Route path="/merchandise/register" element={<MerchandiseConfig authenticated={authenticated} />} />
+              <Route path="/merchandise/cart" element={<StockJ />} />
+              <Route path="/expensesjournal" element={<ExpenseJournal />} />
+              <Route path="/redux/starter" element={<ReduxStarter />} />
+              <Route path="/ware/house" element={<Warehouse />} />
+              <Route path="/index/offline" element={<Offline />} />
+            </Routes>
+          </main>
         </BrowserRouter>
       </div>
     </Fragment>

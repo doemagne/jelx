@@ -1,3 +1,4 @@
+import { start } from "@popperjs/core";
 import { createSlice } from "@reduxjs/toolkit";
 import indexdb from "../../indexdb/indexdb";
 
@@ -9,6 +10,7 @@ const tx = {
     cartuid: null,
     authenticated: false,
     cart: null,
+    address: null,
 }
 const initialState = tx;
 
@@ -27,6 +29,7 @@ export const userSlice = createSlice({
             state.cartuid = pay.cartuid
             state.authenticated = pay.authenticated;
             state.cart = pay.cart;
+            state.address = pay.address;
             //console.log(state);
             if (state.authenticated) {
                 window.sessionStorage.setItem("user", state.username);

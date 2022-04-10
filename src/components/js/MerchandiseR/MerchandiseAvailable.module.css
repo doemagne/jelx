@@ -1,6 +1,12 @@
-.merchandise {
-    max-width: 60rem;
+
+
+/*
+max-width: 60rem;
+
     width: 90%;
+*/
+
+.merchandise {
     margin: 2rem auto;
     animation: merchandise-appear 1s ease-out forwards;
   }

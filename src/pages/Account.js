@@ -5,12 +5,17 @@ import classes from './Account.module.css';
 import CardJ from '../components/js/UI/CardJ';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import Field from '../components/js/UI/Field/Field';
+import FieldIcon from '../components/js/UI/Field/FieldIcon';
+import Select from '../components/js/UI/Field/Select';
+import AccountControls from './AccountControls';
 
 let acc = {};
 let cart = {};
 let cartitems = [];
 const Account = (props) => {
   const user = useSelector(state => state.user)
+  const address = useSelector(state => state.user.address)
   const [imgSrc, setImgSrc] = useState();
   const [gender, setGender] = useState('male');
   const [fieldEdit, setFieldEdit] = useState(true);
@@ -76,28 +81,7 @@ const Account = (props) => {
     <Fragment>
       {!props.authenticated && <Navigate to="/" />}
       <CardJ>
-        <div className='row'>
-          <div className='col'>
-            <button type='button' className='btn btn-default btn-primary' onClick={fieldEditHandler}>
-              <span className='bi bi-gear' />
-            </button>
-          </div>
-          <div className='col'>
-            <button type='button' className='btn btn-default btn-secondary'>
-              <span className='bi bi-key' />
-            </button>
-          </div>
-          <div className='col'>
-            <button type='button' className='btn btn-default btn-danger'>
-              <span className='bi bi-file-pdf-fill' />
-            </button>
-          </div>
-          {!fieldEdit && <div className='col'>
-            <button type='button' className='btn btn-default btn-success'>
-              <span className='bi bi-cloud-arrow-up-fill' />
-            </button>
-          </div>}
-        </div>
+        <AccountControls fieldEditHandler={fieldEditHandler} fieldEdit={fieldEdit}/>
       </CardJ>
       <section>
         <CardJ>
@@ -126,149 +110,40 @@ const Account = (props) => {
             </div>
             <div className='col-sm'>
               <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-person-circle' />
-                  </div>
-                  <input className='form-control' type='text' id='username' placeholder='Username' defaultValue={user.username} readOnly={fieldEdit} />
-                </div>
+                <FieldIcon icon2={`gender-${gender}`} icon="person-fill" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Name', defaultValue: user.name, readOnly: fieldEdit, }} />
               </div>
               <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-at' />
-                  </div>
-                  <input className='form-control' type='text' id='email' placeholder='Email' defaultValue={user.email} readOnly={fieldEdit} />
-                </div>
+                <Field icon="person-circle" input={{ className: 'form-control', type: 'text', id: 'username', placeholder: 'Username', defaultValue: user.username, readOnly: fieldEdit, }} />
               </div>
               <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-diagram-3-fill' />
-                  </div>
-                  <input className='form-control' type='text' id='ipaddress' placeholder='IP Address' defaultValue="169.265.112.432" readOnly={fieldEdit} />
-                </div>
-              </div>
-              <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-link-45deg' />
-                  </div>
-                  <input className='form-control' type='text' id='uid' placeholder='UID' defaultValue={user.uid} readOnly={fieldEdit} />
-                </div>
-              </div>
-              <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-file-earmark-person' />
-                  </div>
-                  <input className='form-control' type='text' id='name' placeholder='Name' defaultValue={user.name} readOnly={fieldEdit} />
-                  <div className='input-group-text'>
-                    <span className={`bi bi-gender-${gender}`} />
-                  </div>
-                </div>
+                <Field icon="at" input={{ className: 'form-control', type: 'email', id: 'email', placeholder: 'Email', defaultValue: user.email, readOnly: fieldEdit, }} />
               </div>
               {!fieldEdit && <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className={`bi bi-gender-${gender}`}></span>
-                  </div>
-                  <select ref={genderref} className='form-control' id='name' readOnly={fieldEdit} defaultValue="male" onChange={genderHandler}>
-                    <option>female</option>
-                    <option>male</option>
-                  </select>
-                  <div className='input-group-text'>
-                  </div>
-                </div>
+                <Select icon={`gender-${gender}`} options={['male', 'female']} ref={genderref} select={{ className: 'form-control', id: 'gender', defaultValue: 'male', readOnly: fieldEdit, }} onSelectChange={genderHandler} />
               </div>}
               <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-phone' />
-                  </div>
-                  <input className='form-control' type='text' id='phone' placeholder='Phone' defaultValue="+09 87 5654 321" readOnly={fieldEdit} />
-                </div>
+                <Field icon="phone-fill" input={{ className: 'form-control', type: 'tel', id: 'phone', placeholder: 'Phone', defaultValue: user.phone, readOnly: fieldEdit, }} />
               </div>
               <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-calendar-event' />
-                  </div>
-                  <input className='form-control' type='date' id='dateofbirth' placeholder='Birth Date' defaultValue={date} readOnly={fieldEdit} onChange={displayDateHandler} />
-                </div>
+                <Field icon="calendar-event" input={{ className: 'form-control', type: 'date', id: 'birthdate', placeholder: 'Birth Date', defaultValue: user.birthdate, readOnly: fieldEdit, }} />
               </div>
               <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-translate' />
-                  </div>
-                  <input className='form-control' type='text' id='language' placeholder='Language' defaultValue="English" readOnly={fieldEdit} />
-                </div>
+                <Field icon="translate" input={{ className: 'form-control', type: 'text', id: 'language', placeholder: 'Language', defaultValue: user.language, readOnly: fieldEdit, }} />
+              </div>
+              <div className='row'>
+                <Field icon="diagram-3-fill" input={{ className: 'form-control', type: 'text', id: 'ipaddress', placeholder: 'IP Address', defaultValue: user.ipaddress, readOnly: fieldEdit, }} />
+              </div>
+              <div className='row'>
+                <Field icon="link-45deg" input={{ className: 'form-control', type: 'text', id: 'uid', placeholder: 'UID', defaultValue: user.uid, readOnly: true, }} />
               </div>
             </div>
 
           </div>
         </CardJ>
       </section>
-      <section>
+      {address && <section>
         <CardJ>
           <div className='row'>
-            <div className='col-sm'>
-              <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-signpost' />
-                  </div>
-                  <input className='form-control' type='text' id='street' placeholder='Street' defaultValue="315 York Avenue" readOnly={fieldEdit} />
-                </div>
-              </div>
-              <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-cursor' />
-                  </div>
-                  <input className='form-control' type='text' id='suburb' placeholder='Suburb' defaultValue="Randburg" readOnly={fieldEdit} />
-                </div>
-              </div>
-              <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-building' />
-                  </div>
-                  <input className='form-control' type='text' id='city' placeholder='building' defaultValue="Johannesburg" readOnly={fieldEdit} />
-                </div>
-              </div>
-              <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-globe' />
-                  </div>
-                  <input className='form-control' type='text' id='country' placeholder='country' defaultValue="South Africa" readOnly={fieldEdit} />
-                </div>
-              </div>
-              <div className='row'>
-                <div className='input-group mb-2'>
-                  <div className='input-group-prepend'></div>
-                  <div className='input-group-text'>
-                    <span className='bi bi-postage' />
-                  </div>
-                  <input className='form-control' type='text' id='postalcode' placeholder='Postal Code' defaultValue="P.O. Box: 2194" readOnly={fieldEdit} />
-                </div>
-              </div>
-            </div>
             <div className='col-sm'>
               <div className='row'>
                 <div>
@@ -277,108 +152,34 @@ const Account = (props) => {
                 </div>
               </div>
             </div>
+            <div className='col-sm'>
+              <div className='row'>
+                <Field icon="signpost" input={{ className: 'form-control', type: 'text', id: 'street', placeholder: 'Street', defaultValue: address.street, readOnly: fieldEdit, }} />
+              </div>
+              <div className='row'>
+                <Field icon="cursor" input={{ className: 'form-control', type: 'text', id: 'suburb', placeholder: 'Suburb', defaultValue: address.suburb, readOnly: fieldEdit, }} />
+              </div>
+              <div className='row'>
+                <Field icon="building" input={{ className: 'form-control', type: 'text', id: 'city', placeholder: 'City', defaultValue: address.city, readOnly: fieldEdit, }} />
+              </div>
+              <div className='row'>
+                <Field icon="globe" input={{ className: 'form-control', type: 'text', id: 'country', placeholder: 'Country', defaultValue: address.country, readOnly: fieldEdit, }} />
+              </div>
+              <div className='row'>
+                <Field icon="postage" input={{ className: 'form-control', type: 'text', id: 'postalcode', placeholder: 'Postal Code', defaultValue: address.postalcode, readOnly: fieldEdit, }} />
+              </div>
+            </div>
           </div>
         </CardJ>
-      </section>
-
-
+      </section>}
       <CardJ>
         <div>
           <span className="bi bi-person-circle" style={{ fontSize: "5rem" }} />
           <br />
         </div>
       </CardJ>
-
-
-
-
-      <CardJ>
-        <section className={classes.profile}>
-          <section>
-            <div><p>UID:</p><p>{user.uid}</p></div>
-            <div><p>Cart UID:</p><p>{acc.cartuid}</p></div>
-          </section>
-          <section>
-            <div><p>Name:</p><p>{user.name}</p></div>
-            <div><p>Username:</p><p>{user.username}</p></div>
-          </section>
-          {user.cart && (
-            <section>
-              <div><p>Total Items:</p><p>{user.cart.totalItems}</p></div>
-              <div><p>Total Amount:</p><p>${user.cart.totalAmount}</p></div>
-            </section>
-          )}
-        </section>
-      </CardJ>
-      {user.cart && (
-        <section className={classes.cart}>
-          <ul>
-            <div className={classes.cartitem}>
-              {cartitems.map((item) => (
-                <li className={classes.listitem} key={item.merchandise.id}>
-                  <div>
-                    <CardJ>
-                      <div style={{ width: "5%" }}> {item.merchandise.id}</div>
-                      <div style={{ width: "20%" }}> {item.merchandise.name}</div>
-                      <div style={{ width: "60%" }}> {item.merchandise.description}</div>
-                      <div style={{ width: "10%" }}>$ {item.merchandise.price}x {item.quantity}</div>
-                      <div style={{ width: "5%" }}>$ {item.total}</div>
-                    </CardJ>
-                  </div>
-                </li>
-              ))}
-            </div>
-          </ul>
-        </section>
-      )}
     </Fragment>
   );
 }
-//<p>{acc.cart.items[0].merchandise.name}</p>
 
 export default Account;
-//{user.name ? user.name : "You're not authenticated."}
-/*
-    <>
-      <CardJ>
-        <div>
-          Account {user.name ? user.name : "You're not authenticated."}
-        </div>
-      </CardJ>
-      <CardJ>
-        <section className={classes.profile}>
-          <section>
-            <div><p>UID:</p><p>{acc.uid}</p></div>
-            <div><p>Cart UID:</p><p>{acc.cartuid}</p></div>
-          </section>
-          <section>
-            <div><p>Name:</p><p>{acc.name}</p></div>
-            <div><p>Username:</p><p>{acc.username}</p></div>
-          </section>
-          <section>
-            <div><p>Total Items:</p><p>{cart.totalItems}</p></div>
-            <div><p>Total Amount:</p><p>${cart.totalAmount}</p></div>
-          </section>
-        </section>
-      </CardJ>
-      <section className={classes.cart}>
-        <ul>
-          <div className={classes.cartitem}>
-            {cartitems.map((item) => (
-              <li className={classes.listitem} key={item.merchandise.id}>
-                <div>
-                  <CardJ>
-                    <div style={{ width: "5%" }}> {item.merchandise.id}</div>
-                    <div style={{ width: "20%" }}> {item.merchandise.name}</div>
-                    <div style={{ width: "60%" }}> {item.merchandise.description}</div>
-                    <div style={{ width: "10%" }}>$ {item.merchandise.price}x {item.quantity}</div>
-                    <div style={{ width: "5%" }}>$ {item.total}</div>
-                  </CardJ>
-                </div>
-              </li>
-            ))}
-          </div>
-        </ul>
-      </section>
-    </>
-*/

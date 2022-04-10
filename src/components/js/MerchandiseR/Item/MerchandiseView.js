@@ -40,7 +40,7 @@ const MerchandiseView = (props) => {
                 <form onSubmit={submitHandler}>
                     <CardJ>
                         <div className="row">
-                            <div className="col">
+                            <div className="col-sm">
                                 <div className="row">
                                     <div className={`form-floating form-fl`}>
                                         <div className={classes.imgcarry}>
@@ -60,7 +60,7 @@ const MerchandiseView = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col">
+                            <div className="col-sm">
                                 <div className="row">
                                     <div className={`form-floating form-fl`}>
                                         <InputJ
@@ -85,7 +85,7 @@ const MerchandiseView = (props) => {
                                 <div className="row">
                                     <button type="button" className="btn btn-success">
                                         <span className="bi bi-minecart-loaded"></span>
-                                        Stock Available:
+                                        Available:
                                         <span className="badge badge-light">
                                             87
                                         </span>
@@ -107,7 +107,7 @@ const MerchandiseView = (props) => {
                         </div>
                     </CardJ>
                     <div className="row">
-                        <div className="col">
+                        <div className="col-sm">
                             <CardJ>
                                 <button className="w-100 btn btn-lg btn-danger" type="button" onClick={props.onClose}>
                                     <span className="bi bi-x-circle-fill"></span>
@@ -115,7 +115,7 @@ const MerchandiseView = (props) => {
                                 </button>
                             </CardJ>
                         </div>
-                        <div className="col">
+                        <div className="col-sm">
                             <CardJ>
                                 <button className="w-100 btn btn-lg btn-primary" type="submit">
                                     <span className="bi bi-cart-plus-fill"></span>

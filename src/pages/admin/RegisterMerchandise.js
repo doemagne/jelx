@@ -118,7 +118,7 @@ const RegisterMerchandise = (props) => {
                 <form onSubmit={submitHandler}>
                     <CardJ>
                         <div className="row">
-                            <div className="col">
+                            <div className="col-sm">
                                 <div className="row">
                                     <div className={`form-floating form-fl`}>
                                         <input readOnly={false} ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required defaultValue={currentItem.name} />
@@ -150,7 +150,7 @@ const RegisterMerchandise = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col">
+                            <div className="col-sm">
                                 <div className="row">
                                     <br />
                                     <div className={`form-floating form-fl`}>
@@ -186,9 +186,9 @@ const RegisterMerchandise = (props) => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col">
+                                        <div className="col-sm">
                                         </div>
-                                        <div className="col">
+                                        <div className="col-sm">
                                             <div className="row">
                                                 <div className="form-floating form-fl">
                                                     <div className="form-check form-switch">
@@ -198,7 +198,7 @@ const RegisterMerchandise = (props) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col">
+                                        <div className="col-sm">
                                         </div>
                                     </div>
                                 </div>

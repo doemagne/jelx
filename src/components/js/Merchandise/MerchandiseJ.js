@@ -4,11 +4,12 @@ import { Fragment } from "react";
 
 const MerchandiseJ = () => {
     return (
+    
     <Fragment>
-        <MerchandiseSummary/>
         <AvailableMerchandiseJ/>
     </Fragment>
     );
 };
+//<MerchandiseSummary/>
 
 export default MerchandiseJ;

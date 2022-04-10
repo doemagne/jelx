@@ -92,7 +92,6 @@ const Navigation = (props) => {
                         {navigation}
                     </Navbar.Collapse>
                 </Container>
-                {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
             </Navbar>
         </Fragment>
     );
@@ -101,6 +100,7 @@ const Navigation = (props) => {
 export default Navigation;
 
 /*
+                {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
  
 //const [exited, setExited] = useState(false);
 /const [error, setError] = useState({

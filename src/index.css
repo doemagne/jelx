@@ -12,3 +12,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+main {
+    position:fixed;
+    top:9.5%;
+    left: 0.1%;
+    right: 0.1%;
+    height: 90%;
+    overflow-y: scroll;
+}

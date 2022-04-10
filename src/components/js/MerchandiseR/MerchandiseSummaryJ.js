@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import AvailableMerchandiseJ from "./MerchandiseAvailableJ";
 import classes from './MerchandiseSummary.module.css';
 
 const MerchandiseSummary = () => {
