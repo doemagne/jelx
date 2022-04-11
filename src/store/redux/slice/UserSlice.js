@@ -11,6 +11,7 @@ const tx = {
     authenticated: false,
     cart: null,
     address: null,
+    profile: null,
 }
 const initialState = tx;
 
@@ -30,6 +31,7 @@ export const userSlice = createSlice({
             state.authenticated = pay.authenticated;
             state.cart = pay.cart;
             state.address = pay.address;
+            state.profile = pay.profile;
             //console.log(state);
             if (state.authenticated) {
                 window.sessionStorage.setItem("user", state.username);

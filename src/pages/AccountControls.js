@@ -8,7 +8,7 @@ const AccountControls = (props) => {
                 </button>
             </div>
             <div className='col'>
-                <button type='button' className='btn btn-default btn-secondary'>
+                <button type='button' className='btn btn-default btn-secondary' onClick={props.togglePasswordChangeHandler}>
                     <span className='bi bi-key' />
                 </button>
             </div>
@@ -18,7 +18,7 @@ const AccountControls = (props) => {
                 </button>
             </div>
             {!props.fieldEdit && <div className='col'>
-                <button type='button' className='btn btn-default btn-success'>
+                <button onClick={props.onSubmitUpdate} type='button' className='btn btn-default btn-success'>
                     <span className='bi bi-cloud-arrow-up-fill' />
                 </button>
             </div>}
