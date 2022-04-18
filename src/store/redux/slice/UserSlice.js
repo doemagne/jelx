@@ -37,6 +37,8 @@ export const userSlice = createSlice({
                 window.sessionStorage.setItem("user", state.username);
                 window.sessionStorage.setItem("useruid", state.uid);
                 window.sessionStorage.setItem("cartuid", state.cartuid);
+                //window.sessionStorage.setItem("component", "");
+            
                 //console.log(state);
                 
             } else {

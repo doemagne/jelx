@@ -5,6 +5,7 @@ const initialState = {
     notification: null,
     loadstate: false,
     redirectstate: false,
+    offline: false,
 };
 
 const uiSlice = createSlice({

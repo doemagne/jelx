@@ -9,6 +9,7 @@ import { Navigate } from 'react-router-dom';
 import Field from '../components/js/UI/Field/Field';
 import FieldIcon from '../components/js/UI/Field/FieldIcon';
 import FieldButton from '../components/js/UI/Field/FieldButton';
+import FieldArea from '../components/js/UI/Field/FieldArea';
 import Select from '../components/js/UI/Field/Select';
 import AccountControls from './AccountControls';
 
@@ -20,12 +21,12 @@ const Account = (props) => {
   const [passwordText, setPasswordText] = useState('password')
   const [eye, setEye] = useState('eye')
   const [togglePasswordChange, setTogglePasswordChange] = useState(false)
-  const user = useSelector(state => state.user);
-  const address = useSelector(state => state.user.address);
-  const profile = useSelector(state => state.user.profile);
   const [imgSrc, setImgSrc] = useState();
   const [gender, setGender] = useState('male');
   const [fieldEdit, setFieldEdit] = useState(true);
+  const user = useSelector(state => state.user);
+  const address = useSelector(state => state.user.address);
+  const profile = useSelector(state => state.user.profile);
   const account = useLiveQuery(() => indexdb.transport.where({ id: 1 }).first());
   const passwordref = useRef();
   const confirmpasswordref = useRef();
@@ -36,12 +37,14 @@ const Account = (props) => {
   const emailref = useRef()
   const usernameref = useRef()
   const nameref = useRef()
+  const inforef = useRef()
   const streetref = useRef()
   const suburbref = useRef()
   const cityref = useRef()
   const countryref = useRef()
   const postalcoderef = useRef()
   const genderref = useRef()
+  const uidref = useRef()
 
   const togglePasswordVisibility = () => {
     setPV(!pV)
@@ -61,6 +64,7 @@ const Account = (props) => {
 
   const submitUpdateHandler = async () => {
     const addressData = {
+      uid: address.uid,
       street: streetref.current.value,
       suburb: suburbref.current.value,
       city: cityref.current.value,
@@ -68,12 +72,20 @@ const Account = (props) => {
       postalcode: postalcoderef.current.value,
     };
     const profileData = {
+      uid: uidref.current.value,
+      name: nameref.current.value,
+      username: usernameref.current.value,
       phone: phoneref.current.value,
       email: emailref.current.value,
       language: languageref.current.value,
       birthdate: birthdateref.current.value,
       gender: genderref.current.value,
+      information: inforef.current.value,
+      attachment: imageref.current.files.length > 0,
     };
+    //const attachmentlatch = {
+      //latch: false,
+    //}
     /*const userData = {
       username: usernameref.current.value,
       password: passwordref.current.value,
@@ -85,7 +97,13 @@ const Account = (props) => {
     formdata.append("address", JSON.stringify(addressData));
     formdata.append("profile", JSON.stringify(profileData));
     //formdata.append("user", JSON.stringify(userData));
-    formdata.append("photo", imageref.current.files[0]);
+    if (imageref.current.files.length > 0) {
+      //attachmentlatch.latch = true;
+      //formdata.append("attachmentlatch", JSON.stringify(attachmentlatch));
+      formdata.append("photo", imageref.current.files[0]);
+      //} else {
+      //formdata.append("attachmentlatch", JSON.stringify(attachmentlatch));
+    }
     try {
       const stimulus = await fetch(ServerURL + '/api/user/update', {
         method: 'PUT',
@@ -130,8 +148,8 @@ const Account = (props) => {
   let ye = cdate.getFullYear();
   let mo = cdate.getMonth() + 1;
   let da = cdate.getDate();
-  let ms = `${mo < 10 ? "0" + mo : mo}`
-  let ds = `${da < 10 ? "0" + da : da}`
+  let ms = `${mo < 10 ? "0" + mo : mo}`;
+  let ds = `${da < 10 ? "0" + da : da}`;
   let date = `${ye}-${ms}-${ds}`;
   const displayDateHandler = (e) => {
     console.log(e.target.value)
@@ -139,11 +157,19 @@ const Account = (props) => {
 
   }
   const ImageSrcHandler = () => {
-    setImgSrc(URL.createObjectURL(imageref.current.files[0]));
+    console.log(imageref.current.files.length)
+    if (imageref.current.files.length > 0) {
+      setImgSrc(URL.createObjectURL(imageref.current.files[0]));
+    } else {
+      if (profile) {
+        setImgSrc(`${ServerURL}/assets/media/profile/${profile.uid}/i.png`);
+      }
+    }
   };
 
   useEffect(() => {
     fetchTransport()
+    ImageSrcHandler()
   }, []);
 
 
@@ -152,7 +178,7 @@ const Account = (props) => {
     <Fragment>
       {!props.authenticated && <Navigate to="/" />}
       <CardJ>
-        <AccountControls fieldEditHandler={fieldEditHandler} fieldEdit={fieldEdit} onSubmitUpdate={submitUpdateHandler} togglePasswordChangeHandler={togglePasswordChangeHandler}/>
+        <AccountControls fieldEditHandler={fieldEditHandler} fieldEdit={fieldEdit} onSubmitUpdate={submitUpdateHandler} togglePasswordChangeHandler={togglePasswordChangeHandler} />
       </CardJ>
       <section>
         <CardJ>
@@ -178,31 +204,37 @@ const Account = (props) => {
                   <img src={imgSrc} onError={null} className={`${classes.imgbackup} img-fluid`} />
                 </div>
               </div>
+              {profile &&
+                <div className='row'>
+                  <div className={classes.imgcarry}>
+                    <img src={`${ServerURL}/assets/media/profile/${profile.uid}/qrcode.png`} onError={null} className={`${classes.imgbackup} img-fluid`} />
+                  </div>
+                </div>}
             </div>
             <div className='col-sm'>
-              <div className='row'>
-                <FieldIcon ref={nameref} icon2={`gender-${gender}`} icon="person-fill" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Name', defaultValue: user.name, readOnly: fieldEdit, }} />
-              </div>
-              <div className='row'>
-                <Field ref={usernameref} icon="person-circle" input={{ className: 'form-control', type: 'text', id: 'username', placeholder: 'Username', defaultValue: user.username, readOnly: fieldEdit, }} />
-              </div>
-              <div className='row'>
-                <Field ref={emailref} icon="at" input={{ className: 'form-control', type: 'email', id: 'email', placeholder: 'Email', defaultValue: user.email, readOnly: fieldEdit, }} />
-              </div>
-              {
-                togglePasswordChange &&
-                <Fragment>
-                  <div className='row'>
-                    <FieldButton onClicked={togglePasswordVisibility} ref={passwordref} icon2={eye} icon="key" input={{ className: 'form-control', type: { passwordText }, id: 'password', placeholder: 'Password', defaultValue: '', readOnly: fieldEdit, }} itype={passwordText}/>
-                  </div>
-                  <div className='row'>
-                    <FieldButton onClicked={togglePasswordVisibility} ref={confirmpasswordref} icon2={eye} icon="key-fill" input={{ className: 'form-control', type: { passwordText }, id: 'confirmpassword', placeholder: 'Confirm Password', defaultValue: '', readOnly: fieldEdit, }} itype={passwordText}/>
-                  </div>
-                </Fragment>
-              }
               {
                 profile &&
                 <Fragment>
+                  <div className='row'>
+                    <FieldIcon ref={nameref} icon2={`gender-${gender}`} icon="person-fill" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Name', defaultValue: profile.name, readOnly: fieldEdit, }} />
+                  </div>
+                  <div className='row'>
+                    <Field ref={usernameref} icon="person-circle" input={{ className: 'form-control', type: 'text', id: 'username', placeholder: 'Username', defaultValue: profile.username, readOnly: fieldEdit, }} />
+                  </div>
+                  <div className='row'>
+                    <Field ref={emailref} icon="at" input={{ className: 'form-control', type: 'email', id: 'email', placeholder: 'Email', defaultValue: profile.email, readOnly: fieldEdit, }} />
+                  </div>
+                  {
+                    togglePasswordChange &&
+                    <Fragment>
+                      <div className='row'>
+                        <FieldButton onClicked={togglePasswordVisibility} ref={passwordref} icon2={eye} icon="key" input={{ className: 'form-control', type: { passwordText }, id: 'password', placeholder: 'Password', defaultValue: '', readOnly: false, }} itype={passwordText} />
+                      </div>
+                      <div className='row'>
+                        <FieldButton onClicked={togglePasswordVisibility} ref={confirmpasswordref} icon2={eye} icon="key-fill" input={{ className: 'form-control', type: { passwordText }, id: 'confirmpassword', placeholder: 'Confirm Password', defaultValue: '', readOnly: false, }} itype={passwordText} />
+                      </div>
+                    </Fragment>
+                  }
                   {
                     !fieldEdit && <div className='row'>
                       <Select icon={`gender-${gender}`} options={['male', 'female']} ref={genderref} select={{ className: 'form-control', id: 'gender', defaultValue: profile.gender, readOnly: fieldEdit, }} onSelectChange={genderHandler} />
@@ -222,7 +254,10 @@ const Account = (props) => {
                     <Field icon="diagram-3-fill" input={{ className: 'form-control', type: 'text', id: 'ipaddress', placeholder: 'IP Address', defaultValue: profile.ipaddress, readOnly: true, }} />
                   </div>
                   <div className='row'>
-                    <Field icon="link-45deg" input={{ className: 'form-control', type: 'text', id: 'uid', placeholder: 'UID', defaultValue: profile.uid, readOnly: true, }} />
+                    <Field ref={uidref} icon="link-45deg" input={{ className: 'form-control', type: 'text', id: 'uid', placeholder: 'UID', defaultValue: profile.uid, readOnly: true, }} />
+                  </div>
+                  <div className='row'>
+                    <FieldArea ref={inforef} icon="info-circle" textarea={{ className: 'form-control', type: 'text', id: 'information', placeholder: 'Information', defaultValue: profile.information, readOnly: fieldEdit, }} />
                   </div>
                 </Fragment>
               }
@@ -243,21 +278,32 @@ const Account = (props) => {
               </div>
             </div>
             <div className='col-sm'>
-              <div className='row'>
-                <Field ref={streetref} icon="signpost" input={{ className: 'form-control', type: 'text', id: 'street', placeholder: 'Street', defaultValue: address.street, readOnly: fieldEdit, }} />
-              </div>
-              <div className='row'>
-                <Field ref={suburbref} icon="cursor" input={{ className: 'form-control', type: 'text', id: 'suburb', placeholder: 'Suburb', defaultValue: address.suburb, readOnly: fieldEdit, }} />
-              </div>
-              <div className='row'>
-                <Field ref={cityref} icon="building" input={{ className: 'form-control', type: 'text', id: 'city', placeholder: 'City', defaultValue: address.city, readOnly: fieldEdit, }} />
-              </div>
-              <div className='row'>
-                <Field ref={countryref} icon="globe" input={{ className: 'form-control', type: 'text', id: 'country', placeholder: 'Country', defaultValue: address.country, readOnly: fieldEdit, }} />
-              </div>
-              <div className='row'>
-                <Field ref={postalcoderef} icon="postage" input={{ className: 'form-control', type: 'text', id: 'postalcode', placeholder: 'Postal Code', defaultValue: address.postalcode, readOnly: fieldEdit, }} />
-              </div>
+              {
+                fieldEdit &&
+                <div className='row'>
+                  <FieldArea ref={streetref} icon="signpost" textarea={{ className: 'form-control', type: 'text', id: 'addressname', placeholder: 'Address Name', defaultValue: address.name, readOnly: true, }} />
+                </div>
+              }
+              {
+                !fieldEdit &&
+                <Fragment>
+                  <div className='row'>
+                    <Field ref={streetref} icon="signpost" input={{ className: 'form-control', type: 'text', id: 'street', placeholder: 'Street', defaultValue: address.street, readOnly: fieldEdit, }} />
+                  </div>
+                  <div className='row'>
+                    <Field ref={suburbref} icon="cursor" input={{ className: 'form-control', type: 'text', id: 'suburb', placeholder: 'Suburb', defaultValue: address.suburb, readOnly: fieldEdit, }} />
+                  </div>
+                  <div className='row'>
+                    <Field ref={cityref} icon="building" input={{ className: 'form-control', type: 'text', id: 'city', placeholder: 'City', defaultValue: address.city, readOnly: fieldEdit, }} />
+                  </div>
+                  <div className='row'>
+                    <Field ref={countryref} icon="globe" input={{ className: 'form-control', type: 'text', id: 'country', placeholder: 'Country', defaultValue: address.country, readOnly: fieldEdit, }} />
+                  </div>
+                  <div className='row'>
+                    <Field ref={postalcoderef} icon="postage" input={{ className: 'form-control', type: 'text', id: 'postalcode', placeholder: 'Postal Code', defaultValue: address.postalcode, readOnly: fieldEdit, }} />
+                  </div>
+                </Fragment>
+              }
             </div>
           </div>
         </CardJ>
