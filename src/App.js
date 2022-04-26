@@ -6,22 +6,20 @@ import SignInN from './pages/SignInN';
 import SignUpN from './pages/SignUpN';
 import SignOut from './pages/SignOut';
 import BackdropJ from './components/UI/Modal/Modal';
-//import Notification from "./components/js/UI/Notification/Notification";
 import Config from './pages/Config';
 import MerchandiseR from './pages/MerchandiseR';
+import MerchandiseConfig from './pages/admin/MerchandiseConfig';
 import { Fragment, useCallback, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { fetchTransportData } from './store/redux/action/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
-//import RegisterMerchandise from './pages/admin/RegisterMerchandise';
-import MerchandiseConfig from './pages/admin/MerchandiseConfig';
-//OLD
-import StockJ from './pages/StockJ';
-import ExpenseJournal from './pages/ExpenseJournal';
-import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
-import Warehouse from './components/old/whcomponents/Warehouse';
-import Offline from './components/js/offline/Offline';
+import aes from 'crypto-js/aes';
+import rabbit from 'crypto-js/rabbit';
+import { enc } from 'crypto-js/core';
+
+let secret = 'abc';
+
 function App() {
   const dispatch = useDispatch(setAuthState);
   const loader = useSelector(state => state.ui.loadstate);
@@ -29,9 +27,14 @@ function App() {
   const authenticated = useSelector(state => state.user.authenticated)
   const name = useSelector(state => state.user.name);
   const cartuid = useSelector(state => state.user.cartuid);
-
+  //const token = useSelector(state => state.user.token);
+  let token = window.sessionStorage.getItem("token")
   const fetchUserHandler = useCallback(async () => {
-    dispatch(fetchTransportData())
+    //if (token == null || token.length == 0) {
+      //token = aes.encrypt("empty", secret).toString(enc.Hex);
+    //}
+    //token = aes.decrypt(token,secret)
+    dispatch(fetchTransportData(token));
   }, [])
   useEffect(() => {
     fetchUserHandler();
@@ -57,11 +60,6 @@ function App() {
               <Route path="/config" element={<Config />} />
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/register" element={<MerchandiseConfig authenticated={authenticated} />} />
-              <Route path="/merchandise/cart" element={<StockJ />} />
-              <Route path="/expensesjournal" element={<ExpenseJournal />} />
-              <Route path="/redux/starter" element={<ReduxStarter />} />
-              <Route path="/ware/house" element={<Warehouse />} />
-              <Route path="/index/offline" element={<Offline />} />
             </Routes>
           </main>
         </BrowserRouter>
@@ -71,6 +69,21 @@ function App() {
 }
 
 export default App;
+/*
+//OLD
+//import Notification from "./components/js/UI/Notification/Notification";
+//import RegisterMerchandise from './pages/admin/RegisterMerchandise';
+//import StockJ from './pages/StockJ';
+//import ExpenseJournal from './pages/ExpenseJournal';
+//import ReduxStarter from './components/old/reduxer/starter/ReduxStarter';
+//import Warehouse from './components/old/whcomponents/Warehouse';
+//import Offline from './components/js/offline/Offline';
+              <Route path="/merchandise/cart" element={<StockJ />} />
+              <Route path="/expensesjournal" element={<ExpenseJournal />} />
+              <Route path="/redux/starter" element={<ReduxStarter />} />
+              <Route path="/ware/house" element={<Warehouse />} />
+              <Route path="/index/offline" element={<Offline />} />
+*/
 //KEEP ORIGINALS
           //<Route path="/account/signin" element={<SignIn setName={setName} setUid={setUid} setCartuid={setCartuid} email={''} password={''} />} />
           //<Route path="/account/signup" element={<SignUp name={''} email={''} password={''} />} />

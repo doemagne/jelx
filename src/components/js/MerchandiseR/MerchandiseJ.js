@@ -1,4 +1,4 @@
-import MerchandiseSummary from "./MerchandiseSummaryJ";
+//import MerchandiseSummary from "./MerchandiseSummaryJ";
 import AvailableMerchandiseJ from "./MerchandiseAvailableJ";
 import { Fragment } from "react";
 

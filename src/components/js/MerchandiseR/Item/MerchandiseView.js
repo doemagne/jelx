@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import CardJ from '../../UI/CardJ';
 import ModalJ from '../../UI/ModalJ';
 import { ServerURL } from '../../../../constraint/ServerURL';
-import { setloading } from "../../../../store/redux/slice/UISlice";
+//import { setloading } from "../../../../store/redux/slice/UISlice";
 import InputJ from "../../UI/InputJ";
 const MerchandiseView = (props) => {
     const [imgSrc, setImgSrc] = useState('');
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     const currentItem = useSelector(state => state.merchandise.currentItem);
     //const nameref = useRef();
     const quantityref = useRef();

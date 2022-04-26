@@ -1,6 +1,10 @@
-import { start } from "@popperjs/core";
+//import { start } from "@popperjs/core";
 import { createSlice } from "@reduxjs/toolkit";
-import indexdb from "../../indexdb/indexdb";
+import aes from "crypto-js/aes";
+import { enc } from "crypto-js/core";
+import rabbit from "crypto-js/rabbit";
+
+//import indexdb from "../../indexdb/indexdb";
 
 const tx = {
     uid: null,
@@ -12,6 +16,8 @@ const tx = {
     cart: null,
     address: null,
     profile: null,
+    token: null,
+    secret: "abc"
 }
 const initialState = tx;
 
@@ -21,7 +27,7 @@ export const userSlice = createSlice({
     reducers: {
         setTransport: (state, action) => {
             console.log(action.payload)
-            const idx = indexdb.transport.put(action.payload);
+            //const idx = indexdb.transport.put(action.payload);
             const pay = action.payload.content;
             state.uid = pay.uid;
             state.name = pay.name;
@@ -32,22 +38,27 @@ export const userSlice = createSlice({
             state.cart = pay.cart;
             state.address = pay.address;
             state.profile = pay.profile;
+            let token = pay.token;//aes.encrypt(pay.token,state.secret).toString();
+            state.token = token;
+            console.log(state.token);
             //console.log(state);
             if (state.authenticated) {
                 window.sessionStorage.setItem("user", state.username);
                 window.sessionStorage.setItem("useruid", state.uid);
                 window.sessionStorage.setItem("cartuid", state.cartuid);
+                window.sessionStorage.setItem("token", token);
                 //window.sessionStorage.setItem("component", "");
             
                 //console.log(state);
                 
             } else {
-                indexdb.delete();
+                //indexdb.delete();
                 state.authenticated = false;
                 console.log("clearing the session storage.")
-                window.sessionStorage.setItem("user", "");
-                window.sessionStorage.setItem("useruid", "");
-                window.sessionStorage.setItem("cartuid", "");
+                window.sessionStorage.setItem("user", null);
+                window.sessionStorage.setItem("useruid", null);
+                window.sessionStorage.setItem("cartuid", null);
+                window.sessionStorage.setItem("token", null);
             }
         },
         authenticator: (state, action) => {
@@ -62,7 +73,7 @@ export const userSlice = createSlice({
         signout: (state) => {
             state.authenticated = false
             state = tx;
-            indexdb.delete();
+            //indexdb.delete();
             /*let req = indexedDB.deleteDatabase('Merchandiser');
             req.onsuccess = () => {
                 console.log('deleted indexedDB database.')
@@ -77,6 +88,7 @@ export const userSlice = createSlice({
             window.sessionStorage.setItem("user", null);
             window.sessionStorage.setItem("useruid", null);
             window.sessionStorage.setItem("cartuid", null);
+            window.sessionStorage.setItem("token", null);
         },
         yieldTransport: (state) => {
 
@@ -88,19 +100,23 @@ export const userSlice = createSlice({
             state.username = pay.username;
             state.uid = pay.uid;
             state.cartuid = pay.cartuid;
+            let token = pay.token;//aes.encrypt(pay.token,state.secret).toString();
+            state.token = token//rabbit.encrypt(pay.token,state.secret).toString(enc.Hex);
             console.log(state);
             if (state.authenticated) {
                 window.sessionStorage.setItem("user", state.username);
                 window.sessionStorage.setItem("useruid", state.uid);
                 window.sessionStorage.setItem("cartuid", state.cartuid);
+                window.sessionStorage.setItem("token", token);
                 //console.log(state);
             } else {
                 state.authenticated = false;
                 console.log("clearing the session storage.")
-                window.sessionStorage.setItem("user", "");
-                window.sessionStorage.setItem("useruid", "");
-                window.sessionStorage.setItem("cartuid", "");
-                indexdb.delete();
+                window.sessionStorage.setItem("user", null);
+                window.sessionStorage.setItem("useruid", null);
+                window.sessionStorage.setItem("cartuid", null);
+                window.sessionStorage.setItem("token", null);
+                //indexdb.delete();
             }
         },
     },

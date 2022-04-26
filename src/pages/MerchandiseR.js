@@ -9,7 +9,7 @@ import MerchandiseView from "../components/js/MerchandiseR/Item/MerchandiseView"
 import { toggle } from "../store/redux/slice/UISlice";
 import CardJ from "../components/js/UI/CardJ";
 
-let isInitial = true;
+//let isInitial = true;
 //let cartuid = '';
 const MerchandiseR = (props) => {
     const [cartShown, setCartShown] = useState(false);

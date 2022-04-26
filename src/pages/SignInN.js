@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Fragment, useRef, useState } from "react";
 import { authenticateUser } from "../store/redux/action/userAction";
 import { Navigate } from "react-router-dom";
+import sha256 from 'crypto-js/sha256';
+import { enc } from 'crypto-js/core';
 
 const SignInN = (props) => {
   const [pV, setPV] = useState(false);
@@ -31,7 +33,7 @@ const SignInN = (props) => {
     const credentials = {
       //email: emailref.current.value,
       username: usernameref.current.value,
-      password: passwordref.current.value,
+      password: sha256(passwordref.current.value).toString(enc.Hex),
     }
     dispatch(authenticateUser(credentials));
   }

@@ -2,7 +2,10 @@ import Card from "../components/UI/Card/Card";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from "../store/redux/action/userAction";
+import { enc } from "crypto-js/core";
+import sha256 from "crypto-js/sha256";
 import { Navigate } from "react-router-dom";
+
 
 let initialload = true;
 
@@ -34,8 +37,8 @@ const SignUpN = (props) => {
       name: nameref.current.value,
       username: nameref.current.value,
       email: emailref.current.value,
-      password: passwordref.current.value,
-      confirmpassword: confirmpasswordref.current.value,
+      password: sha256(passwordref.current.value).toString(enc.Hex),
+      confirmpassword: sha256(confirmpasswordref.current.value).toString(enc.Hex),
     }
     console.log('registring user')
     dispatch(registerUser(credentials));
