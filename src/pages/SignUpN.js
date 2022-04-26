@@ -32,6 +32,7 @@ const SignUpN = (props) => {
     e.preventDefault();
     const credentials = {
       name: nameref.current.value,
+      username: nameref.current.value,
       email: emailref.current.value,
       password: passwordref.current.value,
       confirmpassword: confirmpasswordref.current.value,

@@ -12,7 +12,7 @@ const SignInN = (props) => {
   const [eye,setEye] = useState('eye')
 
   const dispatch = useDispatch();
-  const emailref = useRef();
+  const usernameref = useRef();
   const passwordref = useRef();
 
   const togglePasswordVisibility = () => {
@@ -29,7 +29,8 @@ const SignInN = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const credentials = {
-      email: emailref.current.value,
+      //email: emailref.current.value,
+      username: usernameref.current.value,
       password: passwordref.current.value,
     }
     dispatch(authenticateUser(credentials));
@@ -47,9 +48,9 @@ const SignInN = (props) => {
             <div className='input-group mb-2'>
               <div className='input-group-prepend'></div>
               <div className='input-group-text'>
-                <span className='bi bi-at' />
+                <span className='bi bi-person' />
               </div>
-              <input ref={emailref} className='form-control' type='text' id='email' placeholder='Email' required />
+              <input ref={usernameref} className='form-control' type='text' id='username' placeholder='Username' required />
             </div>
             <div className='input-group mb-2'>
               <div className='input-group-prepend'></div>

@@ -9,7 +9,8 @@ export const fetchTransportData = () => {
     return (async (dispatch) => {
         dispatch(setloading(true));
         try {
-            const endpoint = '/api/user';
+            const endpoint = '/api/user/restriction';
+            //const endpoint = '/api/user';
             const content = await sendGetRequest(endpoint);
             //console.log({id:1, transport:content});
             dispatch(setTransport({ id: 1, content: content }));
@@ -27,7 +28,8 @@ export const registerUser = (credentials) => {
     return (async (dispatch) => {
         try {
             dispatch(setloading(true));
-            const endpoint = '/api/signup';
+            const endpoint = '/api/user/signup';
+            //const endpoint = '/api/signup';
             const content = await sendPostRequest(credentials, endpoint);
             //console.log(content);
             dispatch(notify(notificationsignedup));
@@ -45,7 +47,8 @@ export const authenticateUser = (credentials) => {
         dispatch(setloading(true));
         try {
             dispatch(setloading(true));
-            const endpoint = '/api/signin';
+            const endpoint = '/api/user/signin';
+            //const endpoint = '/api/signin';
             const content = await sendPostRequest(credentials, endpoint);
             dispatch(setTransport({ id: 1, content: content }));
             dispatch(authenticator(content.authenticated));
@@ -68,7 +71,8 @@ export const signoutUser = () => {
     return (async (dispatch) => {
         try {
             dispatch(setloading(true));
-            const endpoint = '/api/signout';
+            //const endpoint = '/api/signout';
+            const endpoint = '/api/user/signout';
             const response = await sendPostRequest(null, endpoint)
             dispatch(signout());
             dispatch(notify({
