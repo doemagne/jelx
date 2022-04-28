@@ -1,5 +1,7 @@
 PROGRAM=jelx
 
+PROGRAMIMG="$(PROGRAM)-image"
+
 #GITHUB
 #make sure revision is aligned correctly
 REVISION=i
@@ -63,9 +65,27 @@ main:
 	make commit
 	make branch
 	make push
+dockerbuilddev:
+	docker build -f front.Dockerfile -t jelx-image .
+dockerbuild:
+	docker build -f production.Dockerfile -t jelx-image .
 
+dockerrunproduction:
+	docker run --env ./.env -d -p 80:80 --name react-app-jelx-production $(PROGRAMIMG)
 
-
+dockerrun:
+	docker run --env ./.env -d -v $(pwd)/src:/app/src:ro -p 3000:3000 --name react-app-$(PROGRAM) $(PROGRAMIMG)
+	#docker run -d -v /home/pi/jex/src:/app/src -p 3000:3000 --name react-app-$(PROGRAM) $(PROGRAMIMG)
+dockerkillc:
+	docker rm react-app-$(PROGRAM) -f 
+dockerinterface:
+	docker exec -it react-app-$(PROGRAM) bash
+dockercompose:
+	docker-compse up -d --build
+dockercomposedown:
+	docker-compose down
+dockercomposeproduction:
+	docker-compose -f docker-compose.yml docker-compose-production.yml up -d --build
 ######GIT Instructions
 #…or create a new repository on the command line
 #echo "# jelx" >> README.md

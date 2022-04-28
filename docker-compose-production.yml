@@ -1,0 +1,8 @@
+version: "3"
+services:
+        react-app-jelx-production:
+                build:
+                        context: .
+                        dockerfile: production.Dockerfile
+                ports:
+                        - "8080:80"

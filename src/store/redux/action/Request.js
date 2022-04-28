@@ -53,8 +53,8 @@ export const sendTokenGetRequest = async (endpoint,token) => {
     //encrypt(th);
     //th = rabbit.encrypt(th,secret)
     response.token = th
-    console.log(response.token);
-    console.log(token);
+    //console.log(response.token);
+    //console.log(token);
     return response;
 }
 export const sendGetRequest = async (endpoint) => {

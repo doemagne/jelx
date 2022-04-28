@@ -1,0 +1,7 @@
+node_modules
+fron.Dockerfile
+.git
+.gitignore
+.dockerignore
+.env
+

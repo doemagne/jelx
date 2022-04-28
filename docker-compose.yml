@@ -1,0 +1,16 @@
+version: "3"
+services:
+        react-app-jelx:
+                #stdin: true
+                #tty: true
+                build:
+                        context: .
+                        dockerfile: front.Dockerfile
+                ports:
+                        - "3000:3000"
+                        - "2023:2023"
+                volumes:
+                        - ./src:/app/src:ro
+                env_file:
+                        - ./.env
+                #environment:
