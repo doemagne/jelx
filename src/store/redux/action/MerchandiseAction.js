@@ -1,15 +1,15 @@
 import { setMerchandise } from "../slice/MerchandiseSlice";
 import { setloading } from "../slice/UISlice";
-import { sendGetRequest, uploadMediaForm } from "./Request";
+import { sendTokenGetRequest, uploadMediaForm } from "./Request";
 
 
-export const fetchMerchandiseData = () => {
+export const fetchMerchandiseData = (token) => {
     return (async (dispatch) => {
         try {
             dispatch(setloading(true));
             const uuid = window.sessionStorage.getItem("cartuid");
             const endpoint = `/api/merchandise/map/${uuid}`
-            const response = await sendGetRequest(endpoint)
+            const response = await sendTokenGetRequest(endpoint, token)
             const transformation = [];
             for (const key in response) {
                 transformation.push({

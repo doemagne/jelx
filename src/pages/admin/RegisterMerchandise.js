@@ -1,3 +1,5 @@
+import Field from '../../components/js/UI/Field/Field';
+import FieldArea from '../../components/js/UI/Field/FieldArea';
 import classes from "./RegisterMerchandise.module.css";
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -120,50 +122,47 @@ const RegisterMerchandise = (props) => {
                         <div className="row">
                             <div className="col-sm">
                                 <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <input readOnly={false} ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required defaultValue={currentItem.name} />
-                                        <label htmlFor="name">Name</label>
-                                    </div>
+                                    <Field ref={nameref} icon="tag" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Item Name', defaultValue: currentItem.name, required:true }} />
                                 </div>
                                 <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <input ref={quantityref} className="form-control" id="quantity" placeholder="Available Quantity" step={1} type="number" required defaultValue={currentItem.quantity} />
-                                        <label htmlFor="price">Available Quantity</label>
-                                    </div>
+                                    <Field ref={quantityref} icon="boxes" input={{ className: 'form-control', type: 'number', step:"1", id: 'quantity', placeholder: 'Quantity', defaultValue: currentItem.quantity, required:true }} />
                                 </div>
                                 <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <input ref={priceref} className="form-control" id="price" placeholder="Price" step={0.01} type="number" required defaultValue={currentItem.price} />
-                                        <label htmlFor="price">$ Price</label>
-                                    </div>
+                                    <Field ref={priceref} icon="currency-dollar" input={{ className: 'form-control', type: 'number',step:"0.01", id: 'price', placeholder: 'Price', defaultValue: currentItem.price, required:true }} />
                                 </div>
                                 <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <textarea rows="3" ref={descriptionref} className="form-control" id="description" placeholder="Description" required defaultValue={currentItem.description} />
-                                        <label htmlFor="description">Description</label>
-                                    </div>
+                                    <FieldArea ref={descriptionref} icon="chat-right-text" textarea={{ className: 'form-control', type: 'text', id: 'description', placeholder: 'Description', defaultValue: currentItem.description, required:true }} />
                                 </div>
                                 <div className="row">
-                                    <div className={`form-floating form-fl`}>
-                                        <input readOnly ref={uidref} className="form-control" id="uid" placeholder="UID" type="text" required defaultValue={currentItem.uid} />
-                                        <label htmlFor="UID">UID</label>
-                                    </div>
+                                    <Field ref={uidref} icon="link" input={{ className: 'form-control', type: 'text', id: 'uid', placeholder: 'UID', defaultValue: currentItem.uid, readOnly:true }} />
                                 </div>
-                            </div>
-                            <div className="col-sm">
-                                <div className="row">
-                                    <br />
-                                    <div className={`form-floating form-fl`}>
-                                        <CardJ>
-                                            <div className={classes.imgcarry}>
-                                                <div className="btn btn-default btn-secondary">
-                                                    <span className="bi bi-camera2"></span>
-                                                    <input ref={imageref} className="btn btn-default btn-secondary" id="image" placeholder="Image" type="file" required onChange={ImageSrcHandler}></input>
+                                <div classNAme="row">
+                                <div className={classes.imgcarry}>
+                                <div className="input-group-text">
+                                    <span className="bi bi-camera2"></span>
+                                    <input ref={imageref} className="btn btn-default" id="image" placeholder="Image" type="file" required onChange={ImageSrcHandler} style={{ fontSize: "0.5rem", padding: "0rem .75rem" }}></input>
+                                </div>
+                                </div>
+                                    
+                                </div>
+                                    <div className="row">
+                                        <div className="col-sm">
+                                        </div>
+                                        <div className="col-sm">
+                                            <div className="row">
+                                                <div className="form-floating form-fl">
+                                                    <div className="form-check form-switch">
+                                                        <input ref={activeref} className="form-check-input" id="active" type="checkbox" defaultChecked={currentItem.active}/>
+                                                        <label className="form-check-label" htmlFor="active">Active</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </CardJ>
+                                        </div>
+                                        <div className="col-sm">
+                                        </div>
                                     </div>
-                                </div>
+                            </div>
+                            <div className="col-sm">
                                 <div className="row">
                                     <div className={`form-floating form-fl`}>
                                         <div className={classes.imgcarry}>
@@ -183,22 +182,6 @@ const RegisterMerchandise = (props) => {
                                                     <img src={imgSrc} id="photo" onClick={imageViewHandler} />
                                                 </CardJ>
                                             }
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-sm">
-                                        </div>
-                                        <div className="col-sm">
-                                            <div className="row">
-                                                <div className="form-floating form-fl">
-                                                    <div className="form-check form-switch">
-                                                        <input ref={activeref} className="form-check-input" id="active" type="checkbox" defaultChecked={currentItem.active}/>
-                                                        <label className="form-check-label" htmlFor="active">Active</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -241,6 +224,42 @@ const RegisterMerchandise = (props) => {
 
 };
 
-//<p className="mt-5 mb-3 text-muted">&copy; 2022</p>
-
 export default RegisterMerchandise;
+
+//<p className="mt-5 mb-3 text-muted">&copy; 2022</p>
+/*
+                                <div className="row">
+                                    <br />
+                                    <div className={`form-floating form-fl`}>
+                                        <CardJ>
+                                            <div className={classes.imgcarry}>
+                                                <div className="btn btn-default btn-secondary">
+                                                    <span className="bi bi-camera2"></span>
+                                                    <input ref={imageref} className="btn btn-default btn-secondary" id="image" placeholder="Image" type="file" required onChange={ImageSrcHandler}></input>
+                                                </div>
+                                            </div>
+                                        </CardJ>
+                                    </div>
+                                </div>
+<div className={`form-floating form-fl`}>
+    <input readOnly={false} ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required defaultValue={currentItem.name} />
+    <label htmlFor="name">Name</label>
+</div>
+<div className={`form-floating form-fl`}>
+    <input ref={quantityref} className="form-control" id="quantity" placeholder="Available Quantity" step={1} type="number" required defaultValue={currentItem.quantity} />
+    <label htmlFor="price">Available Quantity</label>
+</div>
+<div className={`form-floating form-fl`}>
+    <input ref={priceref} className="form-control" id="price" placeholder="Price" step={0.01} type="number" required defaultValue={currentItem.price} />
+    <label htmlFor="price">$ Price</label>
+</div>
+<div className={`form-floating form-fl`}>
+    <textarea rows="3" ref={descriptionref} className="form-control" id="description" placeholder="Description" required defaultValue={currentItem.description} />
+    <label htmlFor="description">Description</label>
+</div>
+<div className={`form-floating form-fl`}>
+    <input readOnly ref={uidref} className="form-control" id="uid" placeholder="UID" type="text" required defaultValue={currentItem.uid} />
+    <label htmlFor="UID">UID</label>
+</div>
+
+*/

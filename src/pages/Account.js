@@ -82,28 +82,30 @@ const Account = (props) => {
       gender: genderref.current.value,
       information: inforef.current.value,
       attachment: imageref.current.files.length > 0,
+      credentials: passwordref.current.value.length != 0 && confirmpasswordref.current.value.length != 0 && confirmpasswordref.current.value == passwordref.current.value,
     };
-    //const attachmentlatch = {
-      //latch: false,
-    //}
     const userData = {
       username: usernameref.current.value,
       password: passwordref.current.value,
       confirmpassword: confirmpasswordref.current.value,
     };
+    const profileconfig = {
+      attachment: imageref.current.files.length > 0,
+      credentials: passwordref.current.value.length != 0 && confirmpasswordref.current.value.length != 0 && confirmpasswordref.current.value == passwordref.current.value,
+    }
     const ctrl = new AbortController();
     setTimeout(() => ctrl.abort(), 5000);
     const formdata = new FormData();
     let token = window.sessionStorage.getItem("token")
+    formdata.append("confuration", JSON.stringify(profileconfig))
     formdata.append("address", JSON.stringify(addressData));
     formdata.append("profile", JSON.stringify(profileData));
-    if (passwordref.current.value.length != 0 && confirmpasswordref.current.value.length != 0 && confirmpasswordref.current.value == passwordref.current.value) {
+    if (profileconfig.credentials) {
       formdata.append("credential", JSON.stringify(userData));
     }
-    if (imageref.current.files.length > 0) {
+    if (profileconfig.attachment) {
       formdata.append("photo", imageref.current.files[0]);
     }
-
     try {
       const stimulus = await fetch(ServerURL + '/api/user/update', {
         method: 'PUT',

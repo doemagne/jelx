@@ -15,8 +15,9 @@ const MerchandiseConfig = (props) => {
     const dispatch = useDispatch();
     const merchandisel = useSelector(state => state.merchandise.merchandise);
     const toggleModal = useSelector(state => state.ui.cartToggle);
+    const token = window.sessionStorage.getItem("token")
     const fetchMerchandise = async () => {
-        dispatch(fetchMerchandiseData());
+        dispatch(fetchMerchandiseData(token));
     };
     useEffect(() => {
         if (merchandisel.length == 0) {

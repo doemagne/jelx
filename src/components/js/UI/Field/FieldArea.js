@@ -8,7 +8,7 @@ const FieldArea = forwardRef((props, ref) => {
             <div className='input-group-text'>
                 <span className={`bi bi-${props.icon}`} />
             </div>
-            <textarea ref={ref} {...props.textarea} />
+            <textarea ref={ref} {...props.textarea}/>
         </div>
     );
 });
