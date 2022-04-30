@@ -13,7 +13,6 @@ cartul
     text-align: right;
     background-image: url(../../node_modules/bootstrap-icons/icons/person-circle.svg) url(../assets/logo.svg);
     border: 0.13em groove #eee;
-    border-radius: 50%;
 */
 .imgbackup{
     background-image: url(../assets/person-circle.svg);

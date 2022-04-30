@@ -136,7 +136,7 @@ const RegisterMerchandise = (props) => {
                                 <div className="row">
                                     <Field ref={uidref} icon="link" input={{ className: 'form-control', type: 'text', id: 'uid', placeholder: 'UID', defaultValue: currentItem.uid, readOnly:true }} />
                                 </div>
-                                <div classNAme="row">
+                                <div className="row">
                                 <div className={classes.imgcarry}>
                                 <div className="input-group-text">
                                     <span className="bi bi-camera2"></span>
@@ -173,13 +173,13 @@ const RegisterMerchandise = (props) => {
                                                         newImg &&
                                                         <img src={imgSrc} id="photo" onClick={imageViewHandler} />
                                                     }
-                                                    <img src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photo" onClick={imageViewHandler} />
+                                                    <img className={classes.imgbackup} src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photo" onClick={imageViewHandler} />
                                                 </CardJ>
                                             }
                                             {
                                                 props.newItem &&
                                                 <CardJ>
-                                                    <img src={imgSrc} id="photo" onClick={imageViewHandler} />
+                                                    <img className={classes.imgbackup} src={imgSrc} id="photo" onClick={imageViewHandler} />
                                                 </CardJ>
                                             }
                                         </div>

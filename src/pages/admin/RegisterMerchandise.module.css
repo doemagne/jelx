@@ -7,3 +7,13 @@
   .imgcarry {
     text-align: center;
   }
+  .imgbackup{
+    background-image: url(../../assets/person-circle.svg);
+    background-repeat: no-repeat ;
+    background-size: 33% auto;
+    background-position: center;
+    text-align: center;
+    width: 50%;
+    height: auto;
+    margin-top: .5rem;
+  }
