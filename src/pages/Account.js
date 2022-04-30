@@ -105,6 +105,7 @@ const Account = (props) => {
       //} else {
       //formdata.append("attachmentlatch", JSON.stringify(attachmentlatch));
     }
+
     try {
       const stimulus = await fetch(ServerURL + '/api/user/update', {
         method: 'PUT',
