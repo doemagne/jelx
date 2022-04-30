@@ -1,3 +1,5 @@
+import Field from "../components/js/UI/Field/Field"
+import FieldButton from "../components/js/UI/Field/FieldButton"
 import Card from "../components/UI/Card/Card";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,6 +56,22 @@ const SignUpN = (props) => {
       <Card className="form-signin">
         <h1 className="h3 mb-3 fw-normal">Sign Up</h1>
         <form onSubmit={submitHandler} >
+            <Field ref={nameref} icon="person-circle" input={{ className: 'form-control', type: 'text', id: 'username', placeholder: 'Username', defaultValue: "", }} />
+            <Field ref={emailref} icon="at" input={{ className: 'form-control', type: 'email', id: 'email', placeholder: 'Email', }} />
+            <FieldButton onClicked={togglePasswordVisibility} ref={passwordref} icon2={eye} icon="key" input={{ className: 'form-control', type: { passwordText }, id: 'password', placeholder: 'Password', defaultValue: '', }} itype={passwordText} />
+            <FieldButton onClicked={togglePasswordVisibility} ref={confirmpasswordref} icon2={eye} icon="key" input={{ className: 'form-control', type: { passwordText }, id: 'confirmpassword', placeholder: 'Confirm Password', defaultValue: '', }} itype={passwordText} />
+          <button className="w-100 btn btn-lg btn-secondary" type="submit">
+            <span className="bi bi-person-lines-fill" />
+          </button>
+          <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
+        </form>
+      </Card>
+    </main>
+  )
+}
+
+export default SignUpN;
+  /*
           <div className='input-group mb-2'>
             <div className='input-group-prepend'></div>
             <div className='input-group-text'>
@@ -85,18 +103,6 @@ const SignUpN = (props) => {
             </div>
             <input ref={confirmpasswordref} className='form-control' type={passwordText} id='confirmpassword' placeholder='Confirm Pasword' required />
           </div>
-          <button className="w-100 btn btn-lg btn-secondary" type="submit">
-            <span className="bi bi-person-lines-fill" />
-          </button>
-          <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
-        </form>
-      </Card>
-    </main>
-  )
-}
-
-export default SignUpN;
-  /*
 
         <div className={`form-floating form-fl`}>
           <input ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required />

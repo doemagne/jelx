@@ -15,13 +15,14 @@ import Notification from '../../js/UI/Notification/Notification';
 //import { signout } from '../../../store/slice/AuthSlice';
 let nav;
 let navigation;
+let navigationloading;
 let menu = (<AnonymousBar />);
 let leftmenu = (<Anonymous />);
 let searchform = (<SearchBar />);
 const Navigation = (props) => {
     const notification = useSelector(state => state.ui.notification);
     const dispatch = useDispatch();
-
+    const loadstate = useSelector(state => state.ui.loadstate)
     const signoutHandler = async (e) => {
         e.preventDefault();
         dispatch(signoutUser());
@@ -47,6 +48,13 @@ const Navigation = (props) => {
             </div>
         </nav>
     );*/
+        navigationloading = 
+        (<Nav>
+            <Link to="#" className='nav-link active' aria-current="page" >
+                <span className="bi bi-house" />
+            </Link>
+        </Nav>)
+
     //return<>{nav}</>
     if (props.authenticated) {
         navigation = (
@@ -89,7 +97,7 @@ const Navigation = (props) => {
                 <Container>
                     <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                     <Navbar.Collapse id='responsive-navbar-nav'>
-                        {navigation}
+                        {!loadstate ?  navigation: navigationloading }
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

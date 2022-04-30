@@ -94,6 +94,7 @@ const Account = (props) => {
     const ctrl = new AbortController();
     setTimeout(() => ctrl.abort(), 5000);
     const formdata = new FormData();
+    let token = window.sessionStorage.getItem("token")
     formdata.append("address", JSON.stringify(addressData));
     formdata.append("profile", JSON.stringify(profileData));
     //formdata.append("user", JSON.stringify(userData));
@@ -107,6 +108,9 @@ const Account = (props) => {
     try {
       const stimulus = await fetch(ServerURL + '/api/user/update', {
         method: 'PUT',
+        headers: { 
+            "X-Csrf-Token": token
+        },
         body: formdata,
         signal: ctrl.signal,
         credentials: "include",

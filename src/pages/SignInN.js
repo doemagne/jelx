@@ -5,6 +5,8 @@ import { Fragment, useRef, useState } from "react";
 import { authenticateUser } from "../store/redux/action/userAction";
 import { Navigate } from "react-router-dom";
 import sha256 from 'crypto-js/sha256';
+import Field from "../components/js/UI/Field/Field"
+import FieldButton from "../components/js/UI/Field/FieldButton"
 import { enc } from 'crypto-js/core';
 
 const SignInN = (props) => {
@@ -47,6 +49,21 @@ const SignInN = (props) => {
         <Card className="form-signin">
           <h1 className="h3 mb-3 fw-normal">Sign In</h1>
           <form onSubmit={submitHandler}>
+            <Field ref={usernameref} icon="person-circle" input={{ className: 'form-control', type: 'text', id: 'username', placeholder: 'Username' }} />
+            <FieldButton onClicked={togglePasswordVisibility} ref={passwordref} icon2={eye} icon="key" input={{ className: 'form-control', type: { passwordText }, id: 'password', placeholder: 'Password', defaultValue: '', }} itype={passwordText} />
+            <button className="w-100 btn btn-lg btn-secondary" type="submit">
+              <span className="bi bi-door-open" />
+            </button>
+            <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
+          </form>
+        </Card>
+      </main>
+    </Fragment>
+  )
+}
+
+export default SignInN;
+/*
             <div className='input-group mb-2'>
               <div className='input-group-prepend'></div>
               <div className='input-group-text'>
@@ -64,19 +81,6 @@ const SignInN = (props) => {
                 <span className={`bi bi-${eye}`} />
               </button>
             </div>
-            <button className="w-100 btn btn-lg btn-secondary" type="submit">
-              <span className="bi bi-door-open" />
-            </button>
-            <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
-          </form>
-        </Card>
-      </main>
-    </Fragment>
-  )
-}
-
-export default SignInN;
-/*
             <div className={`form-floating form-fl`}>
               <input ref={emailref} className="form-control" id="email" placeholder="Email" type="email" required />
               <label htmlFor="email">Email</label>
