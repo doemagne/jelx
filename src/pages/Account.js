@@ -86,24 +86,22 @@ const Account = (props) => {
     //const attachmentlatch = {
       //latch: false,
     //}
-    /*const userData = {
+    const userData = {
       username: usernameref.current.value,
       password: passwordref.current.value,
       confirmpassword: confirmpasswordref.current.value,
-    };*/
+    };
     const ctrl = new AbortController();
     setTimeout(() => ctrl.abort(), 5000);
     const formdata = new FormData();
     let token = window.sessionStorage.getItem("token")
     formdata.append("address", JSON.stringify(addressData));
     formdata.append("profile", JSON.stringify(profileData));
-    //formdata.append("user", JSON.stringify(userData));
+    if (passwordref.current.value.length != 0 && confirmpasswordref.current.value.length != 0 && confirmpasswordref.current.value == passwordref.current.value) {
+      formdata.append("credential", JSON.stringify(userData));
+    }
     if (imageref.current.files.length > 0) {
-      //attachmentlatch.latch = true;
-      //formdata.append("attachmentlatch", JSON.stringify(attachmentlatch));
       formdata.append("photo", imageref.current.files[0]);
-      //} else {
-      //formdata.append("attachmentlatch", JSON.stringify(attachmentlatch));
     }
 
     try {
