@@ -50,11 +50,7 @@ export const sendTokenGetRequest = async (endpoint,token) => {
     }
     const response = await stimulus.json();
     let th = stimulus.headers.get('X-Csrf-Token')
-    //encrypt(th);
-    //th = rabbit.encrypt(th,secret)
     response.token = th
-    //console.log(response.token);
-    //console.log(token);
     return response;
 }
 export const sendGetRequest = async (endpoint) => {

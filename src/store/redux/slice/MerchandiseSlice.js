@@ -9,8 +9,8 @@ const merchandiseSlice = createSlice({
     initialState: initialState,
     reducers: {
         setMerchandise: (state, action) => {
+            console.log(action.payload);
             state.merchandise = action.payload;
-            console.log(state.merchandise);
         },
         yieldCurrentItem: (state, action) => {
             if (action.payload) {

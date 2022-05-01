@@ -17,12 +17,14 @@ const MerchandiseConfig = (props) => {
     const toggleModal = useSelector(state => state.ui.cartToggle);
     const token = window.sessionStorage.getItem("token")
     const fetchMerchandise = async () => {
+            console.log("fetching merchandise")
         dispatch(fetchMerchandiseData(token));
     };
     useEffect(() => {
-        if (merchandisel.length == 0) {
+        //if (merchandisel.length == 0) {
+            console.log(merchandisel.length)
             fetchMerchandise();
-        }
+        //}
     }, []);
 
     const modalToggle = () => {
