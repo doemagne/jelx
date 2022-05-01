@@ -1,10 +1,24 @@
 import { authenticator, setTransport, signout } from "../slice/UserSlice";
 import { setredirect, notify, setloading } from '../slice/UISlice';
-import { sendGetRequest, sendTokenGetRequest, sendPostRequest } from "./Request";
+import { sendGetRequest, sendTokenGetRequest, sendPostRequest, sendTokenPutRequest } from "./Request";
 import { notificationpending, notificationsent, notificationsignedin, notificationsignedup, notificationfailed } from "../structure/NotifyTPL";
 import { updateCart } from "../slice/CartSlice";
 //let endpoint;//'/api/signup'
 
+export const updateUserCredential = (data, token) => {
+    return (async (dispatch) => {
+        dispatch(setloading(true));
+        try {
+            const endpoint = '/api/user/credential';
+            const response = await sendTokenPutRequest(data, endpoint, token)
+            //set the username update
+            dispatch(setloading(false));
+        } catch (error) {
+            dispatch(setloading(false));
+
+        }
+    });
+}
 export const fetchTransportData = (token) => {
     return (async (dispatch) => {
         dispatch(setloading(true));

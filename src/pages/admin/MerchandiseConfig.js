@@ -21,10 +21,10 @@ const MerchandiseConfig = (props) => {
         dispatch(fetchMerchandiseData(token));
     };
     useEffect(() => {
-        //if (merchandisel.length == 0) {
+        if (merchandisel.length == 0) {
             console.log(merchandisel.length)
             fetchMerchandise();
-        //}
+        }
     }, []);
 
     const modalToggle = () => {

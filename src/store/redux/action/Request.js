@@ -67,6 +67,29 @@ export const sendGetRequest = async (endpoint) => {
     return response;
 }
 
+export const sendTokenPutRequest = async (data, endpoint, token) => {
+    console.log(endpoint);
+    const stimulus = await fetch(`${ServerURL}${endpoint}`, {
+        method: "PUT",
+        headers: { 
+            "Content-Type": "application/json", 
+            "X-Csrf-Token": token
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+    });
+    //console.log(stimulus.ok)
+    if (!stimulus.ok) {
+        throw new Error('an error occured when the sending post request.');
+    }
+    const response = await stimulus.json();
+    let th = stimulus.headers.get('X-Csrf-Token')
+    //encrypt(th);
+    //th = rabbit.encrypt(th,secret)
+    response.token = th
+    console.log(response.token);
+    return response;
+}
 export const sendTokenPostRequest = async (data, endpoint, token) => {
     console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {

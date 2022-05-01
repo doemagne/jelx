@@ -4,7 +4,7 @@ import indexdb from '../store/indexdb/indexdb';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import classes from './Account.module.css';
 import CardJ from '../components/js/UI/CardJ';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import Field from '../components/js/UI/Field/Field';
 import FieldIcon from '../components/js/UI/Field/FieldIcon';
@@ -12,11 +12,16 @@ import FieldButton from '../components/js/UI/Field/FieldButton';
 import FieldArea from '../components/js/UI/Field/FieldArea';
 import Select from '../components/js/UI/Field/Select';
 import AccountControls from './AccountControls';
+import { setloading } from '../store/redux/slice/UISlice';
+import { updateUserCredential } from '../store/redux/action/userAction';
+import { enc } from 'crypto-js';
+import sha256 from 'crypto-js/sha256';
 
 let acc = {};
 let cart = {};
 let cartitems = [];
 const Account = (props) => {
+  const dispatch = useDispatch()
   const [pV, setPV] = useState(false);
   const [passwordText, setPasswordText] = useState('password')
   const [eye, setEye] = useState('eye')
@@ -45,6 +50,7 @@ const Account = (props) => {
   const postalcoderef = useRef()
   const genderref = useRef()
   const uidref = useRef()
+  let token = window.sessionStorage.getItem("token")
 
   const togglePasswordVisibility = () => {
     setPV(!pV)
@@ -61,8 +67,17 @@ const Account = (props) => {
     e.preventDefault();
     setTogglePasswordChange(!togglePasswordChange);
   }
-
+  const submitCredentialHandler = () => {
+    const userData = {
+      username: usernameref.current.value,
+      password: sha256(passwordref.current.value).toString(enc.Hex),
+      confirmpassword: sha256(confirmpasswordref.current.value).toString(enc.Hex),
+    };
+    dispatch(updateUserCredential(userData,token))
+    setTogglePasswordChange(!togglePasswordChange)
+  }
   const submitUpdateHandler = async () => {
+    dispatch(setloading(true));
     const addressData = {
       uid: address.uid,
       street: streetref.current.value,
@@ -84,11 +99,6 @@ const Account = (props) => {
       attachment: imageref.current.files.length > 0,
       credentials: passwordref.current.value.length != 0 && confirmpasswordref.current.value.length != 0 && confirmpasswordref.current.value == passwordref.current.value,
     };
-    const userData = {
-      username: usernameref.current.value,
-      password: passwordref.current.value,
-      confirmpassword: confirmpasswordref.current.value,
-    };
     const profileconfig = {
       attachment: imageref.current.files.length > 0,
       credentials: passwordref.current.value.length != 0 && confirmpasswordref.current.value.length != 0 && confirmpasswordref.current.value == passwordref.current.value,
@@ -96,13 +106,12 @@ const Account = (props) => {
     const ctrl = new AbortController();
     setTimeout(() => ctrl.abort(), 5000);
     const formdata = new FormData();
-    let token = window.sessionStorage.getItem("token")
     formdata.append("confuration", JSON.stringify(profileconfig))
     formdata.append("address", JSON.stringify(addressData));
     formdata.append("profile", JSON.stringify(profileData));
-    if (profileconfig.credentials) {
-      formdata.append("credential", JSON.stringify(userData));
-    }
+    //if (togglePasswordChange && profileconfig.credentials) {
+      //formdata.append("credential", JSON.stringify(userData));
+    //}
     if (profileconfig.attachment) {
       formdata.append("photo", imageref.current.files[0]);
     }
@@ -117,8 +126,10 @@ const Account = (props) => {
         credentials: "include",
       });
       console.log(stimulus.status);
+      dispatch(setloading(false));
     } catch (error) {
       console.log("An error occured when uploading the form data.", error);
+      dispatch(setloading(false));
     }
   }
 
@@ -183,15 +194,17 @@ const Account = (props) => {
     <Fragment>
       {!props.authenticated && <Navigate to="/" />}
       <CardJ>
-        <AccountControls fieldEditHandler={fieldEditHandler} fieldEdit={fieldEdit} onSubmitUpdate={submitUpdateHandler} togglePasswordChangeHandler={togglePasswordChangeHandler} />
+        <AccountControls submitCredentialHandler={submitCredentialHandler} passwordToggle={togglePasswordChange} fieldEditHandler={fieldEditHandler} fieldEdit={fieldEdit} onSubmitUpdate={submitUpdateHandler} togglePasswordChangeHandler={togglePasswordChangeHandler} />
       </CardJ>
+      {profile && 
       <section>
         <CardJ>
           <div className='text-center'>
-            <h2>{user.name}</h2>
+            <h2>{profile.username}</h2>
           </div>
         </CardJ>
       </section>
+      }
       <section>
         <CardJ>
           <div className='row'>
@@ -224,10 +237,10 @@ const Account = (props) => {
                     <FieldIcon ref={nameref} icon2={`gender-${gender}`} icon="person-fill" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Name', defaultValue: profile.name, readOnly: fieldEdit, }} />
                   </div>
                   <div className='row'>
-                    <Field ref={usernameref} icon="person-circle" input={{ className: 'form-control', type: 'text', id: 'username', placeholder: 'Username', defaultValue: profile.username, readOnly: fieldEdit, }} />
+                    <Field ref={emailref} icon="at" input={{ className: 'form-control', type: 'email', id: 'email', placeholder: 'Email', defaultValue: profile.email, readOnly: fieldEdit, }} />
                   </div>
                   <div className='row'>
-                    <Field ref={emailref} icon="at" input={{ className: 'form-control', type: 'email', id: 'email', placeholder: 'Email', defaultValue: profile.email, readOnly: fieldEdit, }} />
+                    <Field ref={usernameref} icon="person-circle" input={{ className: 'form-control', type: 'text', id: 'username', placeholder: 'Username', defaultValue: profile.username, readOnly: fieldEdit, }} />
                   </div>
                   {
                     togglePasswordChange &&
@@ -237,6 +250,8 @@ const Account = (props) => {
                       </div>
                       <div className='row'>
                         <FieldButton onClicked={togglePasswordVisibility} ref={confirmpasswordref} icon2={eye} icon="key-fill" input={{ className: 'form-control', type: { passwordText }, id: 'confirmpassword', placeholder: 'Confirm Password', defaultValue: '', readOnly: false, }} itype={passwordText} />
+                      </div>
+                      <div className='row'>
                       </div>
                     </Fragment>
                   }

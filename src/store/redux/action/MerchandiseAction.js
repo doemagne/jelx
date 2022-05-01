@@ -11,11 +11,11 @@ export const fetchMerchandiseData = (token) => {
             //const endpoint = `/api/merchandise/map/${uuid}`
             const endpoint = `/api/merchandise/mapping/`
             //const response = await sendGetRequest(endpoint)
-            console.log("sending request")
+            //console.log("sending request")
             const response = await sendTokenGetRequest(endpoint, token)
 
             //console.log(response)
-            const transformation = [];
+            //const transformation = [];
             /*for (const key in response) {
                 if (response[key]) {
                     transformation.push({

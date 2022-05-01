@@ -22,6 +22,11 @@ const AccountControls = (props) => {
                     <span className='bi bi-cloud-arrow-up-fill' />
                 </button>
             </div>}
+            {props.passwordToggle && <div className='col'>
+                <button type='button' className='btn btn-default btn-secondary' onClick={props.submitCredentialHandler}>
+                    <span className='bi bi-lock' />
+                </button>
+            </div>}
         </div>
     );
 }
