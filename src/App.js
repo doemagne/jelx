@@ -14,26 +14,18 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { fetchTransportData } from './store/redux/action/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
-import aes from 'crypto-js/aes';
-import rabbit from 'crypto-js/rabbit';
-import { enc } from 'crypto-js/core';
-
-let secret = 'abc';
+import Notification from "./components/js/UI/Notification/Notification";
 
 function App() {
   const dispatch = useDispatch(setAuthState);
   const loader = useSelector(state => state.ui.loadstate);
-  //const notification = useSelector(state => state.ui.notification);
+  const notification = useSelector(state => state.ui.notification);
   const authenticated = useSelector(state => state.user.authenticated)
   const name = useSelector(state => state.user.name);
   const cartuid = useSelector(state => state.user.cartuid);
   //const token = useSelector(state => state.user.token);
   let token = window.sessionStorage.getItem("token")
   const fetchUserHandler = useCallback(async () => {
-    //if (token == null || token.length == 0) {
-      //token = aes.encrypt("empty", secret).toString(enc.Hex);
-    //}
-    //token = aes.decrypt(token,secret)
     dispatch(fetchTransportData(token));
   }, [])
   useEffect(() => {
@@ -43,7 +35,6 @@ function App() {
     }
   }, [fetchUserHandler]);//WORKS -> RUNS ONCE
   // }, []);//ALSO WORKS -> RUNS ONCE//KEEP
-  //{notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
   return (
     <Fragment>
       {loader && <BackdropJ />}
@@ -64,12 +55,22 @@ function App() {
           </main>
         </BrowserRouter>
       </div>
+    {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
     </Fragment>
   );
 }
 
 export default App;
 /*
+//import aes from 'crypto-js/aes';
+//import rabbit from 'crypto-js/rabbit';
+//import { enc } from 'crypto-js/core';
+
+    //if (token == null || token.length == 0) {
+      //token = aes.encrypt("empty", secret).toString(enc.Hex);
+    //}
+    //token = aes.decrypt(token,secret)
+//let secret = 'abc';
 //OLD
 //import Notification from "./components/js/UI/Notification/Notification";
 //import RegisterMerchandise from './pages/admin/RegisterMerchandise';

@@ -43,13 +43,9 @@ const ItemJ = (props) => {
     return (
         <Fragment>
             <li className={classes.item}>
-                <div className="row">
-                    <div className="row" >
                         <div className={classes.imgcarry}>
                             <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
                         </div>
-                    </div>
-                    <div className="row" >
                         <div className="col-sm-9">
                             <button onClick={viewItemHandler} className="btn btn-default btn-outline-success"><h3>{props.name}</h3></button>
                             <div className={classes.description}>{props.description}</div>
@@ -58,8 +54,6 @@ const ItemJ = (props) => {
                         <div className="col-sm-3">
                             <ItemFormJ onAddToCart={addToCartHandler} />
                         </div>
-                    </div>
-                </div>
             </li>
         </Fragment>
     );

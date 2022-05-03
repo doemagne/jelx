@@ -10,7 +10,7 @@ const AvailableMerchandiseJ = () => {
   const merchandisel = useSelector(state => state.merchandise.merchandise);
 
   const fetchMerchandise = async () => {
-    dispatch(fetchMerchandiseData());
+    dispatch(fetchMerchandiseData(window.sessionStorage.getItem("token")));
   };
   useEffect(() => {
     if (merchandisel.length == 0) {

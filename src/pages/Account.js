@@ -97,11 +97,9 @@ const Account = (props) => {
       gender: genderref.current.value,
       information: inforef.current.value,
       attachment: imageref.current.files.length > 0,
-      credentials: passwordref.current.value.length != 0 && confirmpasswordref.current.value.length != 0 && confirmpasswordref.current.value == passwordref.current.value,
     };
     const profileconfig = {
       attachment: imageref.current.files.length > 0,
-      credentials: passwordref.current.value.length != 0 && confirmpasswordref.current.value.length != 0 && confirmpasswordref.current.value == passwordref.current.value,
     }
     const ctrl = new AbortController();
     setTimeout(() => ctrl.abort(), 5000);
