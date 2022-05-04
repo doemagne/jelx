@@ -10,15 +10,17 @@ import Config from './pages/Config';
 import MerchandiseR from './pages/MerchandiseR';
 import MerchandiseConfig from './pages/admin/MerchandiseConfig';
 import { Fragment, useCallback, useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
 import { fetchTransportData } from './store/redux/action/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
 import Notification from "./components/js/UI/Notification/Notification";
 import MerchandiseDetail from './components/js/MerchandiseR/MerchandiseDetail';
-
+import Comments from './components/js/UI/Comment/Comments';
+import NotFound from './pages/NotFound';
 function App() {
   const dispatch = useDispatch();
+  const params = useParams();
   const loader = useSelector(state => state.ui.loadstate);
   const notification = useSelector(state => state.ui.notification);
   const authenticated = useSelector(state => state.user.authenticated)
@@ -51,8 +53,9 @@ function App() {
               <Route path="/account/signout" element={<SignOut />} />
               <Route path="/config" element={<Config />} />
               <Route path="/merchandise/register" element={<MerchandiseConfig authenticated={authenticated} />} />
-              <Route path="/merchandise/cartr/:key" element={<MerchandiseDetail/>}/>
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
+              <Route path="/merchandise/detail/:idkey/*" element={<MerchandiseDetail/>}/>
+              <Route path='*' element={<NotFound/>}/>
             </Routes>
           </main>
         </BrowserRouter>
@@ -62,8 +65,10 @@ function App() {
   );
 }
 
+  //<Route path={`/merchandise/detail/:idkey/comments`} element={<Comments/>} />
 export default App;
 /*
+              <Route path={`/merchandise/detail/${params.idkey}/comments`} element={<Comments/>} />
 //import aes from 'crypto-js/aes';
 //import rabbit from 'crypto-js/rabbit';
 //import { enc } from 'crypto-js/core';

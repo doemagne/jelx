@@ -45,7 +45,7 @@ const ItemJ = (props) => {
         <Fragment>
             <li className={classes.item}>
                         <div className="col-sm-1">
-                        <Link to={`/merchandise/cartr/${props.id}`}>
+                        <Link to={`/merchandise/detail/${props.id}`}>
                             <div className={classes.imgcarry}>
                                 <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
                             </div>

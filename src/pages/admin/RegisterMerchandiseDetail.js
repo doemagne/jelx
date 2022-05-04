@@ -7,6 +7,7 @@ import CardJ from '../../components/js/UI/CardJ';
 import ModalJ from '../../components/js/UI/ModalJ';
 import { ServerURL } from '../../constraint/ServerURL';
 import { setloading } from "../../store/redux/slice/UISlice";
+import { Route } from 'react-router-dom';
 const RegisterMerchandise = (props) => {
     const [imgSrc, setImgSrc] = useState('');
     const [newImg, setNewImg] = useState(props.newItem);
@@ -144,42 +145,38 @@ const RegisterMerchandise = (props) => {
                         </div>
                             
                         </div>
+                        <div className="row">
+                        <div className="col-sm">
                             <div className="row">
-                                <div className="col-sm">
-                                </div>
-                                <div className="col-sm">
-                                    <div className="row">
-                                        <div className="form-floating form-fl">
-                                            <div className="form-check form-switch">
-                                                <input ref={activeref} className="form-check-input" id="active" type="checkbox" defaultChecked={currentItem.active}/>
-                                                <label className="form-check-label" htmlFor="active">Active</label>
-                                            </div>
-                                        </div>
+                                <div className="form-floating form-fl">
+                                    <div className="form-check form-switch">
+                                        <input ref={activeref} className="form-check-input" id="active" type="checkbox" defaultChecked={currentItem.active}/>
+                                        <label className="form-check-label" htmlFor="active">Active</label>
                                     </div>
                                 </div>
-                                <div className="col-sm">
-                                </div>
                             </div>
+                        </div>
+                        </div>
                     </div>
                     <div className="col-sm">
                         <div className="row">
                             <div className={`form-floating form-fl`}>
                                 <div className={classes.imgcarry}>
                                     {
-                                        !props.newItem &&
-                                        <CardJ>
-                                            {
-                                                newImg &&
-                                                <img src={imgSrc} id="photo" onClick={imageViewHandler} />
-                                            }
-                                            <img className={classes.imgbackup} src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photo" onClick={imageViewHandler} />
-                                        </CardJ>
+                                    !props.newItem &&
+                                    <CardJ>
+                                        {
+                                            newImg &&
+                                            <img src={imgSrc} id="photo" onClick={imageViewHandler} />
+                                        }
+                                        <img className={classes.imgbackup} src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photo" onClick={imageViewHandler} />
+                                    </CardJ>
                                     }
                                     {
-                                        props.newItem &&
-                                        <CardJ>
-                                            <img className={classes.imgbackup} src={imgSrc} id="photo" onClick={imageViewHandler} />
-                                        </CardJ>
+                                    props.newItem &&
+                                    <CardJ>
+                                        <img className={classes.imgbackup} src={imgSrc} id="photo" onClick={imageViewHandler} />
+                                    </CardJ>
                                     }
                                 </div>
                             </div>
@@ -217,48 +214,9 @@ const RegisterMerchandise = (props) => {
             <br />
         </div>
     </CardJ>
-
         </Fragment>
     );
 
 };
 
 export default RegisterMerchandise;
-
-//<p className="mt-5 mb-3 text-muted">&copy; 2022</p>
-/*
-                                <div className="row">
-                                    <br />
-                                    <div className={`form-floating form-fl`}>
-                                        <CardJ>
-                                            <div className={classes.imgcarry}>
-                                                <div className="btn btn-default btn-secondary">
-                                                    <span className="bi bi-camera2"></span>
-                                                    <input ref={imageref} className="btn btn-default btn-secondary" id="image" placeholder="Image" type="file" required onChange={ImageSrcHandler}></input>
-                                                </div>
-                                            </div>
-                                        </CardJ>
-                                    </div>
-                                </div>
-<div className={`form-floating form-fl`}>
-    <input readOnly={false} ref={nameref} className="form-control" id="name" placeholder="Name" type="text" required defaultValue={currentItem.name} />
-    <label htmlFor="name">Name</label>
-</div>
-<div className={`form-floating form-fl`}>
-    <input ref={quantityref} className="form-control" id="quantity" placeholder="Available Quantity" step={1} type="number" required defaultValue={currentItem.quantity} />
-    <label htmlFor="price">Available Quantity</label>
-</div>
-<div className={`form-floating form-fl`}>
-    <input ref={priceref} className="form-control" id="price" placeholder="Price" step={0.01} type="number" required defaultValue={currentItem.price} />
-    <label htmlFor="price">$ Price</label>
-</div>
-<div className={`form-floating form-fl`}>
-    <textarea rows="3" ref={descriptionref} className="form-control" id="description" placeholder="Description" required defaultValue={currentItem.description} />
-    <label htmlFor="description">Description</label>
-</div>
-<div className={`form-floating form-fl`}>
-    <input readOnly ref={uidref} className="form-control" id="uid" placeholder="UID" type="text" required defaultValue={currentItem.uid} />
-    <label htmlFor="UID">UID</label>
-</div>
-
-*/

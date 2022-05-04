@@ -28,27 +28,6 @@ const Navigation = (props) => {
         window.sessionStorage.setItem("window", "/");
         dispatch(signoutUser());
     }
-    /*if (props.authenticated) {
-        leftmenu = (<NavAuthBar />);
-        menu = (<AuthLogout onClick={signouHandler} />);
-    } else {
-        console.log(`Rerunning Asyncronous SideEffect => `);
-        leftmenu = (<Anonymous />);
-        menu = (<AnonymousBar />);
-        //return <Navigate to="/"/>
-    }*/
-    /*nav = (
-        <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-            <div className="container-fluid">
-                <BrandBar />
-                <div className="collapse navbar-collapse" id="navbarCollapse">
-                    {leftmenu}
-                    {props.authenticated && searchform}
-                </div>
-                {menu}
-            </div>
-        </nav>
-    );*/
         navigationloading = 
         (<Nav>
             <Link to="#" className='nav-link active' aria-current="page" >
@@ -107,6 +86,27 @@ const Navigation = (props) => {
 }
 
 export default Navigation;
+    /*if (props.authenticated) {
+        leftmenu = (<NavAuthBar />);
+        menu = (<AuthLogout onClick={signouHandler} />);
+    } else {
+        console.log(`Rerunning Asyncronous SideEffect => `);
+        leftmenu = (<Anonymous />);
+        menu = (<AnonymousBar />);
+        //return <Navigate to="/"/>
+    }*/
+    /*nav = (
+        <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+            <div className="container-fluid">
+                <BrandBar />
+                <div className="collapse navbar-collapse" id="navbarCollapse">
+                    {leftmenu}
+                    {props.authenticated && searchform}
+                </div>
+                {menu}
+            </div>
+        </nav>
+    );*/
 
 /*
                 {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}

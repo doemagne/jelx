@@ -143,80 +143,67 @@ const RegisterMerchandise = (props) => {
                                     <input ref={imageref} className="btn btn-default" id="image" placeholder="Image" type="file" required onChange={ImageSrcHandler} style={{ fontSize: "0.5rem", padding: "0rem .75rem" }}></input>
                                 </div>
                                 </div>
-                                    
                                 </div>
+                                <div className="row">
+                                    <div className="col-sm">
                                     <div className="row">
-                                        <div className="col-sm">
-                                        </div>
-                                        <div className="col-sm">
-                                            <div className="row">
-                                                <div className="form-floating form-fl">
-                                                    <div className="form-check form-switch">
-                                                        <input ref={activeref} className="form-check-input" id="active" type="checkbox" defaultChecked={currentItem.active}/>
-                                                        <label className="form-check-label" htmlFor="active">Active</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm">
+                                    <div className="form-floating form-fl">
+                                        <div className="form-check form-switch">
+                                            <input ref={activeref} className="form-check-input" id="active" type="checkbox" defaultChecked={currentItem.active}/>
+                                            <label className="form-check-label" htmlFor="active">Active</label>
                                         </div>
                                     </div>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                             <div className="col-sm">
                                 <div className="row">
                                     <div className={`form-floating form-fl`}>
-                                        <div className={classes.imgcarry}>
-                                            {
-                                                !props.newItem &&
-                                                <CardJ>
-                                                    {
-                                                        newImg &&
-                                                        <img src={imgSrc} id="photo" onClick={imageViewHandler} />
-                                                    }
-                                                    <img className={classes.imgbackup} src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photo" onClick={imageViewHandler} />
-                                                </CardJ>
-                                            }
-                                            {
-                                                props.newItem &&
-                                                <CardJ>
-                                                    <img className={classes.imgbackup} src={imgSrc} id="photo" onClick={imageViewHandler} />
-                                                </CardJ>
-                                            }
-                                        </div>
+                                    {
+                                    !props.newItem &&
+                                    <CardJ>
+                                        {
+                                        newImg &&
+                                        <img className={classes.imgbackup} src={imgSrc} id="photo" onClick={imageViewHandler} />
+                                        }
+                                    <img className={classes.imgbackup} src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photo" onClick={imageViewHandler} />
+                                    </CardJ>
+                                    }
+                                    {
+                                    props.newItem &&
+                                    <CardJ>
+                                        <img className={classes.imgbackup} src={imgSrc} id="photo" onClick={imageViewHandler} />
+                                    </CardJ>
+                                    }
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </CardJ>
+                    <CardJ>
                     <div className="row">
-                        {
-                            !props.newItem &&
-                            <div className="col">
-                                <CardJ>
-                                    <button className="w-100 btn btn-lg btn-danger" type="button" onClick={deactivateMerchandiseHandler}>
-                                        <span className="bi bi-trash3-fill"></span>
-                                        Remove
-                                    </button>
-                                </CardJ>
-                            </div>
-                        }
+                        {!props.newItem &&
                         <div className="col">
-                            <CardJ>
+                                <button className="w-100 btn btn-lg btn-danger" type="button" onClick={deactivateMerchandiseHandler}>
+                                    <span className="bi bi-trash3-fill"></span>
+                                    Remove
+                                </button>
+                        </div>}
+                        <div className="col">
                                 <button className="w-100 btn btn-lg btn-warning" type="button" onClick={props.onClose}>
                                     <span className="bi bi-x-lg" />
                                     Cancel
                                 </button>
-                            </CardJ>
                         </div>
                         <div className="col">
-                            <CardJ>
                                 <button className="w-100 btn btn-lg btn-primary" type="submit">
                                     <span className="bi bi-cloud-upload-fill" />
                                     Save
                                 </button>
-                            </CardJ>
                         </div>
                     </div>
+                    </CardJ>
                 </form>
             </main >
         </ModalJ >
