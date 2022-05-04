@@ -21,6 +21,7 @@ let acc = {};
 let cart = {};
 let cartitems = [];
 const Account = (props) => {
+  window.sessionStorage.setItem("window", window.location.pathname)
   const dispatch = useDispatch()
   const [pV, setPV] = useState(false);
   const [passwordText, setPasswordText] = useState('password')

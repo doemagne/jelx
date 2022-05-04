@@ -19,15 +19,15 @@ const AvailableMerchandiseJ = () => {
   }, []);
 
   const merchandiseList = merchandisel.map((merchandise) => (
-    <ItemJ
-      id={merchandise.id}
-      key={merchandise.id}
-      name={merchandise.name}
-      description={merchandise.description}
-      price={merchandise.price}
-      uid={merchandise.uid}
-      iref={merchandise.iref}
-    />
+      <ItemJ
+        id={merchandise.id}
+        key={merchandise.id}
+        name={merchandise.name}
+        description={merchandise.description}
+        price={merchandise.price}
+        uid={merchandise.uid}
+        iref={merchandise.iref}
+      />
   ));
 
   return (
@@ -35,6 +35,12 @@ const AvailableMerchandiseJ = () => {
       <CardJ>
         <ul>{merchandiseList}</ul>
       </CardJ>
+        <CardJ>
+            <div>
+                <span className="bi bi-cart" style={{ fontSize: "5rem" }} />
+                <br />
+            </div>
+        </CardJ>
     </section>
   );
 };

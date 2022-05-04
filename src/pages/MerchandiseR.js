@@ -7,11 +7,12 @@ import { fetchCartData } from "../store/redux/action/CartAction";
 import { Navigate } from "react-router-dom";
 import MerchandiseView from "../components/js/MerchandiseR/Item/MerchandiseView";
 import { toggle } from "../store/redux/slice/UISlice";
-import CardJ from "../components/js/UI/CardJ";
+//import CardJ from "../components/js/UI/CardJ";
 
 //let isInitial = true;
 //let cartuid = '';
 const MerchandiseR = (props) => {
+    window.sessionStorage.setItem("window", window.location.pathname)
     const [cartShown, setCartShown] = useState(false);
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
@@ -42,12 +43,6 @@ const MerchandiseR = (props) => {
             <main>
                 <MerchandiseJ />
             </main>
-            <CardJ>
-                <div>
-                    <span className="bi bi-cart" style={{ fontSize: "5rem" }} />
-                    <br />
-                </div>
-            </CardJ>
 
         </Fragment>
     );

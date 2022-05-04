@@ -27,6 +27,7 @@ const ItemFormJ = props => {
     return (
         <Fragment>
             <form className={classes.form} onSubmit={submitHandler}>
+                <div className={props.priceclass}>Price:  ${props.price}</div>
                 <InputJ
                 ref={amountInputRef} 
                 label={`Quantity`} 
@@ -38,7 +39,7 @@ const ItemFormJ = props => {
                     step: '1',
                     defaultValue: '1'
                 }}/>
-                <button>+ Add</button>
+                <button><span className="bi-plus"></span>Add</button>
                 {!amountIsValid && <p>Please enter a valid amount.</p>}
             </form>
         </Fragment>

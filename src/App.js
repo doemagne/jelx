@@ -15,9 +15,10 @@ import { fetchTransportData } from './store/redux/action/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
 import Notification from "./components/js/UI/Notification/Notification";
+import MerchandiseDetail from './components/js/MerchandiseR/MerchandiseDetail';
 
 function App() {
-  const dispatch = useDispatch(setAuthState);
+  const dispatch = useDispatch();
   const loader = useSelector(state => state.ui.loadstate);
   const notification = useSelector(state => state.ui.notification);
   const authenticated = useSelector(state => state.user.authenticated)
@@ -49,8 +50,9 @@ function App() {
               <Route path="/account/user" element={<Account authenticated={authenticated} />} />
               <Route path="/account/signout" element={<SignOut />} />
               <Route path="/config" element={<Config />} />
-              <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/register" element={<MerchandiseConfig authenticated={authenticated} />} />
+              <Route path="/merchandise/cartr/:key" element={<MerchandiseDetail/>}/>
+              <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
             </Routes>
           </main>
         </BrowserRouter>

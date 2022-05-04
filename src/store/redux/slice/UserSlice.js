@@ -43,10 +43,10 @@ export const userSlice = createSlice({
             console.log(state.token);
             //console.log(state);
             if (state.authenticated) {
-                window.sessionStorage.setItem("user", state.username);
-                window.sessionStorage.setItem("useruid", state.uid);
-                window.sessionStorage.setItem("cartuid", state.cartuid);
                 window.sessionStorage.setItem("token", token);
+                //window.sessionStorage.setItem("user", state.username);
+                //window.sessionStorage.setItem("useruid", state.uid);
+                //window.sessionStorage.setItem("cartuid", state.cartuid);
                 //window.sessionStorage.setItem("component", "");
             
                 //console.log(state);
@@ -55,10 +55,11 @@ export const userSlice = createSlice({
                 //indexdb.delete();
                 state.authenticated = false;
                 console.log("clearing the session storage.")
-                window.sessionStorage.setItem("user", null);
-                window.sessionStorage.setItem("useruid", null);
-                window.sessionStorage.setItem("cartuid", null);
                 window.sessionStorage.setItem("token", null);
+                window.sessionStorage.setItem("window", null);
+                //window.sessionStorage.setItem("user", null);
+                //window.sessionStorage.setItem("useruid", null);
+                //window.sessionStorage.setItem("cartuid", null);
             }
         },
         authenticator: (state, action) => {
@@ -73,6 +74,9 @@ export const userSlice = createSlice({
         signout: (state) => {
             state.authenticated = false
             state = tx;
+            window.sessionStorage.setItem("token", null);
+            window.sessionStorage.setItem("window", "/");
+            window.location.reload();
             //indexdb.delete();
             /*let req = indexedDB.deleteDatabase('Merchandiser');
             req.onsuccess = () => {
@@ -84,11 +88,9 @@ export const userSlice = createSlice({
             req.onblocked = () => {
                 console.log('blocked indexedDB database deletion.')
             }*/
-            window.location.reload();
-            window.sessionStorage.setItem("user", null);
-            window.sessionStorage.setItem("useruid", null);
-            window.sessionStorage.setItem("cartuid", null);
-            window.sessionStorage.setItem("token", null);
+            //window.sessionStorage.setItem("user", null);
+            //window.sessionStorage.setItem("useruid", null);
+            //window.sessionStorage.setItem("cartuid", null);
         },
         yieldTransport: (state) => {
 
@@ -104,18 +106,19 @@ export const userSlice = createSlice({
             state.token = token//rabbit.encrypt(pay.token,state.secret).toString(enc.Hex);
             console.log(state);
             if (state.authenticated) {
-                window.sessionStorage.setItem("user", state.username);
-                window.sessionStorage.setItem("useruid", state.uid);
-                window.sessionStorage.setItem("cartuid", state.cartuid);
                 window.sessionStorage.setItem("token", token);
+                //window.sessionStorage.setItem("user", state.username);
+                //window.sessionStorage.setItem("useruid", state.uid);
+                //window.sessionStorage.setItem("cartuid", state.cartuid);
                 //console.log(state);
             } else {
                 state.authenticated = false;
                 console.log("clearing the session storage.")
-                window.sessionStorage.setItem("user", null);
-                window.sessionStorage.setItem("useruid", null);
-                window.sessionStorage.setItem("cartuid", null);
                 window.sessionStorage.setItem("token", null);
+                window.sessionStorage.setItem("window", null);
+                //window.sessionStorage.setItem("user", null);
+                //window.sessionStorage.setItem("useruid", null);
+                //window.sessionStorage.setItem("cartuid", null);
                 //indexdb.delete();
             }
         },

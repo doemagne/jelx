@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { /*useContext,*/Fragment } from "react";
 import ItemFormJ from "./ItemFormJ";
 import classes from './Item.module.css';
@@ -43,16 +44,20 @@ const ItemJ = (props) => {
     return (
         <Fragment>
             <li className={classes.item}>
-                        <div className={classes.imgcarry}>
-                            <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
+                        <div className="col-sm-1">
+                        <Link to={`/merchandise/cartr/${props.id}`}>
+                            <div className={classes.imgcarry}>
+                                <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
+                            </div>
+                        </Link>
                         </div>
-                        <div className="col-sm-9">
+                        <div className="col-sm-8">
                             <button onClick={viewItemHandler} className="btn btn-default btn-outline-success"><h3>{props.name}</h3></button>
                             <div className={classes.description}>{props.description}</div>
                             <div className={classes.price}>{price}</div>
                         </div>
                         <div className="col-sm-3">
-                            <ItemFormJ onAddToCart={addToCartHandler} />
+                            <ItemFormJ priceclass={classes.price} price={props.price} onAddToCart={addToCartHandler} />
                         </div>
             </li>
         </Fragment>

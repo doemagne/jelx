@@ -25,6 +25,7 @@ const Navigation = (props) => {
     const loadstate = useSelector(state => state.ui.loadstate)
     const signoutHandler = async (e) => {
         e.preventDefault();
+        window.sessionStorage.setItem("window", "/");
         dispatch(signoutUser());
     }
     /*if (props.authenticated) {
