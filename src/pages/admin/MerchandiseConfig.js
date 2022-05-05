@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import RegisterMerchandise from "./RegisterMerchandise";
+import RegisterNewMerchandise from "./RegisterNewMerchandise";
 import { fetchMerchandiseData } from '../../store/redux/action/MerchandiseAction';
 //import { CardJ } from '../../components/js/UI/CardJ';
 import CardJ from "../../components/js/UI/CardJ";
@@ -7,10 +8,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import ItemU from '../../components/js/MerchandiseR/Item/ItemU';
 import { toggle } from "../../store/redux/slice/UISlice";
 import { yieldCurrentItem } from "../../store/redux/slice/MerchandiseSlice";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
 //import { ServerURL } from "../../constraint/ServerURL";
 
 const MerchandiseConfig = (props) => {
+    window.sessionStorage.setItem("window", window.location.pathname)
     const [newItem, setNewItem] = useState(false);
     const dispatch = useDispatch();
     const merchandisel = useSelector(state => state.merchandise.merchandise);
@@ -30,6 +32,7 @@ const MerchandiseConfig = (props) => {
     const modalToggle = () => {
         dispatch(toggle());
     };
+
     const addNewMerchandiseHandler = () => {
         setNewItem(true)
         modalToggle();
@@ -64,8 +67,17 @@ const MerchandiseConfig = (props) => {
     return (
         <Fragment>
             {!props.authenticated && <Navigate to="/" />}
+            <Routes>
+                <Route path="edit/:idkey" element={<MerchandiseConfig authenticated={props.authenticated} />} />
+            </Routes>
             {toggleModal && <RegisterMerchandise setNewItem={setNewItem} newItem={newItem} onClose={modalToggle} />}
             <CardJ>
+                <Link to={`/merchandise/new`}>
+                    <button className="w-100 btn btn-lg btn-dark" type="button">
+                        <span className="bi bi-cloud-plus"></span>
+                        Register New Merchandise
+                    </button>
+                </Link>
                 <button className="w-100 btn btn-lg btn-success" type="button" onClick={addNewMerchandiseHandler}>
                     <span className="bi bi-cloud-plus"></span>
                     Add New Merchandise

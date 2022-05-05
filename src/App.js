@@ -16,11 +16,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAuthState, signout } from './store/redux/slice/AuthSlice';
 import Notification from "./components/js/UI/Notification/Notification";
 import MerchandiseDetail from './components/js/MerchandiseR/MerchandiseDetail';
-import Comments from './components/js/UI/Comment/Comments';
 import NotFound from './pages/NotFound';
+import RegisterNewMerchandise from './pages/admin/RegisterNewMerchandise';
 function App() {
   const dispatch = useDispatch();
-  const params = useParams();
   const loader = useSelector(state => state.ui.loadstate);
   const notification = useSelector(state => state.ui.notification);
   const authenticated = useSelector(state => state.user.authenticated)
@@ -51,10 +50,11 @@ function App() {
               <Route path="/account/signupN" element={<SignUpN />} />
               <Route path="/account/user" element={<Account authenticated={authenticated} />} />
               <Route path="/account/signout" element={<SignOut />} />
-              <Route path="/config" element={<Config />} />
-              <Route path="/merchandise/register" element={<MerchandiseConfig authenticated={authenticated} />} />
+              <Route path="/merchandise/register/*" element={<MerchandiseConfig authenticated={authenticated} />} />
+              <Route path="/merchandise/new" element={<RegisterNewMerchandise authenticated={authenticated} />} />
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/detail/:idkey/*" element={<MerchandiseDetail/>}/>
+              <Route path="/config" element={<Config />} />
               <Route path='*' element={<NotFound/>}/>
             </Routes>
           </main>

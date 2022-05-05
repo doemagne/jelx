@@ -1,7 +1,20 @@
-import { setMerchandise } from "../slice/MerchandiseSlice";
+import { setMerchandise, updateMerchandise } from "../slice/MerchandiseSlice";
 import { setloading } from "../slice/UISlice";
-import { sendTokenGetRequest, sendGetRequest, uploadMediaForm } from "./Request";
+import { sendTokenGetRequest, sendGetRequest, uploadMediaForm, sendTokenPostRequest } from "./Request";
 
+export const registerMerchandiseData = (data, token) => {
+    return (async (dispatch) => {
+        try {
+            dispatch(setloading(true));
+            const endpoint = '/api/merchandise/register/new';
+            const content = await sendTokenPostRequest(data, endpoint,token);
+            dispatch(updateMerchandise(content))
+            dispatch(setloading(false));
+        } catch (error) {
+            dispatch(setloading(false));
+        }
+    });
+}
 
 export const fetchMerchandiseData = (token) => {
     return (async (dispatch) => {

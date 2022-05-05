@@ -19,8 +19,13 @@ const merchandiseSlice = createSlice({
                 state.currentItem = action.payload;
             }
         },
+        updateMerchandise: (state,action) => {
+            if (action.payload) {
+                console.log(action.payload);
+            }
+        },
     }
 });
-export const { setMerchandise, yieldCurrentItem } = merchandiseSlice.actions;
+export const { setMerchandise, yieldCurrentItem, updateMerchandise } = merchandiseSlice.actions;
 
 export default merchandiseSlice.reducer;
