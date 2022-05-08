@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 const initialState = {
     merchandise: [],
     currentItem: null,
@@ -41,8 +41,8 @@ const merchandiseSlice = createSlice({
             const pay = action.payload
             const qitem = state.merchandise.findIndex((item) => item.uid === pay.uid);
             console.log(qitem)
-            if (qitem) {
-                state.currentItem = {
+            if (state.merchandise[qitem]) {
+                const currentItem = {
                     active: pay.active,
                     description: pay.description,
                     id: qitem,//state.merchandise[qitem].id,//state.merchandise.length + 1,
@@ -52,7 +52,8 @@ const merchandiseSlice = createSlice({
                     quantity: pay.quantity,
                     uid: pay.uid,
                 };
-                state.merchandise[qitem] = state.currentItem
+                //state.merchandise[qitem] = state.currentItem
+                state.merchandise[qitem] = currentItem
             }
         },
         updateMerchandise: (state, action) => {

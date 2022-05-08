@@ -13,6 +13,7 @@ import { Link, Navigate, Route, Routes } from "react-router-dom";
 
 const MerchandiseConfig = (props) => {
     //const [newItem, setNewItem] = useState(false);
+    const [merchandiseList, setMerchandiseList] = useState()
     const dispatch = useDispatch();
     const merchandisel = useSelector(state => state.merchandise.merchandise);
     const currentItem = useSelector(state => state.merchandise.currentItem)
@@ -22,27 +23,29 @@ const MerchandiseConfig = (props) => {
         console.log("fetching merchandise")
         dispatch(fetchMerchandiseData(token));
     };
+    
     useEffect(() => {
         if (merchandisel.length == 0) {
             console.log(merchandisel.length)
             fetchMerchandise();
         }
-    }, []);
-
-    const merchandiseList = merchandisel.map((merchandise) => (
-        <ItemU
-            id={merchandise.id}
-            key={merchandise.id}
-            name={merchandise.name}
-            description={merchandise.description}
-            price={merchandise.price}
-            quantity={merchandise.quantity}
-            uid={merchandise.uid}
-            iref={merchandise.iref}
-            active={merchandise.active}
+        setMerchandiseList(merchandisel.map((merchandise) => (
+            <ItemU
+                id={merchandise.id}
+                key={merchandise.id}
+                name={merchandise.name}
+                description={merchandise.description}
+                price={merchandise.price}
+                quantity={merchandise.quantity}
+                uid={merchandise.uid}
+                iref={merchandise.iref}
+                active={merchandise.active}
             //setNewItem={setNewItem}
-        />
-    ));
+            />
+        )));      
+    }, [merchandisel]);
+
+    
     window.sessionStorage.setItem("window", window.location.pathname)
     return (
         <Fragment>
