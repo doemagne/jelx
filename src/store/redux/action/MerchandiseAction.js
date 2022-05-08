@@ -7,8 +7,12 @@ export const registerMerchandiseData = (data, token) => {
         try {
             dispatch(setloading(true));
             const endpoint = '/api/merchandise/register/new';
-            const content = await sendTokenPostRequest(data, endpoint,token);
-            dispatch(updateMerchandise(content))
+            const content = await sendTokenPostRequest(data, endpoint, token);
+            if (content) {
+                console.log(content)
+                dispatch(updateMerchandise(content))
+            }
+
             dispatch(setloading(false));
         } catch (error) {
             dispatch(setloading(false));
@@ -62,7 +66,7 @@ export const uploadMerchandiseData = (formdata) => {
     return (async (dispatch) => {
         try {
             dispatch(setloading(true));
-            const endpoint = '/api/merchandise/upload';               
+            const endpoint = '/api/merchandise/upload';
             uploadMediaForm(formdata, endpoint)
         } catch (error) {
             dispatch(setloading(false));

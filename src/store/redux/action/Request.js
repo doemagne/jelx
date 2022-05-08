@@ -9,6 +9,8 @@ import padNopadding from "crypto-js/pad-nopadding";
 import sha512 from "crypto-js/sha512";
 import rabbit from "crypto-js/rabbit";
 
+export const delayRequest = (ms) => new Promise(res => setTimeout(res, ms))
+
 const encrypt = (token) => {
     let secret = 'secret';
     //console.log(`secret: ${secret}`)

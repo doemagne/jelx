@@ -18,6 +18,7 @@ import Notification from "./components/js/UI/Notification/Notification";
 import MerchandiseDetail from './components/js/MerchandiseR/MerchandiseDetail';
 import NotFound from './pages/NotFound';
 import RegisterNewMerchandise from './pages/admin/RegisterNewMerchandise';
+import RegisterExistingMerchandise from './pages/admin/RegisterExistingMerchandise';
 function App() {
   const dispatch = useDispatch();
   const loader = useSelector(state => state.ui.loadstate);
@@ -52,6 +53,7 @@ function App() {
               <Route path="/account/signout" element={<SignOut />} />
               <Route path="/merchandise/register/*" element={<MerchandiseConfig authenticated={authenticated} />} />
               <Route path="/merchandise/new" element={<RegisterNewMerchandise authenticated={authenticated} />} />
+              <Route path="/merchandise/existing" element={<RegisterExistingMerchandise authenticated={authenticated}/>}/>
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/detail/:idkey/*" element={<MerchandiseDetail/>}/>
               <Route path="/config" element={<Config />} />

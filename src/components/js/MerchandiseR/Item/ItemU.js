@@ -1,4 +1,5 @@
 import { /*useContext,*/Fragment, useEffect, useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import ItemFormEdit from "./ItemFormEdit";
 import classes from './Item.module.css';
 import { ServerURL } from "../../../../constraint/ServerURL";
@@ -6,6 +7,7 @@ import { yieldCurrentItem } from "../../../../store/redux/slice/MerchandiseSlice
 import { useDispatch } from "react-redux";
 //import { sendCartItem } from "../../../../store/redux/action/CartAction";
 const ItemJ = (props) => {
+    const navigate = useNavigate();
     const imgref = useRef();
     const [blobUrl, setBlobUrl] = useState('')
     const dispatch = useDispatch();
@@ -26,7 +28,7 @@ const ItemJ = (props) => {
                 reader.readAsDataURL(blob);
             }))
     const setItemEditableHandler = async () => {
-        props.setNewItem(false);
+        //props.setNewItem(false);
         const selecteditem = {
             cartuid: props.cartuid,
             id: props.id,
@@ -39,7 +41,9 @@ const ItemJ = (props) => {
             iref: props.iref,
             active: props.active,
         };
+        console.log("yeiding...")
         dispatch(yieldCurrentItem(selecteditem));
+        navigate("/merchandise/existing")
     }
     useEffect(() => {
         //generateBlobFromURL();

@@ -108,6 +108,9 @@ const RegisterMerchandise = (props) => {
             window.open(`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`, '_blank').focus();
         }
     };
+    useEffect(() => {
+        currentItem;
+    },[currentItem]);
 
     return (
         <ModalJ>

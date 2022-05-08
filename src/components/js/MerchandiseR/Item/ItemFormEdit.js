@@ -1,30 +1,33 @@
 import { Fragment } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { toggle } from "../../../../store/redux/slice/UISlice";
 import classes from './ItemForm.module.css';
 const ItemFormJ = props => {//KEEP props to pass item back up
     const dispatch = useDispatch();
-    const selectEditHandler = event => {
+    const selectEditHandler = async(event) => {
         event.preventDefault();
-        dispatch(toggle());
-        console.log(props);
+        //dispatch(toggle());
+        console.log("yeilding 1");
         //props.onSelectedItemEdit(enteredAmountNumber);
         props.setItemEditable();
     };
     return (
         <Fragment>
-            <form className={classes.form} onSubmit={selectEditHandler}>
-                <button className="btn btn-default btn-outline-success">
-                    <span className="bi bi-gear"></span>
-                    View
-                </button>
-            </form>
+                <Link to={"/merchandise/existing"}>
+                    <button className="btn btn-default btn-outline-success" onClick={selectEditHandler}>
+                        <span className="bi bi-gear"></span>
+                        View
+                    </button>
+                </Link>
         </Fragment>
     );
 };
 
 export default ItemFormJ
 /*
+            <form className={classes.form} onSubmit={selectEditHandler}>
+            </form>
  
 const [amountIsValid, setAmountIsValid] = useState(true);
 
