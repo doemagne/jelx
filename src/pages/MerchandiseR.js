@@ -7,17 +7,12 @@ import { fetchCartData } from "../store/redux/action/CartAction";
 import { Navigate } from "react-router-dom";
 import MerchandiseView from "../components/js/MerchandiseR/Item/MerchandiseView";
 import { toggle } from "../store/redux/slice/UISlice";
-//import CardJ from "../components/js/UI/CardJ";
-
-//let isInitial = true;
-//let cartuid = '';
 const MerchandiseR = (props) => {
     window.sessionStorage.setItem("window", window.location.pathname)
     const [cartShown, setCartShown] = useState(false);
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const token = window.sessionStorage.getItem("token")
-
     const toggleModal = useSelector(state => state.ui.cartToggle);
     useEffect(() => {
         if (cart.uid.length != 0) {

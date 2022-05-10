@@ -1,4 +1,4 @@
-import { addItemToCart, updateCart } from "../slice/CartSlice";
+import { addItemToCart, removeItemFromCart, updateCart } from "../slice/CartSlice";
 import { notify } from "../slice/UISlice";
 import { sendPutRequest, sendPostRequest, sendTokenPostRequest, sendTokenPutRequest } from "./Request";
 import { setloading } from "../slice/UISlice";
@@ -48,7 +48,11 @@ export const sendCartItem = (item, token) => {
             const endpoint = '/api/cart/item/register';
             //await sendPostRequest(item, endpoint);
             await sendTokenPostRequest(item, endpoint, token);
-            // dispatch(addItemToCart(item));
+            if (item.quantity < 0) {
+                dispatch(removeItemFromCart(item.id));
+            } else {
+                dispatch(addItemToCart(item));
+            }
             dispatch(notify({
                 status: 'success',
                 title: 'success',

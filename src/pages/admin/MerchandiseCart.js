@@ -1,15 +1,7 @@
 import { Fragment, useContext, useEffect, useState } from "react";
-//import CartContext from "../../../store/cart-context";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart, removeItemFromCart } from "../../store/redux/slice/CartSlice";
-// import ModalJ from "../UI/ModalJ";
 import classes from '../../components/js/CartR/Cart.module.css';
-// import CartItemJ from "./CartItemR";
-// import CheckoutJ from "./Checkout/CheckoutJ";
-// import { ServerURL } from "../../../constraint/ServerURL";
-import CartItemJ from "../../components/js/CartR/CartItemR";
 import CheckoutJ from "../../components/js/CartR/Checkout/CheckoutJ";
-// import { ServerURL } from "../../constraint/ServerURL";
 import { fetchCartData, sendCartItem } from "../../store/redux/action/CartAction";
 import HeaderR from "../../components/js/Layout/Header/HeaderR";
 import CardJ from "../../components/js/UI/CardJ";
@@ -27,39 +19,12 @@ const MerchandiseCart = props => {
     const totalAmount = `$${cartTotal.toFixed(2)}`;
     const hasItems = cartCtx.items.length > 0;
     const token = window.sessionStorage.getItem("token")
-    const deductItemHandler = async (item) => {
-        const tmpi = {
-            cartuid: item.cartuid,
-            uid: item.uid,
-            quantity: -1,
-            iref: item.iref,
-        };
-        dispatch(sendCartItem(tmpi, token))
-    };
-    const registerItemHandler = async (item) => {
-        const tmpi = {
-            cartuid: item.cartuid,
-            uid: item.uid,
-            quantity: 1,
-            iref: item.iref,
-        }
-        dispatch(sendCartItem(tmpi, token))
 
-    };
     const cartItemRemoveHandler = async (item) => {
-        //cartCtx.removeItem(id);
-        if (!item) {
-            return;
-        }
-        console.log(item)
-        dispatch(removeItemFromCart(item.id));
-        await deductItemHandler(item);
-        return
+        dispatch(sendCartItem({ ...item, quantity: -1 }, token))
     };
-    const cartItemAddHandler = item => {
-        //cartCtx.addItem({ ...item, amount: 1 });
-        dispatch(addItemToCart({ ...item, quantity: 1 }));
-        registerItemHandler(item);
+    const cartItemAddHandler = async (item) => {
+        dispatch(sendCartItem({ ...item, quantity: 1 }, token))
     };
 
     const orderClickedHandler = () => {
@@ -80,7 +45,7 @@ const MerchandiseCart = props => {
     };
 
     const showCartHandler = () => {
-        navigator("/merchandise/cartr")
+        navigator(-1)
     }
 
     useEffect(() => {
@@ -98,25 +63,32 @@ const MerchandiseCart = props => {
         )))
         return;
 
-    }, [cartCtx, dispatch])
-    //onAdd={cartItemAddHandler.bind(null, item)}
-
-
-
-    //<li>{item.name}</li>
-    const ModalActions = (
-        <div className={classes.actions}>
-            <button className={classes['button--alt']} onClick={showCartHandler}>Close</button>
-            {hasItems && <button className={classes.button} onClick={orderClickedHandler}>Order</button>}
-        </div>
-    );
-    // <HeaderR onShowCart={showCartHandler} />
-
+    }, [cartCtx])
     return (
-        <Fragment>
+        <section>
             {!props.authenticated && <Navigate to={"/"} />}
-            <CardJ>
+            <Fragment>
+                <HeaderR onShowCart={showCartHandler} />
                 <main>
+                    <CardJ>
+                        <div className={classes.imgcarry}>
+                            <h1>Cart Items</h1>
+                        </div>
+                    </CardJ>
+                    <CardJ>
+                        <div className="row">
+                            <div className="col">
+                                <button className="w-100 btn btn-lg btn-warning" onClick={showCartHandler}>
+                                    <span className="bi bi-chevron-double-left" />
+                                </button>
+                            </div>
+                            <div className="col">
+                                {hasItems && <button className={`w-100 btn btn-lg btn-success`} onClick={orderClickedHandler}>
+                                    <span className="bi bi-cash-coin" />
+                                </button>}
+                            </div>
+                        </div>
+                    </CardJ>
                     <CardJ>
                         <ul className={classes['cart-items']}>
                             {cartItems}
@@ -128,17 +100,29 @@ const MerchandiseCart = props => {
                             <span>{totalAmount}</span>
                         </div>
                         {orderClicked && <CheckoutJ onConfirm={submitOrderHandler} onCancel={showCartHandler} />}
-                        {ModalActions}
                     </CardJ>
                 </main>
-            </CardJ>
-        </Fragment>
+            </Fragment>
+        </section>
+
     );
 };
 
 export default MerchandiseCart;
 {
-        /*const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
+        /*
+        const tmpi = {
+            cartuid: item.cartuid,
+            uid: item.uid,
+            quantity: -1,
+            iref: item.iref,
+        };const tmpi = {
+            cartuid: item.cartuid,
+            uid: item.uid,
+            quantity: 1,
+            iref: item.iref,
+        }
+        const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
             {
                 method: 'POST',//body: JSON.stringify(cart),
                 body: JSON.stringify(tmpi),
