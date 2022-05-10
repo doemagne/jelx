@@ -11,7 +11,21 @@ import { toggle } from "../../../../store/redux/slice/UISlice";
 const ItemJ = (props) => {
     const dispatch = useDispatch();
     const price = `$${props.price.toFixed(2)}`;
+    const token = window.sessionStorage.getItem("token")
 
+    const setItemDetailHandler = () => {
+        const selecteditem = {
+            cartuid: props.cartuid,
+            id: props.id,
+            name: props.name,
+            //quantity: quantity,
+            description: props.description,
+            price: props.price,
+            uid: props.uid,
+            iref: props.iref,
+        };
+        dispatch(yieldCurrentItem(selecteditem));
+    }
 
     const addToCartHandler = async (quantity) => {
         const titem = {
@@ -23,7 +37,7 @@ const ItemJ = (props) => {
             uid: props.uid,
             iref: props.iref,
         }
-        dispatch(sendCartItem(titem));
+        dispatch(sendCartItem(titem,token));
     };
     const viewItemHandler = () => {
 
@@ -45,9 +59,9 @@ const ItemJ = (props) => {
         <Fragment>
             <li className={classes.item}>
                         <div className="col-sm-1">
-                        <Link to={`/merchandise/detail/${props.id}`}>
+                        <Link to={`/merchandise/detail`}>
                             <div className={classes.imgcarry}>
-                                <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} />
+                                <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} onClick={setItemDetailHandler}/>
                             </div>
                         </Link>
                         </div>

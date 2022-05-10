@@ -16,11 +16,12 @@ const MerchandiseR = (props) => {
     const [cartShown, setCartShown] = useState(false);
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
+    const token = window.sessionStorage.getItem("token")
 
     const toggleModal = useSelector(state => state.ui.cartToggle);
     useEffect(() => {
         if (cart.uid.length != 0) {
-            dispatch(fetchCartData(cart))
+            dispatch(fetchCartData(cart,token))
         }
         return;
     }, [cart, dispatch]);

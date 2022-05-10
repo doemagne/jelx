@@ -8,7 +8,6 @@ import { fetchMerchandiseData } from '../../../store/redux/action/MerchandiseAct
 const AvailableMerchandiseJ = () => {
   const dispatch = useDispatch();
   const merchandisel = useSelector(state => state.merchandise.merchandise);
-
   const fetchMerchandise = async () => {
     dispatch(fetchMerchandiseData(window.sessionStorage.getItem("token")));
   };

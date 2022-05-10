@@ -1,9 +1,9 @@
 import { addItemToCart, updateCart } from "../slice/CartSlice";
 import { notify } from "../slice/UISlice";
-import { sendPutRequest, sendPostRequest } from "./Request";
+import { sendPutRequest, sendPostRequest, sendTokenPostRequest, sendTokenPutRequest } from "./Request";
 import { setloading } from "../slice/UISlice";
 //fetchcart
-export const fetchCartData = (cart) => {
+export const fetchCartData = (cart, token) => {
     return (async (dispatch) => {
 
         dispatch(notify({
@@ -14,7 +14,8 @@ export const fetchCartData = (cart) => {
         try {
             dispatch(setloading(true));
             const endpoint = '/api/cart/update';
-            const content = await sendPutRequest(cart, endpoint);
+            //const content = await sendPutRequest(cart, endpoint);
+            const content = await sendTokenPutRequest(cart, endpoint, token);
             dispatch(notify({
                 status: 'success',
                 title: 'success',
@@ -28,20 +29,26 @@ export const fetchCartData = (cart) => {
             dispatch(notify({
                 status: 'error',
                 title: 'failed to send',
-                message: `[failed to fetch cart data]${error.message}`,
+                message: `${error.message}`,
             }));
             dispatch(setloading(false));
         }
     });
 }
 
-export const sendCartItem = (item) => {
+export const sendCartItem = (item, token) => {
     return (async (dispatch) => {
         try {
+            dispatch(notify({
+                status: 'pending',
+                title: 'request pending',
+                message: 'cart data pending.',
+            }))
             dispatch(setloading(true));
             const endpoint = '/api/cart/item/register';
-            await sendPostRequest(item, endpoint);
-            dispatch(addItemToCart(item));
+            //await sendPostRequest(item, endpoint);
+            await sendTokenPostRequest(item, endpoint, token);
+            // dispatch(addItemToCart(item));
             dispatch(notify({
                 status: 'success',
                 title: 'success',
@@ -52,7 +59,7 @@ export const sendCartItem = (item) => {
             dispatch(notify({
                 status: 'failed',
                 title: 'failed to send',
-                message: `[failed to send cart data]${error.message}`,
+                message: ` ${error.message}`,
             }));
             dispatch(setloading(false));
         }

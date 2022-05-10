@@ -1,10 +1,16 @@
 import { setMerchandise, updateMerchandise } from "../slice/MerchandiseSlice";
-import { setloading } from "../slice/UISlice";
+import { notify, setloading } from "../slice/UISlice";
 import { sendTokenGetRequest, sendGetRequest, uploadMediaForm, sendTokenPostRequest } from "./Request";
 
 export const registerMerchandiseData = (data, token) => {
     return (async (dispatch) => {
         try {
+            dispatch(notify({
+                status: 'pending',
+                title: 'update is pending',
+                message: 'request pending',
+            }));
+
             dispatch(setloading(true));
             const endpoint = '/api/merchandise/register/new';
             const content = await sendTokenPostRequest(data, endpoint, token);
@@ -12,10 +18,19 @@ export const registerMerchandiseData = (data, token) => {
                 console.log(content)
                 dispatch(updateMerchandise(content))
             }
-
             dispatch(setloading(false));
+            dispatch(notify({
+                status: 'success',
+                title: 'updated profile successfully.',
+                message: 'request was successful.',
+            }));
         } catch (error) {
             dispatch(setloading(false));
+            dispatch(notify({
+                status: 'error',
+                title: 'failed to send',
+                message: `[failed to send merchandise data]${error.message}`,
+            }));
         }
     });
 }

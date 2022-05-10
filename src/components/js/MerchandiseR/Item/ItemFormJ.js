@@ -10,13 +10,13 @@ const ItemFormJ = props => {
         event.preventDefault();
         const enteredAmount = amountInputRef.current.value;
         const enteredAmountNumber = +enteredAmount;
-        if (
+        /*if (
             enteredAmount.trim().length === 0 || 
             enteredAmountNumber < 1 || 
             enteredAmountNumber > 50) {
                 setAmountIsValid(false);
                 return;
-        }
+        }*/
         props.onAddToCart(enteredAmountNumber);
     };
 

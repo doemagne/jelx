@@ -33,7 +33,12 @@ const merchandiseSlice = createSlice({
         yieldCurrentItem: (state, action) => {
             console.log("yeilding 2.")
             if (action.payload) {
-                state.currentItem = action.payload;
+                const qitem = state.merchandise.findIndex((item) => item.uid === action.payload.uid);
+                if (state.merchandise[qitem]) {
+                    state.currentItem = state.merchandise[qitem]
+                } else {
+                    state.currentItem = action.payload;
+                }
                 console.log(action.payload)
             }
         },

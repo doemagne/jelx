@@ -19,6 +19,7 @@ import MerchandiseDetail from './components/js/MerchandiseR/MerchandiseDetail';
 import NotFound from './pages/NotFound';
 import RegisterNewMerchandise from './pages/admin/RegisterNewMerchandise';
 import RegisterExistingMerchandise from './pages/admin/RegisterExistingMerchandise';
+import MerchandiseCart from './pages/admin/MerchandiseCart';
 function App() {
   const dispatch = useDispatch();
   const loader = useSelector(state => state.ui.loadstate);
@@ -54,8 +55,9 @@ function App() {
               <Route path="/merchandise/register/*" element={<MerchandiseConfig authenticated={authenticated} />} />
               <Route path="/merchandise/new" element={<RegisterNewMerchandise authenticated={authenticated} />} />
               <Route path="/merchandise/existing" element={<RegisterExistingMerchandise authenticated={authenticated}/>}/>
+              <Route path="/merchandise/cart" element={<MerchandiseCart cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
-              <Route path="/merchandise/detail/:idkey/*" element={<MerchandiseDetail/>}/>
+              <Route path="/merchandise/detail" element={<MerchandiseDetail cartuid={cartuid} authenticated={authenticated}/>}/>
               <Route path="/config" element={<Config />} />
               <Route path='*' element={<NotFound/>}/>
             </Routes>
