@@ -12,14 +12,11 @@ const cartSlice = createSlice({
     initialState: initialState,
     reducers: {
         addItemToCart: (state, action) => {
-            //state.totalItems++;
             const newitem = action.payload;
-            const existingItem = state.items.find(item => item.id === newitem.id)
+            const existingItem = state.items.find(item => item.uid === newitem.uid)
             state.totalAmount = state.totalAmount + newitem.price * newitem.quantity;
             state.totalItems += newitem.quantity
             if (!existingItem) {
-                //const iref = uuidv4();
-                //console.log(iref);
                 state.items.push({
                     id: newitem.id,
                     name: newitem.name,
@@ -31,35 +28,10 @@ const cartSlice = createSlice({
                 });
             } else {
                 existingItem.quantity += newitem.quantity;
-                //existingItem.total = existingItem.total + newitem.price;
                 existingItem.total = existingItem.quantity * newitem.price;
-                //state.totalAmount = state.totalAmount + existingItem.price * newitem.quantity;
             }
-        },
-        addItemToCarti: (state, action) => {
-            const updatedTotalAmount = state.totalAmount + action.item.price * action.item.quantity;
-            const existingCartIdx = state.items.findIndex(
-                item => item.id === action.item.id
-            );
-            const existingCartItem = state.items[existingCartIdx];
-            let updatedItems;
-            if (existingCartItem) {
-                const updatedItem = {
-                    ...existingCartItem,
-                    amount: existingCartItem.quantity + action.item.quantity
-                };
-                updatedItems = [...state.items];
-                updatedItems[existingCartIdx] = updatedItem;
-            } else {
-                updatedItems = state.items.concat(action.item);
-            }
-            //return {
-            state.items = updatedItems;
-            state.totalAmount = updatedTotalAmount;
-            //};
         },
         removeItemFromCart: (state, action) => {
-            console.log("removing")
             state.totalItems--;
             const id = action.payload;
             if (id) {
@@ -70,12 +42,11 @@ const cartSlice = createSlice({
                         state.totalAmount -= existingItem.price;
                     } else {
                         existingItem.quantity--;
-                        console.log(existingItem.quantity)
+                        // console.log(existingItem.quantity)
                         existingItem.total -= existingItem.price;
                         state.totalAmount -= existingItem.price;
                     }
                 }
-                console.log("removed", state.totalAmount)
             }
         },
         replaceCart: (state, action) => {
@@ -106,6 +77,28 @@ const cartSlice = createSlice({
                     }
                 }
             }
+        },
+        addItemToCarti: (state, action) => {
+            const updatedTotalAmount = state.totalAmount + action.item.price * action.item.quantity;
+            const existingCartIdx = state.items.findIndex(
+                item => item.id === action.item.id
+            );
+            const existingCartItem = state.items[existingCartIdx];
+            let updatedItems;
+            if (existingCartItem) {
+                const updatedItem = {
+                    ...existingCartItem,
+                    amount: existingCartItem.quantity + action.item.quantity
+                };
+                updatedItems = [...state.items];
+                updatedItems[existingCartIdx] = updatedItem;
+            } else {
+                updatedItems = state.items.concat(action.item);
+            }
+            //return {
+            state.items = updatedItems;
+            state.totalAmount = updatedTotalAmount;
+            //};
         },
     },
 });

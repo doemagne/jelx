@@ -1,12 +1,10 @@
 import { Fragment, useContext, useState } from "react";
-//import CartContext from "../../../store/cart-context";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart, removeItemFromCart } from "../../../store/redux/slice/CartSlice";
 import ModalJ from "../UI/ModalJ";
 import classes from './Cart.module.css';
 import CartItemJ from "./CartItemR";
 import CheckoutJ from "./Checkout/CheckoutJ";
-import { ServerURL } from "../../../constraint/ServerURL";
+import { sendCartItem } from "../../../store/redux/action/CartAction";
 
 const CartJ = props => {
     const [orderClicked, setOrderClicked] = useState(false);
@@ -16,57 +14,15 @@ const CartJ = props => {
     const cartCtx = useSelector(state => state.cart);
     const cartTotal = useSelector(state => state.cart.totalAmount);
     const dispatch = useDispatch();
-    //const cartCtx = useContext(CartContext);
-    //const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
     const totalAmount = `$${cartTotal.toFixed(2)}`;
     const hasItems = cartCtx.items.length > 0;
-    //{[{id: 'c1', name: 'Sushi', price: 12.99}].map((item) => (
+    const token = window.sessionStorage.getItem("token")
     
-    const deductItemHandler = async(item) => {
-        const tmpi = {
-            cartuid: item.cartuid,
-            uid: item.uid,
-            //quantity: quantity.toString(),
-            quantity: 1,
-            iref: item.iref,
-        };
-        const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
-            {
-                method: 'POST',//body: JSON.stringify(cart),
-                body: JSON.stringify(tmpi),
-                headers: { "Content-Type": "application/json" },
-                //credentials: 'include',
-            });
-            const response = await stimulus.json();
-
-    };
-    const registerItemHandler = async(item) => {
-        const tmpi = {
-            cartuid: item.cartuid,
-            uid: item.uid,
-            //quantity: quantity.toString(),
-            quantity: 1,
-            iref: item.iref,
-        }
-        const stimulus = await fetch(ServerURL + '/api/cart/item/register',
-            {
-                method: 'POST',//body: JSON.stringify(cart),
-                body: JSON.stringify(tmpi),
-                headers: { "Content-Type": "application/json" },
-                //credentials: 'include',
-            });
-            const response = await stimulus.json();
-
-    };
     const cartItemRemoveHandler = item => {
-        //cartCtx.removeItem(id);
-        dispatch(removeItemFromCart(item.id));
-        deductItemHandler(item);
+        dispatch(sendCartItem({ ...item, quantity: -1 }, token))
     };
     const cartItemAddHandler = item => {
-        //cartCtx.addItem({ ...item, amount: 1 });
-        dispatch(addItemToCart({ ...item, quantity: 1 }));
-        registerItemHandler(item);
+        dispatch(sendCartItem({ ...item, quantity: 1 }, token))
     };
 
     const orderClickedHandler = () => {
@@ -106,7 +62,6 @@ const CartJ = props => {
         </ul>
     );
 
-    //<li>{item.name}</li>
     const ModalActions = (
         <div className={classes.actions}>
             <button className={classes['button--alt']} onClick={props.onClose}>Close</button>
@@ -143,3 +98,40 @@ const CartJ = props => {
 };
 
 export default CartJ;
+/*
+    const deductItemHandler = async(item) => {
+        const tmpi = {
+            cartuid: item.cartuid,
+            uid: item.uid,
+            //quantity: quantity.toString(),
+            quantity: 1,
+            iref: item.iref,
+        };
+        const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
+            {
+                method: 'POST',//body: JSON.stringify(cart),
+                body: JSON.stringify(tmpi),
+                headers: { "Content-Type": "application/json" },
+                //credentials: 'include',
+            });
+            const response = await stimulus.json();
+
+    };
+    const registerItemHandler = async(item) => {
+        const tmpi = {
+            cartuid: item.cartuid,
+            uid: item.uid,
+            //quantity: quantity.toString(),
+            quantity: 1,
+            iref: item.iref,
+        }
+        const stimulus = await fetch(ServerURL + '/api/cart/item/register',
+            {
+                method: 'POST',//body: JSON.stringify(cart),
+                body: JSON.stringify(tmpi),
+                headers: { "Content-Type": "application/json" },
+                //credentials: 'include',
+            });
+            const response = await stimulus.json();
+
+    };*/

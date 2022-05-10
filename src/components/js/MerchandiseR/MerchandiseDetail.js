@@ -26,9 +26,6 @@ const MerchandiseDetail = (props) => {
     const imageViewHandler = () => {
         window.open(`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`, '_blank').focus();
     };
-    const ImageSrcHandler = () => {
-        setImgSrc(`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`);
-    };
     const submitHandler = async (e) => {
         e.preventDefault()
         console.log(quantityref.current.value)

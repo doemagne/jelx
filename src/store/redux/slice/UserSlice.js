@@ -26,7 +26,7 @@ export const userSlice = createSlice({
     initialState: initialState,
     reducers: {
         setTransport: (state, action) => {
-            console.log(action.payload)
+            // console.log(action.payload)
             //const idx = indexdb.transport.put(action.payload);
             const pay = action.payload.content;
             state.uid = pay.uid;
@@ -40,7 +40,7 @@ export const userSlice = createSlice({
             state.profile = pay.profile;
             let token = pay.token;//aes.encrypt(pay.token,state.secret).toString();
             state.token = token;
-            console.log(state.token);
+            // console.log(state.token);
             //console.log(state);
             if (state.authenticated) {
                 window.sessionStorage.setItem("token", token);
@@ -54,7 +54,7 @@ export const userSlice = createSlice({
             } else {
                 //indexdb.delete();
                 state.authenticated = false;
-                console.log("clearing the session storage.")
+                // console.log("clearing the session storage.")
                 window.sessionStorage.setItem("token", null);
                 window.sessionStorage.setItem("window", null);
                 //window.sessionStorage.setItem("user", null);
@@ -104,7 +104,7 @@ export const userSlice = createSlice({
             state.cartuid = pay.cartuid;
             let token = pay.token;//aes.encrypt(pay.token,state.secret).toString();
             state.token = token//rabbit.encrypt(pay.token,state.secret).toString(enc.Hex);
-            console.log(state);
+            // console.log(state);
             if (state.authenticated) {
                 window.sessionStorage.setItem("token", token);
                 //window.sessionStorage.setItem("user", state.username);
@@ -113,7 +113,7 @@ export const userSlice = createSlice({
                 //console.log(state);
             } else {
                 state.authenticated = false;
-                console.log("clearing the session storage.")
+                // console.log("clearing the session storage.")
                 window.sessionStorage.setItem("token", null);
                 window.sessionStorage.setItem("window", null);
                 //window.sessionStorage.setItem("user", null);

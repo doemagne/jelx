@@ -21,11 +21,11 @@ export const fetchCartData = (cart, token) => {
                 title: 'success',
                 message: 'cart data was fetched successfully.',
             }));
-            console.log(content);
+            // console.log(content);
             dispatch(updateCart(content.cart));
             dispatch(setloading(false));
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             dispatch(notify({
                 status: 'error',
                 title: 'failed to send',

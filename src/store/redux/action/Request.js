@@ -39,7 +39,7 @@ const encrypt = (token) => {
 }
 const secret = 'abc';
 export const sendTokenGetRequest = async (endpoint,token) => {
-    console.log(endpoint);
+    // console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
         headers: { 
             "Content-Type": "application/json", 
@@ -56,7 +56,7 @@ export const sendTokenGetRequest = async (endpoint,token) => {
     return response;
 }
 export const sendGetRequest = async (endpoint) => {
-    console.log(endpoint);
+    // console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
         headers: { "Content-Type": "application/json", },
         credentials: "include",
@@ -70,7 +70,7 @@ export const sendGetRequest = async (endpoint) => {
 }
 
 export const sendTokenPutRequest = async (data, endpoint, token) => {
-    console.log(endpoint);
+    // console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
         method: "PUT",
         headers: { 
@@ -89,11 +89,11 @@ export const sendTokenPutRequest = async (data, endpoint, token) => {
     //encrypt(th);
     //th = rabbit.encrypt(th,secret)
     response.token = th
-    console.log(response.token);
+    // console.log(response.token);
     return response;
 }
 export const sendTokenPostRequest = async (data, endpoint, token) => {
-    console.log(endpoint);
+    // console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
         method: "POST",
         headers: { 
@@ -112,11 +112,11 @@ export const sendTokenPostRequest = async (data, endpoint, token) => {
     //encrypt(th);
     //th = rabbit.encrypt(th,secret)
     response.token = th
-    console.log(response.token);
+    // console.log(response.token);
     return response;
 }
 export const sendPostRequest = async (data, endpoint) => {
-    console.log(endpoint);
+    // console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", },
@@ -132,11 +132,11 @@ export const sendPostRequest = async (data, endpoint) => {
     //encrypt(th);
     //th = rabbit.encrypt(th,secret)
     response.token = th
-    console.log(response.token);
+    // console.log(response.token);
     return response;
 }
 export const sendPutRequest = async (data, endpoint) => {
-    console.log(endpoint);
+    // console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", },
@@ -151,7 +151,7 @@ export const sendPutRequest = async (data, endpoint) => {
     return response;
 }
 export const sendGenericRequest = async (data, endpoint, method) => {
-    console.log(endpoint);
+    // console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
         method: method,
         headers: { "Content-Type": "application/json", },
@@ -175,7 +175,7 @@ export const uploadMediaForm = async (formdata, endpoint) => {
         body: formdata,
         signal: ctrl.signal,
     });
-    console.log(stimulus.status);
+    // console.log(stimulus.status);
     if (!stimulus.ok) {
         throw new Error('an error occured when the sending post request.');
     }
