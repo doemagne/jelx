@@ -12,6 +12,7 @@ const MerchandiseCartItem = (props) => {
             <div className={classes.summary}>
               <span className={classes.price}>{`$ ${props.price.toFixed(2)}`}</span>
               <span className={classes.amount}>x {props.quantity}</span>
+              <span className={classes.price}>{`$ ${props.total}`}</span>
             </div>
           </div>
           <div className={classes.actions}>
