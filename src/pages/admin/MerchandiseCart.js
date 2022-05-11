@@ -8,6 +8,7 @@ import CardJ from "../../components/js/UI/CardJ";
 import { Navigate, useNavigate } from "react-router-dom";
 import MerchandiseCartItem from "../../components/js/CartR/MerchandiseCartItem";
 import { delayRequest } from "../../store/redux/action/Request";
+import Banner from "../../components/js/UI/Banner/Banner";
 
 const MerchandiseCart = props => {
     const [cartItems, setCartItems] = useState();
@@ -82,11 +83,11 @@ const MerchandiseCart = props => {
                                     <span className="bi bi-chevron-double-left" />
                                 </button>
                             </div>
-                            <div className="col">
-                                {hasItems && <button className={`w-100 btn btn-lg btn-success`} onClick={orderClickedHandler}>
+                            {hasItems && <div className="col">
+                                <button className={`w-100 btn btn-lg btn-success`} onClick={orderClickedHandler}>
                                     <span className="bi bi-cash-coin" />
-                                </button>}
-                            </div>
+                                </button>
+                            </div>}
                         </div>
                     </CardJ>
                     <CardJ>
@@ -101,6 +102,7 @@ const MerchandiseCart = props => {
                         </div>
                         {orderClicked && <CheckoutJ onConfirm={submitOrderHandler} onCancel={showCartHandler} />}
                     </CardJ>
+                    <Banner banner={'cart-check'} />
                 </main>
             </Fragment>
         </section>

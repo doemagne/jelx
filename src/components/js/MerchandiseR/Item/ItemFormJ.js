@@ -1,11 +1,13 @@
 import { useRef, Fragment, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { delayRequest } from "../../../../store/redux/action/Request";
 import InputJ from "../../UI/InputJ";
 import classes from './ItemForm.module.css';
 const ItemFormJ = props => {
     const [amountIsValid, setAmountIsValid] = useState(true);
 
     const amountInputRef = useRef();
-    
+    const navigator = useNavigate()
     const submitHandler = event => {
         event.preventDefault();
         const enteredAmount = amountInputRef.current.value;
@@ -20,27 +22,34 @@ const ItemFormJ = props => {
         props.onAddToCart(enteredAmountNumber);
     };
 
-    const viewItemHandler = () => {
-
+    const viewItemHandler = async () => {
+        props.setItemDetailHandler()
+        // delayRequest(100)
+        navigator("/merchandise/detail")
     };
 
     return (
         <Fragment>
             <form className={classes.form} onSubmit={submitHandler}>
-                <div className={props.priceclass}>Price:  ${props.price}</div>
+                <div className={props.priceclass}>Price: $ {props.price}</div>
                 <InputJ
-                ref={amountInputRef} 
-                label={`Quantity`} 
-                input={{
-                    id: 'amount_'+props.id,
-                    type: 'number',
-                    min: '1',
-                    max: '50',
-                    step: '1',
-                    defaultValue: '1'
-                }}/>
-                <button><span className="bi-plus"></span>Add</button>
-                {!amountIsValid && <p>Please enter a valid amount.</p>}
+                    ref={amountInputRef}
+                    label={`Quantity`}
+                    input={{
+                        id: 'amount_' + props.id,
+                        type: 'number',
+                        min: '1',
+                        max: '50',
+                        step: '1',
+                        defaultValue: '1'
+                    }} />
+                
+                <button type="button" onClick={viewItemHandler}>
+                    <span className="bi-chat-right-text" ></span>View
+                </button>
+                <button>
+                    <span className="bi-plus" />Add
+                </button>{!amountIsValid && <p>Please enter a valid amount.</p>}
             </form>
         </Fragment>
     );

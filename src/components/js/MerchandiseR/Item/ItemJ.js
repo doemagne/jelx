@@ -13,7 +13,7 @@ const ItemJ = (props) => {
     const price = `$${props.price.toFixed(2)}`;
     const token = window.sessionStorage.getItem("token")
 
-    const setItemDetailHandler = () => {
+    const setItemDetailHandler = async() => {
         const selecteditem = {
             cartuid: props.cartuid,
             id: props.id,
@@ -24,6 +24,7 @@ const ItemJ = (props) => {
             uid: props.uid,
             iref: props.iref,
         };
+        // console.log(selecteditem)
         dispatch(yieldCurrentItem(selecteditem));
     }
 
@@ -71,7 +72,7 @@ const ItemJ = (props) => {
                             <div className={classes.price}>{price}</div>
                         </div>
                         <div className="col-sm-3">
-                            <ItemFormJ priceclass={classes.price} price={props.price} onAddToCart={addToCartHandler} />
+                            <ItemFormJ priceclass={classes.price} price={props.price} onAddToCart={addToCartHandler} setItemDetailHandler={setItemDetailHandler.bind(null, props)}/>
                         </div>
             </li>
         </Fragment>

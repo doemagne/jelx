@@ -1,43 +1,7 @@
-import sha256 from "crypto-js/sha256";
-import encBase64 from "crypto-js/enc-base64";
-import { enc } from "crypto-js/core";
 import { ServerURL } from "../../../constraint/ServerURL";
-import aes from "crypto-js/aes";
-import cryptoJs from "crypto-js";
-import modeCfb from "crypto-js/mode-cfb";
-import padNopadding from "crypto-js/pad-nopadding";
-import sha512 from "crypto-js/sha512";
-import rabbit from "crypto-js/rabbit";
 
 export const delayRequest = (ms) => new Promise(res => setTimeout(res, ms))
 
-const encrypt = (token) => {
-    let secret = 'secret';
-    //console.log(`secret: ${secret}`)
-    let secretHash = sha256(secret).toString(enc.Hex).slice(0,32);
-    //console.log(`secretHash: ${secretHash}`)
-    secretHash = cryptoJs.enc.Utf8.parse(secretHash)
-    //console.log(`secretHash: ${secretHash}`)
-    //btoken = atob(token)
-    let b64token = Buffer.from(token, "base64")
-    //console.log(`b64token: ${b64token}`)
-    let initialvector = Buffer.from("i-n-i-t-i-a-l-i-z-a-t-i-o-n-v-e-c-t-o-r", "base64")
-    //console.log(`initialvector: ${initialvector}`)
-    let ciphertext = enc.Base64.parse(b64token);
-    //console.log(`ciphertext: ${ciphertext}`)
-    let iv = enc.Base64.parse(initialvector);
-    //console.log(`iv: ${iv}`)
-    let decrypted = aes.decrypt({
-        ciphertext:ciphertext
-    },
-    secretHash,{
-        mode: modeCfb,
-        padding: padNopadding,
-        iv: iv,  
-    })
-    console.log('decrypted token: '+decrypted.toString(enc.Utf8))
-}
-const secret = 'abc';
 export const sendTokenGetRequest = async (endpoint,token) => {
     // console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
@@ -183,6 +147,44 @@ export const uploadMediaForm = async (formdata, endpoint) => {
     //console.log("An error occured when uploading the form data.", error);
     //}
 }
+// import sha256 from "crypto-js/sha256";
+// import encBase64 from "crypto-js/enc-base64";
+// import { enc } from "crypto-js/core";
+// import aes from "crypto-js/aes";
+// import cryptoJs from "crypto-js";
+// import modeCfb from "crypto-js/mode-cfb";
+// import padNopadding from "crypto-js/pad-nopadding";
+// import sha512 from "crypto-js/sha512";
+// import rabbit from "crypto-js/rabbit";
+
+/*const encrypt = (token) => {
+    let secret = 'secret';
+    //console.log(`secret: ${secret}`)
+    let secretHash = sha256(secret).toString(enc.Hex).slice(0,32);
+    //console.log(`secretHash: ${secretHash}`)
+    secretHash = cryptoJs.enc.Utf8.parse(secretHash)
+    //console.log(`secretHash: ${secretHash}`)
+    //btoken = atob(token)
+    let b64token = Buffer.from(token, "base64")
+    //console.log(`b64token: ${b64token}`)
+    let initialvector = Buffer.from("i-n-i-t-i-a-l-i-z-a-t-i-o-n-v-e-c-t-o-r", "base64")
+    //console.log(`initialvector: ${initialvector}`)
+    let ciphertext = enc.Base64.parse(b64token);
+    //console.log(`ciphertext: ${ciphertext}`)
+    let iv = enc.Base64.parse(initialvector);
+    //console.log(`iv: ${iv}`)
+    let decrypted = aes.decrypt({
+        ciphertext:ciphertext
+    },
+    secretHash,{
+        mode: modeCfb,
+        padding: padNopadding,
+        iv: iv,  
+    })
+    console.log('decrypted token: '+decrypted.toString(enc.Utf8))
+}
+const secret = 'abc';
+*/
 /*
 
         const ctrl = new AbortController();

@@ -51,6 +51,12 @@ const Navigation = (props) => {
                 <Link to="/merchandise/register" className='nav-link active' aria-current="page">
                     <span className="bi bi-gear" />
                 </Link>
+                <Link to="/" className='nav-link active' aria-current="page" >
+                    <span className="bi bi-thermometer-sun" />
+                </Link>
+                <Link to="/" className='nav-link active' aria-current="page" >
+                    <span className="bi bi-camera-reels" />
+                </Link>
                 <Link to="/account/signout" className="nav-link active" aria-current="page" onClick={signoutHandler}>
                     <span className="bi bi-door-closed" />
                 </Link>

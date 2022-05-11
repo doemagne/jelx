@@ -5,11 +5,11 @@ import { Link, Route, Routes, useNavigate, Navigate, useParams } from "react-rou
 import { ServerURL } from "../../../constraint/ServerURL";
 import Banner from "../UI/Banner/Banner";
 import CardJ from "../UI/CardJ";
-import Comments from '../UI/Comment/Comments';
+// import Comments from '../UI/Comment/Comments';
 import Field from "../UI/Field/Field";
 import FieldArea from "../UI/Field/FieldArea";
 import { sendCartItem } from '../../../store/redux/action/CartAction';
-import { delayRequest } from '../../../store/redux/action/Request';
+// import { delayRequest } from '../../../store/redux/action/Request';
 import HeaderR from '../Layout/Header/HeaderR';
 const MerchandiseDetail = (props) => {
     const [imgSrc, setImgSrc] = useState();
@@ -119,6 +119,7 @@ const MerchandiseDetail = (props) => {
         </section>
     )
 }
+export default MerchandiseDetail;
 //<Routes>
 //<Route path={`comments`} element={<Comments />} />
 //</Routes>
@@ -127,4 +128,3 @@ const MerchandiseDetail = (props) => {
 
 //<Comments></Comments>
 //<Route path={`/merchandise/cartr/${params.key}/comments`} element={<Comments/>} />
-export default MerchandiseDetail;

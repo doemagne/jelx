@@ -4,6 +4,7 @@ import ItemJ from './Item/ItemJ';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMerchandiseData } from '../../../store/redux/action/MerchandiseAction';
+import Banner from '../UI/Banner/Banner';
 
 const AvailableMerchandiseJ = () => {
   const dispatch = useDispatch();
@@ -18,15 +19,15 @@ const AvailableMerchandiseJ = () => {
   }, []);
 
   const merchandiseList = merchandisel.map((merchandise) => (
-      <ItemJ
-        id={merchandise.id}
-        key={merchandise.id}
-        name={merchandise.name}
-        description={merchandise.description}
-        price={merchandise.price}
-        uid={merchandise.uid}
-        iref={merchandise.iref}
-      />
+    <ItemJ
+      id={merchandise.id}
+      key={merchandise.id}
+      name={merchandise.name}
+      description={merchandise.description}
+      price={merchandise.price}
+      uid={merchandise.uid}
+      iref={merchandise.iref}
+    />
   ));
 
   return (
@@ -34,12 +35,7 @@ const AvailableMerchandiseJ = () => {
       <CardJ>
         <ul>{merchandiseList}</ul>
       </CardJ>
-        <CardJ>
-            <div>
-                <span className="bi bi-cart" style={{ fontSize: "5rem" }} />
-                <br />
-            </div>
-        </CardJ>
+      <Banner banner={'cart'} />
     </section>
   );
 };

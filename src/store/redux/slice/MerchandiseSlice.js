@@ -39,13 +39,13 @@ const merchandiseSlice = createSlice({
                 } else {
                     state.currentItem = action.payload;
                 }
-                console.log(action.payload)
+                // console.log(action.payload)
             }
         },
         updateMerchandiseItem: (state, action) => {
             const pay = action.payload
             const qitem = state.merchandise.findIndex((item) => item.uid === pay.uid);
-            console.log(qitem)
+            // console.log(qitem)
             if (state.merchandise[qitem]) {
                 const currentItem = {
                     active: pay.active,

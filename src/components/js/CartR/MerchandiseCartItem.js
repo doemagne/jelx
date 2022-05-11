@@ -15,8 +15,15 @@ const MerchandiseCartItem = (props) => {
             </div>
           </div>
           <div className={classes.actions}>
-            <button type="button" onClick={props.onRemove}>−</button>
-            <button type="button" onClick={props.onAdd}>+</button>
+            <button type="button" onClick={props.onRemove}>
+              <span className="bi bi-dash-circle" />
+            </button>
+            <button type="button" onClick={props.onAdd}>
+              <span className="bi bi-plus-circle" />
+            </button>
+            <button type="button" onClick={props.onRemove}>
+              <span className="bi bi-x-circle" />
+            </button>
           </div>
         </li>
       }
