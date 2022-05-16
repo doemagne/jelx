@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound';
 import RegisterNewMerchandise from './pages/admin/RegisterNewMerchandise';
 import RegisterExistingMerchandise from './pages/admin/RegisterExistingMerchandise';
 import MerchandiseCart from './pages/admin/MerchandiseCart';
+import MerchandiseCheckout from './pages/admin/MerchandiseCheckout';
 function App() {
   const dispatch = useDispatch();
   const loader = useSelector(state => state.ui.loadstate);
@@ -56,6 +57,7 @@ function App() {
               <Route path="/merchandise/new" element={<RegisterNewMerchandise authenticated={authenticated} />} />
               <Route path="/merchandise/existing" element={<RegisterExistingMerchandise authenticated={authenticated}/>}/>
               <Route path="/merchandise/cart" element={<MerchandiseCart cartuid={cartuid} authenticated={authenticated} />} />
+              <Route path="/merchandise/cart/checkout" element={<MerchandiseCheckout cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/detail" element={<MerchandiseDetail cartuid={cartuid} authenticated={authenticated}/>}/>
               <Route path="/config" element={<Config />} />

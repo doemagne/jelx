@@ -12,8 +12,9 @@ import Banner from "../../components/js/UI/Banner/Banner";
 import CheckoutAddress from "../../components/js/Cart/Checkout/CheckoutAddress";
 import CheckoutPayment from "../../components/js/Cart/Checkout/CheckoutPayment";
 import CheckoutProfile from "../../components/js/Cart/Checkout/CheckoutProfile";
+import MerchandiseCheckoutItem from "../../components/js/CartR/MerchandiseCheckoutItem";
 
-const MerchandiseCart = props => {
+const MerchandiseCheckout = props => {
     const [fieldEdit, setFieldEdit] = useState(true);
     const [cartItems, setCartItems] = useState();
     const [orderClicked, setOrderClicked] = useState(false);
@@ -33,8 +34,7 @@ const MerchandiseCart = props => {
     };
 
     const orderClickedHandler = () => {
-        // setOrderClicked(!orderClicked);
-        navigator("/merchandise/cart/checkout")
+        setOrderClicked(!orderClicked);
     };
     const fieldEditHandler = () => {
         setFieldEdit(!fieldEdit)
@@ -60,7 +60,7 @@ const MerchandiseCart = props => {
 
     useEffect(() => {
         setCartItems(cartCtx.items.map((item) => (
-            <MerchandiseCartItem
+            <MerchandiseCheckoutItem
                 key={item.id}
                 name={item.name}
                 quantity={item.quantity}
@@ -92,27 +92,18 @@ const MerchandiseCart = props => {
                                     <span className="bi bi-chevron-double-left" />
                                 </button>
                             </div>
-                            {orderClicked  && <div className="col-sm">
+                            <div className="col-sm">
                                 <button className={`w-100 btn btn-lg btn-primary`} onClick={fieldEditHandler} >
                                     <span className="bi bi-gear" />
                                 </button>
-                            </div>}
-                            {hasItems && <div className="col-sm">
-                                <button className={`w-100 btn btn-lg btn-success`} onClick={orderClickedHandler}>
-                                    <span className="bi bi-cash-coin" />
+                            </div>
+                            {fieldEdit && <div className='col'>
+                                <button className={`w-100 btn btn-lg btn-dark`} onClick={() => { }}>
+                                    <span className="bi bi-hand-thumbs-up" />
                                 </button>
                             </div>}
-                            
-
                         </div>
                     </CardJ>
-                    {orderClicked && <CardJ>
-                        <div className="row">
-                            <CheckoutProfile onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
-                            <CheckoutAddress onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
-                            <CheckoutPayment onconfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={() => { }} />
-                        </div>
-                    </CardJ>}
                     <CardJ>
                         <ul className={classes['cart-items']}>
                             {cartItems}
@@ -124,6 +115,27 @@ const MerchandiseCart = props => {
                             <span>{totalAmount}</span>
                         </div>
                     </CardJ>
+                    <CardJ>
+                        <div className="row">
+                            <CheckoutPayment onconfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={() => { }} />
+                            <div className="col-sm">
+                                <Banner banner={"credit-card-2-front"} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <CheckoutProfile onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
+                            <div className="col-sm">
+                                <Banner banner={"person-circle"} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <CheckoutAddress onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
+                            <div className="col-sm">
+                                <Banner banner={"geo"} />
+                            </div>
+                        </div>
+                    </CardJ>
+                    
                     <Banner banner={'cart-check'} />
                 </main>
             </Fragment>
@@ -132,49 +144,49 @@ const MerchandiseCart = props => {
     );
 };
 
-export default MerchandiseCart;
-{
-        /*
-        const tmpi = {
-            cartuid: item.cartuid,
-            uid: item.uid,
-            quantity: -1,
-            iref: item.iref,
-        };const tmpi = {
-            cartuid: item.cartuid,
-            uid: item.uid,
-            quantity: 1,
-            iref: item.iref,
-        }
-        const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
-            {
-                method: 'POST',//body: JSON.stringify(cart),
-                body: JSON.stringify(tmpi),
-                headers: { "Content-Type": "application/json" },
-                //credentials: 'include',
-            });
-        const response = await stimulus.json();*/
+export default MerchandiseCheckout;
+
+/*
+const tmpi = {
+    cartuid: item.cartuid,
+    uid: item.uid,
+    quantity: -1,
+    iref: item.iref,
+};const tmpi = {
+    cartuid: item.cartuid,
+    uid: item.uid,
+    quantity: 1,
+    iref: item.iref,
+}
+const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
+    {
+        method: 'POST',//body: JSON.stringify(cart),
+        body: JSON.stringify(tmpi),
+        headers: { "Content-Type": "application/json" },
+        //credentials: 'include',
+    });
+const response = await stimulus.json();*/
 
 
-        /*const stimulus = await fetch(ServerURL + '/api/cart/item/register',
-            {
-                method: 'POST',//body: JSON.stringify(cart),
-                body: JSON.stringify(tmpi),
-                headers: { "Content-Type": "application/json" },
-                //credentials: 'include',
-            });
-        // const response = await stimulus.json();*/
+/*const stimulus = await fetch(ServerURL + '/api/cart/item/register',
+    {
+        method: 'POST',//body: JSON.stringify(cart),
+        body: JSON.stringify(tmpi),
+        headers: { "Content-Type": "application/json" },
+        //credentials: 'include',
+    });
+// const response = await stimulus.json();*/
 
-    /*
-            {isSubmitting && isSubmittingModalContent}
-            {!isSubmitting && didSubmit && didSubmitModalContent}
+/*
+        {isSubmitting && isSubmittingModalContent}
+        {!isSubmitting && didSubmit && didSubmitModalContent}
 
-    const isSubmittingModalContent = (
-        <p>Submitting Order Data.</p>
-    );
-    const didSubmitModalContent = (
-        <p>Order Data Was Submitted.</p>
-    );
+const isSubmittingModalContent = (
+    <p>Submitting Order Data.</p>
+);
+const didSubmitModalContent = (
+    <p>Order Data Was Submitted.</p>
+);
 
 
-<Fragment onClose={showCartHandler}> */ }
+<Fragment onClose={showCartHandler}> */

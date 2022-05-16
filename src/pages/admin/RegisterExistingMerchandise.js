@@ -113,7 +113,6 @@ const RegisterExistingMerchandise = (props) => {
                         <div className="col">
                             <button className="w-100 btn btn-lg btn-danger" type="button" onClick={deactivateMerchandiseHandler}>
                                 <span className="bi bi-trash3-fill"></span>
-                                Remove
                             </button>
                         </div>
                         <div className="col">

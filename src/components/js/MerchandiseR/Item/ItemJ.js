@@ -13,7 +13,7 @@ const ItemJ = (props) => {
     const price = `$${props.price.toFixed(2)}`;
     const token = window.sessionStorage.getItem("token")
 
-    const setItemDetailHandler = async() => {
+    const setItemDetailHandler = async () => {
         const selecteditem = {
             cartuid: props.cartuid,
             id: props.id,
@@ -38,7 +38,7 @@ const ItemJ = (props) => {
             uid: props.uid,
             iref: props.iref,
         }
-        dispatch(sendCartItem(titem,token));
+        dispatch(sendCartItem(titem, token));
     };
     const viewItemHandler = () => {
 
@@ -59,21 +59,23 @@ const ItemJ = (props) => {
     return (
         <Fragment>
             <li className={classes.item}>
-                        <div className="col-sm-1">
-                        <Link to={`/merchandise/detail`}>
-                            <div className={classes.imgcarry}>
-                                <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} onClick={setItemDetailHandler}/>
-                            </div>
-                        </Link>
+                <div className="col-sm-1">
+                    <Link to={`/merchandise/detail`}>
+                        <div className={classes.imgcarry}>
+                            <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} onClick={setItemDetailHandler} />
                         </div>
-                        <div className="col-sm-8">
-                            <button onClick={viewItemHandler} className="btn btn-default btn-outline-success"><h3>{props.name}</h3></button>
-                            <div className={classes.description}>{props.description}</div>
-                            <div className={classes.price}>{price}</div>
-                        </div>
-                        <div className="col-sm-3">
-                            <ItemFormJ priceclass={classes.price} price={props.price} onAddToCart={addToCartHandler} setItemDetailHandler={setItemDetailHandler.bind(null, props)}/>
-                        </div>
+                    </Link>
+                </div>
+                <div className="col-sm-8">
+                    <div onClick={viewItemHandler} className="btn btn-default btn-outline-success">
+                        <h3>{props.name}</h3>
+                    </div>
+                    <div className={classes.description}>{props.description}</div>
+                    <div className={classes.price}>{price}</div>
+                </div>
+                <div className="col-sm-3">
+                    <ItemFormJ priceclass={classes.price} price={props.price} onAddToCart={addToCartHandler} setItemDetailHandler={setItemDetailHandler.bind(null, props)} />
+                </div>
             </li>
         </Fragment>
     );

@@ -4,7 +4,7 @@ const Banner = (props) => {
     return (
         <CardJ>
             <div>
-                <span className={`bi bi-${props.banner}`} style={{ fontSize: "5rem" }} />
+                <span className={`bi bi-${props.banner}`} style={{ fontSize: "3rem" }} />
             </div>
         </CardJ>
     )

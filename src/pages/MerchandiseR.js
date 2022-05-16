@@ -35,7 +35,7 @@ const MerchandiseR = (props) => {
             {!props.authenticated && <Navigate to='/' />}
             {cartShown && <CartJ onClose={hideCartHandler} />}
             {toggleModal && <MerchandiseView onClose={modalToggle} />}
-            <HeaderR onShowCart={showCartHandler} />
+            {/* <HeaderR onShowCart={showCartHandler} /> */}
             <main>
                 <MerchandiseJ />
             </main>

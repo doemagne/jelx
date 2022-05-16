@@ -1,8 +1,8 @@
 import './Navigation.module.css';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 //import { Navigate } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavAuthBar from './NavAuthBar';
 import AnonymousBar from './Anonymous/AnonymousBar';
 import Anonymous from './Anonymous/Anonymous';
@@ -12,6 +12,8 @@ import BrandBar from './BrandBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { signoutUser } from '../../../store/redux/action/userAction';
 import Notification from '../../js/UI/Notification/Notification';
+// import classes from '../../js/Layout/HeaderCartButton/HeaderCartButton.module.css'
+import classes from './Navigation.module.css';
 //import { signout } from '../../../store/slice/AuthSlice';
 let nav;
 let navigation;
@@ -28,7 +30,28 @@ const Navigation = (props) => {
         window.sessionStorage.setItem("window", "/");
         dispatch(signoutUser());
     }
-        navigationloading = 
+    const navigator = useNavigate()
+    const cartCtx = useSelector(state => state.cart);
+    const { items } = cartCtx;
+    const [btnHigh, setBtnHigh] = useState(false);
+
+    const buttonClasses = `${classes.button} ${btnHigh ? classes.bump : ''}`;
+    useEffect(() => {
+        if (items.length === 0) {
+            return;
+        }
+        setBtnHigh(true);
+        const timer = setTimeout(() => {
+            setBtnHigh(false);
+        }, 290);
+
+        //console.log(items.length);
+        return () => {
+            clearTimeout(timer);
+        };
+
+    }, [items]);
+    navigationloading =
         (<Nav>
             <Link to="#" className='nav-link active' aria-current="page" >
                 <span className="bi bi-house" />
@@ -48,14 +71,22 @@ const Navigation = (props) => {
                 <Link to="/merchandise/cartr" className='nav-link active' aria-current="page">
                     <span className="bi bi-cart" />
                 </Link>
+                <Link to="/merchandise/cart" >
+                    <button className={`${buttonClasses} nav-link active text-center`} onClick={() => { }}>
+                        <span className={classes.button}>{cartCtx.totalItems}</span>
+                    </button>
+                </Link>
                 <Link to="/merchandise/register" className='nav-link active' aria-current="page">
                     <span className="bi bi-gear" />
                 </Link>
-                <Link to="/" className='nav-link active' aria-current="page" >
+                <Link to="/sensor/telemetry" className='nav-link active' aria-current="page" >
                     <span className="bi bi-thermometer-sun" />
                 </Link>
-                <Link to="/" className='nav-link active' aria-current="page" >
+                <Link to="/camera/feed" className='nav-link active' aria-current="page" >
                     <span className="bi bi-camera-reels" />
+                </Link>
+                <Link to="/report/bug" className='nav-link active' aria-current="page" >
+                    <span className="bi bi-bug" />
                 </Link>
                 <Link to="/account/signout" className="nav-link active" aria-current="page" onClick={signoutHandler}>
                     <span className="bi bi-door-closed" />
@@ -74,6 +105,9 @@ const Navigation = (props) => {
                 <Link to="/account/signupN" className="nav-link active" aria-current="page" >
                     <span className="bi bi-person-lines-fill" />
                 </Link>
+                <Link to="/report/bug" className='nav-link active' aria-current="page" >
+                    <span className="bi bi-bug" />
+                </Link>
             </Nav>
         );
     }
@@ -83,7 +117,7 @@ const Navigation = (props) => {
                 <Container>
                     <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                     <Navbar.Collapse id='responsive-navbar-nav'>
-                        {!loadstate ?  navigation: navigationloading }
+                        {!loadstate ? navigation : navigationloading}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -93,26 +127,26 @@ const Navigation = (props) => {
 
 export default Navigation;
     /*if (props.authenticated) {
-        leftmenu = (<NavAuthBar />);
-        menu = (<AuthLogout onClick={signouHandler} />);
-    } else {
-        console.log(`Rerunning Asyncronous SideEffect => `);
-        leftmenu = (<Anonymous />);
-        menu = (<AnonymousBar />);
-        //return <Navigate to="/"/>
-    }*/
-    /*nav = (
-        <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-            <div className="container-fluid">
-                <BrandBar />
-                <div className="collapse navbar-collapse" id="navbarCollapse">
-                    {leftmenu}
-                    {props.authenticated && searchform}
-                </div>
-                {menu}
+leftmenu = (<NavAuthBar />);
+menu = (<AuthLogout onClick={signouHandler} />);
+} else {
+console.log(`Rerunning Asyncronous SideEffect => `);
+leftmenu = (<Anonymous />);
+menu = (<AnonymousBar />);
+//return <Navigate to="/"/>
+}*/
+/*nav = (
+    <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <div className="container-fluid">
+            <BrandBar />
+            <div className="collapse navbar-collapse" id="navbarCollapse">
+                {leftmenu}
+                {props.authenticated && searchform}
             </div>
-        </nav>
-    );*/
+            {menu}
+        </div>
+    </nav>
+);*/
 
 /*
                 {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}

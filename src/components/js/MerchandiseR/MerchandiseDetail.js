@@ -50,7 +50,7 @@ const MerchandiseDetail = (props) => {
             {!props.authenticated && (<Navigate to="/" />)}
             {!currentItem && (<Navigate to="/merchandise/cartr" />)}
             <Fragment>
-                <HeaderR onShowCart={showCartHandler} />
+                {/* <HeaderR onShowCart={showCartHandler} /> */}
                 <main>
                     (<CardJ>
                         <div className={classes.imgcarry}>
@@ -86,7 +86,7 @@ const MerchandiseDetail = (props) => {
                                     </div>
                                     <div className="col-sm">
                                         <div className='row'>
-                                            <Field ref={quantityref} icon="box" input={{ className: 'form-control', type: 'number', step: "1", id: 'cartquantity', placeholder: 'Quantity', defaultValue: "1", required: true, }} />
+                                            <Field ref={quantityref} icon="box" input={{ className: 'form-control', type: 'number', step: "1", id: 'cartquantity', placeholder: 'Quantity', defaultValue: `${1}`, required: true, }} />
                                         </div>
                                         <div className="row">
                                             <Field icon="tag" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Item Name', readOnly: true, defaultValue: currentItem.name }} />

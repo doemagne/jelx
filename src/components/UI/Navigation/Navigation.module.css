@@ -1,0 +1,64 @@
+.tcenter{
+  text-align: center;
+}
+
+.button {
+  /* position: relative; */
+  cursor: pointer;
+  font: inherit;
+  border: none;
+  background-color: #888;
+  color: white;
+  padding: 0.2rem 0.3rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 25px;
+  font-weight: bold;
+  text-align: center;
+  margin:0 auto;
+}
+
+.button:hover,
+.button:active {
+  background-color: #1a002c;
+}
+
+.badge {
+    background-color: #17b9b9;
+    padding: 0.5rem 0.5rem;
+    border-radius: 15px;
+    /* margin-left: 1rem; */
+    font-weight: bold;
+    /* top: 0.25rem; */
+    text-align: center;
+  }
+  .bump {
+    animation: bump 300ms ease-out;
+  }
+  
+  @keyframes bump {
+    0% {
+      transform: scale(1);
+    }
+    10% {
+      transform: scale(0.9);
+    }
+    30% {
+      transform: scale(1.1);
+    }
+    50% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .button:hover .badge,
+  .button:active .badge {
+    background-color: #0c2b92;
+  }
+  button:hover,
+  .button:active {
+    background-color: #1a002c;
+  }

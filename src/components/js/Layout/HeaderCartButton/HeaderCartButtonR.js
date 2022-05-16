@@ -19,7 +19,7 @@ const HeaderCartButtonR = props => {
     
     const [btnHigh, setBtnHigh] = useState(false); 
 
-    const buttonClasses = `${classes.button} ${btnHigh ? classes.bump : ''}`;
+    const buttonClasses = `${classes.badge} ${btnHigh ? classes.bump : ''}`;
     useEffect(() => {
         if (items.length === 0) {
             return;
