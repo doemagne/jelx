@@ -17,10 +17,10 @@ const CheckoutProfile = (props) => {
     <Fragment> {profile && 
         <div className='col'>
           <div className='row'>
-            <Field ref={nameref} icon="person-fill" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Name', defaultValue: profile.name, readOnly: props.fieldEdit, }} />
+            <Field ref={nameref} icon="person-fill" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Name', defaultValue: profile.name, readOnly: props.fieldEdit, required:true}} />
           </div>
           <div className='row'>
-            <Field ref={phoneref} icon="phone-fill" input={{ className: 'form-control', type: 'tel', id: 'phone', placeholder: 'Phone', defaultValue: profile.phone, readOnly: props.fieldEdit, }} />
+            <Field ref={phoneref} icon="phone-fill" input={{ className: 'form-control', type: 'tel', id: 'phone', placeholder: 'Phone', defaultValue: profile.phone, readOnly: props.fieldEdit, required:true}} />
           </div>
         </div>}
     </Fragment>

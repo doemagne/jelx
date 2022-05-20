@@ -11,10 +11,10 @@ const MerchandiseCheckoutItem = (props) => {
     <Fragment>
         <li className={classes['cart-item']}>
           <div className='row'>
-            <div className='col-8'>
+            <div className='col-7'>
               <h2>{props.name}</h2>
             </div>
-            <div className='col-4'>
+            <div className='col-5'>
               <div className={classes.summary}>
                 <span className={classes.price}>{price}</span>
                 <span className={classes.amount}>x{props.quantity}</span>

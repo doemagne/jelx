@@ -27,19 +27,19 @@ const CheckoutAddress = (props) => {
       {address && !props.fieldEdit &&
         <div className='col-sm'>
           <div className='row'>
-            <Field ref={streetref} icon="signpost" input={{ className: 'form-control', type: 'text', id: 'street', placeholder: 'Street', defaultValue: address.street, readOnly: props.fieldEdit, }} />
+            <Field ref={streetref} icon="signpost" input={{ className: 'form-control', type: 'text', id: 'street', placeholder: 'Street', defaultValue: address.street, readOnly: props.fieldEdit, required:true}} />
           </div>
           <div className='row'>
-            <Field ref={suburbref} icon="cursor" input={{ className: 'form-control', type: 'text', id: 'suburb', placeholder: 'Suburb', defaultValue: address.suburb, readOnly: props.fieldEdit, }} />
+            <Field ref={suburbref} icon="cursor" input={{ className: 'form-control', type: 'text', id: 'suburb', placeholder: 'Suburb', defaultValue: address.suburb, readOnly: props.fieldEdit, required:true}} />
           </div>
           <div className='row'>
-            <Field ref={cityref} icon="building" input={{ className: 'form-control', type: 'text', id: 'city', placeholder: 'City', defaultValue: address.city, readOnly: props.fieldEdit, }} />
+            <Field ref={cityref} icon="building" input={{ className: 'form-control', type: 'text', id: 'city', placeholder: 'City', defaultValue: address.city, readOnly: props.fieldEdit, required:true}} />
           </div>
           <div className='row'>
-            <Field ref={countryref} icon="globe" input={{ className: 'form-control', type: 'text', id: 'country', placeholder: 'Country', defaultValue: address.country, readOnly: props.fieldEdit, }} />
+            <Field ref={countryref} icon="globe" input={{ className: 'form-control', type: 'text', id: 'country', placeholder: 'Country', defaultValue: address.country, readOnly: props.fieldEdit, required:true}} />
           </div>
           <div className='row'>
-            <Field ref={postalcoderef} icon="postage" input={{ className: 'form-control', type: 'text', id: 'postalcode', placeholder: 'Postal Code', defaultValue: address.postalcode, readOnly: props.fieldEdit, }} />
+            <Field ref={postalcoderef} icon="postage" input={{ className: 'form-control', type: 'text', id: 'postalcode', placeholder: 'Postal Code', defaultValue: address.postalcode, readOnly: props.fieldEdit, required:true}} />
           </div>
         </div>}
     </Fragment>

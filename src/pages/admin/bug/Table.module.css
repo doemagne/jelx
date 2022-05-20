@@ -1,0 +1,18 @@
+.sorter {
+    display: flex;
+    margin:0;
+    padding:0;
+}
+
+th {
+    cursor: pointer;
+    min-width: 4.9em;
+}
+
+tr {
+    text-align: left;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: auto;
+}

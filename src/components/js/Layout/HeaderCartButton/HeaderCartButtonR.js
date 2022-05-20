@@ -41,7 +41,7 @@ const HeaderCartButtonR = props => {
             <button className={buttonClasses} onClick={props.onClick}>
                 <span className={classes.icon}><CartIconJ /></span>
                 <span>Cart</span>
-                <span className={classes.badge}>{tItems}</span>
+                <span className={classes.badge}>{numberOfCartItems}</span>
             </button>
         </Fragment>
     );

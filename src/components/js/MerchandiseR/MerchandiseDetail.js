@@ -45,79 +45,77 @@ const MerchandiseDetail = (props) => {
         navigator("/merchandise/cart")
     }
 
-    return (
+    return <Fragment>
         <section>
             {!props.authenticated && (<Navigate to="/" />)}
             {!currentItem && (<Navigate to="/merchandise/cartr" />)}
-            <Fragment>
-                {/* <HeaderR onShowCart={showCartHandler} /> */}
-                <main>
-                    (<CardJ>
-                        <div className={classes.imgcarry}>
-                            <h1>Merchandise Detail</h1>
-                        </div>
-                    </CardJ>
-                    {currentItem && (
-                        <form onSubmit={submitHandler}>
-                            <CardJ>
-                                <div className="row">
-                                    <div className="col">
-                                        <button className="w-100 btn btn-lg btn-warning" type="button" onClick={cancelHandler}>
-                                            <span className="bi bi-chevron-double-left" />
-                                        </button>
-                                    </div>
-                                    <div className="col">
-                                        <button className="w-100 btn btn-lg btn-primary" type="submit">
-                                            <span className="bi bi-cart" />
-                                        </button>
+            {/* <HeaderR onShowCart={showCartHandler} /> */}
+            <main>
+                <CardJ>
+                    <div className={classes.imgcarry}>
+                        <h1>Merchandise Detail</h1>
+                    </div>
+                </CardJ>
+                {currentItem &&
+                    <form onSubmit={submitHandler}>
+                        <CardJ>
+                            <div className="row">
+                                <div className="col">
+                                    <button className="w-100 btn btn-lg btn-warning" type="button" onClick={cancelHandler}>
+                                        <span className="bi bi-chevron-double-left" />
+                                    </button>
+                                </div>
+                                <div className="col">
+                                    <button className="w-100 btn btn-lg btn-primary" type="submit">
+                                        <span className="bi bi-cart" />
+                                    </button>
+                                </div>
+                            </div>
+                        </CardJ>
+                        <CardJ>
+                            <div className="row">
+                                <div className="col-sm">
+                                    <div className="row">
+                                        <div className={`form-floating form-fl`}>
+                                            <CardJ>
+                                                <img className={classes.imgbackup} src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photop" onClick={imageViewHandler} />
+                                            </CardJ>
+                                        </div>
                                     </div>
                                 </div>
-                            </CardJ>
-                            <CardJ>
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <div className="row">
-                                            <div className={`form-floating form-fl`}>
-                                                <CardJ>
-                                                    <img className={classes.imgbackup} src={`${ServerURL}/assets/media/merchandise/${currentItem.uid}/i.png`} id="photop" onClick={imageViewHandler} />
-                                                </CardJ>
-                                            </div>
-                                        </div>
+                                <div className="col-sm">
+                                    <div className='row'>
+                                        <Field ref={quantityref} icon="box" input={{ className: 'form-control', type: 'number', step: "1", id: 'cartquantity', placeholder: 'Quantity', defaultValue: `${1}`, required: true, }} />
                                     </div>
-                                    <div className="col-sm">
-                                        <div className='row'>
-                                            <Field ref={quantityref} icon="box" input={{ className: 'form-control', type: 'number', step: "1", id: 'cartquantity', placeholder: 'Quantity', defaultValue: `${1}`, required: true, }} />
-                                        </div>
-                                        <div className="row">
-                                            <Field icon="tag" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Item Name', readOnly: true, defaultValue: currentItem.name }} />
-                                        </div>
-                                        <div className="row">
-                                            <Field icon="boxes" input={{ className: 'form-control', type: 'number', step: "1", id: 'quantity', placeholder: 'Quantity', readOnly: true, defaultValue: currentItem.quantity }} />
-                                        </div>
-                                        <div className="row">
-                                            <Field icon="currency-dollar" input={{ className: 'form-control', type: 'number', step: "0.01", id: 'price', placeholder: 'Price', readOnly: true, defaultValue: currentItem.price }} />
-                                        </div>
-                                        <div className="row">
-                                            <FieldArea icon="chat-right-text" textarea={{ className: 'form-control', type: 'text', id: 'description', placeholder: 'Description', readOnly: true, defaultValue: currentItem.description }} />
-                                        </div>
-                                        <div className="row">
-                                            <Field icon="link" input={{ className: 'form-control', type: 'text', id: 'uid', placeholder: 'UID', readOnly: true, defaultValue: currentItem.uid }} />
-                                        </div>
+                                    <div className="row">
+                                        <Field icon="tag" input={{ className: 'form-control', type: 'text', id: 'name', placeholder: 'Item Name', readOnly: true, defaultValue: currentItem.name }} />
                                     </div>
+                                    <div className="row">
+                                        <Field icon="boxes" input={{ className: 'form-control', type: 'number', step: "1", id: 'quantity', placeholder: 'Quantity', readOnly: true, defaultValue: currentItem.quantity }} />
+                                    </div>
+                                    <div className="row">
+                                        <Field icon="currency-dollar" input={{ className: 'form-control', type: 'number', step: "0.01", id: 'price', placeholder: 'Price', readOnly: true, defaultValue: currentItem.price }} />
+                                    </div>
+                                    <div className="row">
+                                        <FieldArea icon="chat-right-text" textarea={{ className: 'form-control', type: 'text', id: 'description', placeholder: 'Description', readOnly: true, defaultValue: currentItem.description }} />
+                                    </div>
+                                    <div className="row">
+                                        <Field icon="link" input={{ className: 'form-control', type: 'text', id: 'uid', placeholder: 'UID', readOnly: true, defaultValue: currentItem.uid }} />
+                                    </div>
+                                </div>
 
-                                </div>
-                            </CardJ>
-                        </form>
-                    )}
-                    <Banner banner={'chat-right-text'} />
-                    <CardJ>
-                        <Link to={`comments`} className='nav-link active' aria-current="page" >
-                            <span className="bi bi-chat-left-text" />
-                        </Link>
-                    </CardJ></main>
-            </Fragment>
+                            </div>
+                        </CardJ>
+                    </form>
+                }
+                <Banner banner={'chat-right-text'} />
+                <CardJ>
+                    <Link to={`comments`} className='nav-link active' aria-current="page" >
+                        <span className="bi bi-chat-left-text" />
+                    </Link>
+                </CardJ></main>
         </section>
-    )
+    </Fragment>
 }
 export default MerchandiseDetail;
 //<Routes>

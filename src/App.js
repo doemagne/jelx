@@ -21,15 +21,20 @@ import RegisterNewMerchandise from './pages/admin/RegisterNewMerchandise';
 import RegisterExistingMerchandise from './pages/admin/RegisterExistingMerchandise';
 import MerchandiseCart from './pages/admin/MerchandiseCart';
 import MerchandiseCheckout from './pages/admin/MerchandiseCheckout';
+import MerchandiseCartcc from './pages/admin/MerchandiseCartcc';
+import ReportBug from './pages/admin/bug/ReportBug';
+import BugListView from './pages/admin/bug/BugListView';
+import BugLog from './pages/admin/bug/BugLog';
 function App() {
   const dispatch = useDispatch();
   const loader = useSelector(state => state.ui.loadstate);
   const notification = useSelector(state => state.ui.notification);
+  const token = useSelector(state => state.user.token) || window.sessionStorage.getItem("token")
   const authenticated = useSelector(state => state.user.authenticated)
   const name = useSelector(state => state.user.name);
   const cartuid = useSelector(state => state.user.cartuid);
   //const token = useSelector(state => state.user.token);
-  let token = window.sessionStorage.getItem("token")
+  // let token = window.sessionStorage.getItem("token")
   const fetchUserHandler = useCallback(async () => {
     dispatch(fetchTransportData(token));
   }, [])
@@ -60,6 +65,8 @@ function App() {
               <Route path="/merchandise/cart/checkout" element={<MerchandiseCheckout cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/detail" element={<MerchandiseDetail cartuid={cartuid} authenticated={authenticated}/>}/>
+              <Route path="/bug/report" element={<ReportBug authenticated={authenticated} token={token}/>} />
+              <Route path="/bug/mapping" element={<BugLog authenticated={authenticated} token={token}/>} />
               <Route path="/config" element={<Config />} />
               <Route path='*' element={<NotFound/>}/>
             </Routes>

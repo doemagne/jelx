@@ -71,6 +71,7 @@ const MerchandiseCart = props => {
                 onAdd={cartItemAddHandler.bind(null, item)}
             />
         )))
+        
         return;
 
     }, [cartCtx])
@@ -92,11 +93,6 @@ const MerchandiseCart = props => {
                                     <span className="bi bi-chevron-double-left" />
                                 </button>
                             </div>
-                            {orderClicked  && <div className="col-sm">
-                                <button className={`w-100 btn btn-lg btn-primary`} onClick={fieldEditHandler} >
-                                    <span className="bi bi-gear" />
-                                </button>
-                            </div>}
                             {hasItems && <div className="col-sm">
                                 <button className={`w-100 btn btn-lg btn-success`} onClick={orderClickedHandler}>
                                     <span className="bi bi-cash-coin" />

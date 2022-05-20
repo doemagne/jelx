@@ -59,24 +59,27 @@ const ItemJ = (props) => {
     return (
         <Fragment>
             <li className={classes.item}>
-                <div className="col-sm-1">
+                <div className="col">
                     <Link to={`/merchandise/detail`}>
                         <div className={classes.imgcarry}>
                             <img src={`${ServerURL}/assets/media/merchandise/${props.uid}/i.png`} onClick={setItemDetailHandler} />
                         </div>
                     </Link>
                 </div>
-                <div className="col-sm-8">
-                    <div onClick={viewItemHandler} className="btn btn-default btn-outline-success">
+                <div className="col">
+                    <div onClick={viewItemHandler}>
                         <h3>{props.name}</h3>
                     </div>
                     <div className={classes.description}>{props.description}</div>
                     <div className={classes.price}>{price}</div>
                 </div>
-                <div className="col-sm-3">
+                <div className="col">
                     <ItemFormJ priceclass={classes.price} price={props.price} onAddToCart={addToCartHandler} setItemDetailHandler={setItemDetailHandler.bind(null, props)} />
                 </div>
             </li>
+            {/* <div className='row'>
+            </div> */}
+
         </Fragment>
     );
 };

@@ -20,20 +20,18 @@ const CheckoutPayment = (props) => {
   return (
     <Fragment>
       <div className='col-sm'>
-        <form onSubmit={submitHandler}>
-          <div className='row'>
-            <Field ref={accnameref} icon="bank" input={{ className: 'form-control', type: 'text', id: 'accname', placeholder: 'Account Name', readOnly: !fieldEdit, }} />
-          </div>
-          <div className='row'>
-            <Field ref={cardnrref} icon="credit-card-2-front" input={{ className: 'form-control', type: 'text', id: 'cardnr', placeholder: 'Card Number.', readOnly: !fieldEdit, }} />
-          </div>
-          <div className='row'>
-            <Field ref={cardcvcref} icon="credit-card-2-back" input={{ className: 'form-control', type: 'text', id: 'cvcnr', placeholder: 'Card CVC', readOnly: !fieldEdit, }} />
-          </div>
-          <div className='row'>
-            <Field ref={expiryref} icon="calendar-event" input={{ className: 'form-control', type: 'text', id: 'expiry', placeholder: 'Expiry Date', readOnly: !fieldEdit, }} />
-          </div>
-        </form>
+        <div className='row'>
+          <Field ref={accnameref} icon="bank" input={{ className: 'form-control', type: 'text', id: 'accname', placeholder: 'Account Name', readOnly: !fieldEdit, required:true}} />
+        </div>
+        <div className='row'>
+          <Field ref={cardnrref} icon="credit-card-2-front" input={{ className: 'form-control', type: 'text', id: 'cardnr', placeholder: 'Card Number.', readOnly: !fieldEdit, required:true }} />
+        </div>
+        <div className='row'>
+          <Field ref={cardcvcref} icon="credit-card-2-back" input={{ className: 'form-control', type: 'text', id: 'cvcnr', placeholder: 'Card CVC', readOnly: !fieldEdit, required:true }} />
+        </div>
+        <div className='row'>
+          <Field ref={expiryref} icon="calendar-event" input={{ className: 'form-control', type: 'text', id: 'expiry', placeholder: 'Expiry Date', readOnly: !fieldEdit, required:true}} />
+        </div>
       </div>
     </Fragment >
   );

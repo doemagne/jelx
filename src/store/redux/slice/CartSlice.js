@@ -58,11 +58,18 @@ const cartSlice = createSlice({
             //console.log(pay);
             if (action.payload) {
                 state.uid = action.payload.uid;
-                state.totalAmount = action.payload.totalAmount;
+                // let counterupdate = action.payload.items.reduce((curNum, item) => {
+                //     return curNum + item.quantity;
+                // });
+                // state.totalAmount = action.payload.totalAmount
                 state.totalItems = action.payload.totalItems;
                 if (state.items.length == 0) {
+                    let counterupdate = 0;
+                    let totalUpdate = 0;
                     for (const i in action.payload.items) {
                         if (action.payload.items[i].latched) {
+                            counterupdate = counterupdate + action.payload.items[i].quantity
+                            totalUpdate = totalUpdate + (action.payload.items[i].merchandise.price * action.payload.items[i].quantity) 
                             state.items.push({
                                 id: action.payload.items[i].merchandise.id,
                                 name: action.payload.items[i].merchandise.name,
@@ -75,6 +82,9 @@ const cartSlice = createSlice({
                         }
                         //state.merchandise.push()
                     }
+                    state.totalItems = counterupdate
+                    state.totalAmount = totalUpdate
+                    console.log(counterupdate)
                 }
             }
         },

@@ -1,3 +1,7 @@
+.tselector tr::selection {
+  color: gold;
+}
+
 .cart-item {
     /* display: flex; */
     /* justify-content: space-between; */

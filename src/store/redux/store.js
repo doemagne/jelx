@@ -7,6 +7,8 @@ import whcartReducer from './slice/WHCartSlice';
 import cartReducer from './slice/CartSlice';
 import userReducer from './slice/UserSlice';
 import merchandiseReducer from './slice/MerchandiseSlice';
+import bugReducer from './slice/BugSlice';
+import tableReducer from './slice/TableSlice';
 
 const Store = configureStore({
     reducer: {
@@ -18,6 +20,8 @@ const Store = configureStore({
         auth: authReducer,
         whui: whuiReducer,
         whcart: whcartReducer,
+        bug: bugReducer,
+        table: tableReducer,
     },
 })
 

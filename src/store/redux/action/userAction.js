@@ -1,6 +1,6 @@
 import { authenticator, setTransport, signout } from "../slice/UserSlice";
 import { setredirect, notify, setloading } from '../slice/UISlice';
-import { sendGetRequest, sendTokenGetRequest, sendPostRequest, sendTokenPutRequest } from "./Request";
+import { sendGetRequest, sendTokenGetRequest, sendPostRequest, sendTokenPutRequest, sendTokenPostRequest } from "./Request";
 import { notificationpending, notificationsent, notificationsignedin, notificationsignedup, notificationfailed } from "../structure/NotifyTPL";
 import { updateCart } from "../slice/CartSlice";
 //let endpoint;//'/api/signup'
@@ -44,9 +44,9 @@ export const fetchTransportData = (token) => {
         try {
             const endpoint = '/api/user/restriction';
             //const endpoint = '/api/user';
-            const content = await sendTokenGetRequest(endpoint,token);
+            const content = await sendTokenGetRequest(endpoint, token);
             //console.log({id:1, transport:content});
-            
+
             dispatch(setTransport({ id: 1, content: content }));
             dispatch(authenticator(content.authenticated));
             dispatch(updateCart(content.cart));

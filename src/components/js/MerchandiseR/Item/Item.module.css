@@ -22,8 +22,12 @@
   }
 
   .imgcarry img {
-    width: 7rem;
-    height: 7rem;
+    /* width: 7rem; */
+    /* height: 7rem; */
+    width: auto;
+    height: auto;
+    max-width: 50%;
+    max-height: 50%;
   }
   .btncarry {
     align-items: center;

@@ -12,9 +12,9 @@ import Banner from "../../components/js/UI/Banner/Banner";
 import CheckoutAddress from "../../components/js/Cart/Checkout/CheckoutAddress";
 import CheckoutPayment from "../../components/js/Cart/Checkout/CheckoutPayment";
 import CheckoutProfile from "../../components/js/Cart/Checkout/CheckoutProfile";
-import MerchandiseCheckoutItem from "../../components/js/CartR/MerchandiseCheckoutItem";
+import MerchandiseCartRow from "../../components/js/CartR/MerchandiseCartRow";
 
-const MerchandiseCheckout = props => {
+const MerchandiseCartcc = props => {
     const [fieldEdit, setFieldEdit] = useState(true);
     const [cartItems, setCartItems] = useState();
     const [orderClicked, setOrderClicked] = useState(false);
@@ -34,7 +34,8 @@ const MerchandiseCheckout = props => {
     };
 
     const orderClickedHandler = () => {
-        setOrderClicked(!orderClicked);
+        // setOrderClicked(!orderClicked);
+        navigator("/merchandise/cart/checkout")
     };
     const fieldEditHandler = () => {
         setFieldEdit(!fieldEdit)
@@ -59,8 +60,8 @@ const MerchandiseCheckout = props => {
     }
 
     useEffect(() => {
-        setCartItems(cartCtx.items.map((item) => (
-            <MerchandiseCheckoutItem
+        /*setCartItems(cartCtx.items.map((item) => (
+            <MerchandiseCartItem
                 key={item.id}
                 name={item.name}
                 quantity={item.quantity}
@@ -71,15 +72,33 @@ const MerchandiseCheckout = props => {
                 onAdd={cartItemAddHandler.bind(null, item)}
             />
         )))
+        */
+
+        setCartItems(cartCtx.items.map((item) => <MerchandiseCartRow
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            quantity={item.quantity}
+            price={item.price}
+            uid={item.uid}
+            iref={item.iref}
+            onRemove={cartItemRemoveHandler.bind(null, item)}
+            onAdd={cartItemAddHandler.bind(null, item)}
+        />))
+
         return;
 
     }, [cartCtx])
+    let th = <Fragment>
+
+    </Fragment>
+
     return (
         <section>
             {!props.authenticated && <Navigate to={"/"} />}
             <Fragment>
                 {/* <HeaderR onShowCart={showCartHandler} /> */}
-                <main><form>
+                <main>
                     <CardJ>
                         <div className={classes.imgcarry}>
                             <h1>Cart Items</h1>
@@ -88,26 +107,40 @@ const MerchandiseCheckout = props => {
                     <CardJ>
                         <div className="row">
                             <div className="col-sm">
-                                <button className="w-100 btn btn-lg btn-warning" type="button" onClick={showCartHandler}>
+                                <button className="w-100 btn btn-lg btn-warning" onClick={showCartHandler}>
                                     <span className="bi bi-chevron-double-left" />
                                 </button>
                             </div>
-                            <div className="col-sm">
-                                <button className={`w-100 btn btn-lg btn-primary`} type="button" onClick={fieldEditHandler} >
-                                    <span className="bi bi-gear" />
-                                </button>
-                            </div>
-                            {fieldEdit && <div className='col'>
-                                <button className={`w-100 btn btn-lg btn-dark`} type="submit" onClick={() => { }}>
-                                    <span className="bi bi-hand-thumbs-up" />
+                            {hasItems && <div className="col-sm">
+                                <button className={`w-100 btn btn-lg btn-success`} onClick={orderClickedHandler}>
+                                    <span className="bi bi-cash-coin" />
                                 </button>
                             </div>}
                         </div>
                     </CardJ>
+                    {/* {orderClicked && <CardJ>
+                        <div className="row">
+                            <CheckoutProfile onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
+                            <CheckoutAddress onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
+                            <CheckoutPayment onconfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={() => { }} />
+                        </div>
+                    </CardJ>} */}
                     <CardJ>
-                        <ul className={classes['cart-items']}>
-                            {cartItems}
-                        </ul>
+                        {/* <ul className={classes['cart-items']}> */}
+                        {/* {cartItems} */}
+                        {/* </ul> */}
+                        <table className="table table-light table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" >#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Qty.</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>{cartItems}</tbody>
+                        </table>
                     </CardJ>
                     <CardJ>
                         <div className={classes.total}>
@@ -115,30 +148,7 @@ const MerchandiseCheckout = props => {
                             <span>{totalAmount}</span>
                         </div>
                     </CardJ>
-                    <CardJ>
-                        <div className="row">
-                            <CheckoutPayment onconfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={() => { }} />
-                            <div className="col-sm">
-                                <Banner banner={"credit-card-2-front"} />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <CheckoutProfile onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
-                            <div className="col-sm">
-                                <Banner banner={"person-circle"} />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <CheckoutAddress onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
-                            <div className="col-sm">
-                                <Banner banner={"geo"} />
-                            </div>
-                        </div>
-                    </CardJ>
-
                     <Banner banner={'cart-check'} />
-                </form>
-
                 </main>
             </Fragment>
         </section>
@@ -146,27 +156,28 @@ const MerchandiseCheckout = props => {
     );
 };
 
-export default MerchandiseCheckout;
+export default MerchandiseCartcc;
+        /*
 
-/*
+{
 const tmpi = {
-    cartuid: item.cartuid,
-    uid: item.uid,
-    quantity: -1,
-    iref: item.iref,
+cartuid: item.cartuid,
+uid: item.uid,
+quantity: -1,
+iref: item.iref,
 };const tmpi = {
-    cartuid: item.cartuid,
-    uid: item.uid,
-    quantity: 1,
-    iref: item.iref,
+cartuid: item.cartuid,
+uid: item.uid,
+quantity: 1,
+iref: item.iref,
 }
 const stimulus = await fetch(ServerURL + '/api/cart/item/deduct',
-    {
-        method: 'POST',//body: JSON.stringify(cart),
-        body: JSON.stringify(tmpi),
-        headers: { "Content-Type": "application/json" },
-        //credentials: 'include',
-    });
+{
+method: 'POST',//body: JSON.stringify(cart),
+body: JSON.stringify(tmpi),
+headers: { "Content-Type": "application/json" },
+//credentials: 'include',
+});
 const response = await stimulus.json();*/
 
 
