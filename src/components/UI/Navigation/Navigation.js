@@ -85,7 +85,7 @@ const Navigation = (props) => {
                 <Link to="/camera/feed" className='nav-link active' aria-current="page" >
                     <span className="bi bi-camera-reels" />
                 </Link>
-                <Link to="/bug/report" className='nav-link active' aria-current="page" >
+                <Link to="/bug/mapping" className='nav-link active' aria-current="page" >
                     <span className="bi bi-bug" />
                 </Link>
                 <Link to="/account/signout" className="nav-link active" aria-current="page" onClick={signoutHandler}>
@@ -104,9 +104,6 @@ const Navigation = (props) => {
                 </Link>
                 <Link to="/account/signupN" className="nav-link active" aria-current="page" >
                     <span className="bi bi-person-lines-fill" />
-                </Link>
-                <Link to="/bug/report" className='nav-link active' aria-current="page" >
-                    <span className="bi bi-bug" />
                 </Link>
             </Nav>
         );

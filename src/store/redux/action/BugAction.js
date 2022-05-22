@@ -1,6 +1,7 @@
-import { addToBugs, transportBugs } from "../slice/BugSlice";
+import { addToBugs, transportBugs, updateBug } from "../slice/BugSlice";
+import { updateTableRow } from "../slice/TableSlice";
 import { notify, setloading } from "../slice/UISlice";
-import { sendTokenGetRequest, sendTokenPostRequest } from "./Request";
+import { sendTokenGetRequest, sendTokenPostRequest, sendTokenPutRequest } from "./Request";
 
 export const fetchBugMap = (token) => {
     return (async (dispatch) => {
@@ -31,7 +32,38 @@ export const fetchBugMap = (token) => {
         dispatch(setloading(false));
     })
 } 
-
+export const updateSystemBug = (data, token) => {
+    return (async (dispatch) => {
+        dispatch(setloading(true));
+        dispatch(notify({
+            status: 'pending',
+            title: 'bug report.',
+            message: 'submitting reported bug',
+        }));
+        try {
+            console.log("updating")
+            // console.log(data)
+            // console.log(token)
+            const endpoint = '/api/bug/update';
+            const response = await sendTokenPutRequest(data, endpoint, token)
+            dispatch(updateBug(response))
+            dispatch(updateTableRow(response))
+            dispatch(setloading(false));
+            dispatch(notify({
+                status: 'success',
+                title: 'Bug Updated.',
+                message: 'system updated bug successfully.',
+            }));
+        } catch (error) {
+            dispatch(setloading(false));
+            dispatch(notify({
+                status: 'error',
+                title: 'failed to update bug',
+                message: `failed to update the bug data: ${error.message}`,
+            }));
+        }
+    });
+}
 export const registerSystemBug = (data, token) => {
     return (async (dispatch) => {
         dispatch(setloading(true));
@@ -44,12 +76,12 @@ export const registerSystemBug = (data, token) => {
             const endpoint = '/api/bug/register';
             const response = await sendTokenPostRequest(data, endpoint, token)
             dispatch(addToBugs({content:response}))
+            dispatch(setloading(false));
             dispatch(notify({
                 status: 'success',
                 title: 'Bug report acknowledged.',
                 message: 'system has acknowledged report registration successfully.',
             }));
-            dispatch(setloading(false));
         } catch (error) {
             dispatch(setloading(false));
             dispatch(notify({

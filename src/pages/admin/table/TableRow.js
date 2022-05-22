@@ -7,16 +7,19 @@ const TableRow = (props) => {
   const celldata = props.celldata
   const headers = useSelector(state => state.table.headers)
   const [tableRow, setTableRow] = useState()
+  const onClickHandler = (item) => {
+    props.onClickHandler(item)
+  }
   useEffect(() => {
     if (headers || headers.length > 0) {
-      setTableRow(headers.map((header) => <TableCell key={header.headerCaption} caption={celldata[header.headerCaption]} />))
+      setTableRow(headers.map((header) => <TableCell key={header.headerCaption} caption={props.celldata[header.headerCaption]} />))
     }
-  }, [headers])
+  }, [headers, setTableRow, celldata])
 
 
   return (
     <Fragment>
-      <tr>
+      <tr onClick={onClickHandler}>
         {tableRow}
       </tr>
     </Fragment>

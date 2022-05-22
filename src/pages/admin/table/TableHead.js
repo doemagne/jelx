@@ -6,15 +6,15 @@ import Banner from "../../../components/js/UI/Banner/Banner"
 import CardJ from "../../../components/js/UI/CardJ"
 import { fetchBugMap } from "../../../store/redux/action/BugAction"
 import { delayRequest } from "../../../store/redux/action/Request"
-import BugRow from "./BugRow"
+import BugRow from "../bug/BugRow"
 import TableHeader from "./TableHeader"
 import { sortascending, sortdescending } from "../../../store/redux/slice/TableSlice"
 const desc = `sort-down`
 const asc = `sort-up`
+// let firstLoad = true
 
 const TableHead = (props) => {
     const [headersl, setHeadersl] = useState()
-    const [idSort, setIdSort] = useState(desc)
     const headers = useSelector(state => state.table.headers)
     const dispatch = useDispatch()
     const sortColumnHandler = (header) => {
@@ -28,6 +28,10 @@ const TableHead = (props) => {
     useEffect(() => {
         if (headers && headers.length > 0) {
             setHeadersl(headers.map((header) => <TableHeader key={header.id} headerSort={header.headerSort} onClickHandler={sortColumnHandler.bind(null, header)} headerCaption={header.headerCaption} />))
+            // if (firstLoad) {
+            //     dispatch(sortascending(headers[0]))
+            //     firstLoad = false
+            // }
         }
     }, [headers])
 

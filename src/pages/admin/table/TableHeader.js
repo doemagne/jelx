@@ -8,8 +8,8 @@ const TableHeader = (props) => {
     }
     return (
         <Fragment>
-            <th scope="col">
-                <span className={`bi bi-${props.headerSort}`} onClick={headerOnClickHandler}>
+            <th scope="col"  onClick={headerOnClickHandler}>
+                <span className={`bi bi-${props.headerSort}`}>
                     {props.headerCaption}
                 </span>
             </th>

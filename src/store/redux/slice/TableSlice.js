@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import BugRow from "../../../pages/admin/bug/BugRow";
-import TableRow from "../../../pages/admin/bug/TableRow";
+import TableRow from "../../../pages/admin/table/TableRow";
 
 const initialState = {
     data: null,
@@ -8,7 +8,8 @@ const initialState = {
     items: [],
     default: [],
     output: null,
-    restrictions: ["uid", "page",]
+    restrictions: ["uid", "page",],
+    current: null,
 }
 const desc = `sort-down`
 const asc = `sort-up`
@@ -18,11 +19,46 @@ const tableSlice = createSlice({
     name: 'table',
     initialState: initialState,
     reducers: {
+        appendTableRow: (state, action) => {
+            const pay = action.payload.content
+            pay.id = state.default.length + 1
+            state.default.push(pay)
+        },
+        setTableSelection: (state, action) => {
+            if (action.payload) {
+                const b = state.items.find(bi => bi.id === action.payload)
+                if (b) {
+                    // console.log(`${b}`)
+                    state.current = b
+                }
+            }
+        },
+        updateTableRow: (state, action) => {
+            const pay = action.payload
+            const b = state.items.findIndex(bi => bi.id === pay.id)
+            
+            if (state.items[b]) {
+                // console.log(state.items[b])
+                state.items[b] = pay
+                // state.items[b] = state.current
+            }
+            // const c = state.default.findIndex(bi => bi.id === pay.id)
+            // if (state.default[c]) {
+            //     // state.default[c] = { pay }
+            //     state.items[b] = state.current
+            // }
+            // const d = state.data.findIndex(bi => bi.id === pay.id)
+            // if (state.default[d]) {
+            //     // state.default[d] = { pay }
+            //     state.items[d] = state.current
+            // }
+        },
         filterItems: (state, action) => {
             // if (action.payload.length > 0) {
-            const query = action.payload.toLowerCase()
-            const tdata = state.default
+            const query = action.payload.toLowerCase().substring(1, action.payload.length)
+            const tdata = state.default.slice().reverse()
             const headers = state.headers.slice().reverse()
+            // let stack = []
             const filter = tdata.filter((item) => {
                 // const filter = state.items.filter((item) => {
                 // headers.forEach
@@ -33,18 +69,23 @@ const tableSlice = createSlice({
                     const header = headers[k]
                     // console.log(header)
                     const cell = `${item[header.headerCaption.toLowerCase()]}`
+                    // const existing = stack.find(i => i.id == item.id)
                     // const cell = `${item[state.headers[k].headerCaption.toLowerCase()]}`
                     // if (cell) {
                     if (query === '') {
+                        // stack.concat(item)
+                        // if (!existing) { stack.push(item) }
                         return item
                     } else if (cell.includes(query)) {
-                        console.log(`${header.headerCaption}: ${cell}`)
                         // if (item[state.headers[k].headerCaption].includes(query)) {
+                        // if (!existing) { stack.push(item) }
                         return item
                     }
+                    // console.log(`${header.headerCaption}: ${cell}`)
                     // }
                 }
             })
+            // state.items = stack
             state.items = filter
             // }
         },
@@ -57,7 +98,7 @@ const tableSlice = createSlice({
                     if (query === '') {
                         return item
                     } else if (cell.includes(query)) {
-                        console.log(`${header.headerCaption}: ${cell}`)
+                        // console.log(`${header.headerCaption}: ${cell}`)
                         return item
                     }
                 })
@@ -86,7 +127,7 @@ const tableSlice = createSlice({
             const pay = action.payload.content
             const restrictions = action.payload.restrictions
             state.restrictions = state.restrictions.concat(restrictions)
-            console.log(restrictions)
+            // console.log(restrictions)
             if (pay) {
                 state.data = initialState.data
                 state.headers = []
@@ -113,7 +154,7 @@ const tableSlice = createSlice({
                     const header = {
                         id: i,
                         headerCaption: k,
-                        headerSort: desc,
+                        headerSort: asc,
                         active: true,
                     }
                     i++
@@ -134,7 +175,7 @@ const tableSlice = createSlice({
                     }
                 }
                 if (items.length > 0) {
-                    state.items = items
+                    state.items = items.slice().reverse()
                     state.default = items
                 }
                 // const outputlist = state.items.map((item) => (<TableRow key={item.id} celldata={item}/>))
@@ -145,6 +186,6 @@ const tableSlice = createSlice({
     }
 });
 
-export const { filterItemsI, filterItems, sortdescending, sortascending, loadTableData } = tableSlice.actions;
+export const { appendRow, setTableSelection, updateTableRow, filterItemsI, filterItems, sortdescending, sortascending, loadTableData } = tableSlice.actions;
 
 export default tableSlice.reducer;

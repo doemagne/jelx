@@ -34,7 +34,7 @@ export const sendGetRequest = async (endpoint) => {
 }
 
 export const sendTokenPutRequest = async (data, endpoint, token) => {
-    // console.log(endpoint);
+    console.log(endpoint);
     const stimulus = await fetch(`${ServerURL}${endpoint}`, {
         method: "PUT",
         headers: { 

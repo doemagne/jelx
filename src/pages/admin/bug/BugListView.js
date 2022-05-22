@@ -1,4 +1,4 @@
-import "./Table.module.css"
+import "../table/Table.module.css"
 import { Fragment, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Navigate, useNavigate } from "react-router-dom"

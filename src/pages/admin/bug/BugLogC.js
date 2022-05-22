@@ -11,15 +11,12 @@ import Table from "../table/Table"
 import { loadTableData, setTableSelection } from "../../../store/redux/slice/TableSlice"
 import BugView from "./BugView"
 import { setCurrent } from "../../../store/redux/slice/BugSlice"
-import BugViewC from "./BugViewC"
 
 const restrictions = ["created", "user", "uid", "page", "suggestion"]
 
 // let firstsort = true
 const BugLog = (props) => {
     const bugs = useSelector(state => state.bug.bugs)
-    const [selected, setSelected] = useState(false)
-    const [selectednew, setSelectedNew] = useState(false)
     const dispatch = useDispatch()
     const navigator = useNavigate()
 
@@ -34,8 +31,7 @@ const BugLog = (props) => {
         console.log(item.id)
         dispatch(setCurrent(item.id))
         dispatch(setTableSelection(item.id))
-        // navigator("/bug/update")
-        setSelected(true)
+        navigator("/bug/update")
     }
 
     useEffect(() => {
@@ -51,34 +47,29 @@ const BugLog = (props) => {
 
     return (
         <Fragment>
-            {!props.authenticated && <Navigate to="/"/>}
-            {selected && <BugViewC setSelected={setSelected} token={props.token}/>}
-            {!selected &&
-                <Fragment>
-                    <CardJ>
-                        <div>
-                            <h1>Bug Log</h1>
-                        </div>
-                    </CardJ>
-                    <CardJ>
-                        <div className="row">
-                            <div className="col">
-                                <button className="w-100 btn btn-lg btn-warning" type="button" onClick={cancelHandler}>
-                                    <span className="bi bi-chevron-double-left" />
-                                </button>
-                            </div>
-                            <div className="col">
-                                <button className="w-100 btn btn-lg btn-danger" type="button" onClick={() => { navigator("/bug/register") }}>
-                                    <span className="bi bi-bug" />
-                                </button>
-                            </div>
+            <CardJ>
+                <div>
+                    <h1>Bug Log</h1>
+                </div>
+            </CardJ>
+            <CardJ>
+                <div className="row">
+                    <div className="col">
+                        <button className="w-100 btn btn-lg btn-warning" type="button" onClick={cancelHandler}>
+                            <span className="bi bi-chevron-double-left" />
+                        </button>
+                    </div>
+                    <div className="col">
+                        <button className="w-100 btn btn-lg btn-danger" type="button" onClick={()=>{navigator("/bug/register")}}>
+                            <span className="bi bi-bug" />
+                        </button>
+                    </div>
 
-                        </div>
-                    </CardJ>
+                </div>
 
-                    <Table data={bugs} defaultClickHandler={onRowClickHandler}></Table>
-                    <Banner banner={"view-list"} />
-                </Fragment>}
+            </CardJ>
+            <Table data={bugs} defaultClickHandler={onRowClickHandler}></Table>
+            <Banner banner={"view-list"} />
         </Fragment>
     )
 }

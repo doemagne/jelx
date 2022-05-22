@@ -8,7 +8,7 @@ import FieldArea from "../../../components/js/UI/Field/FieldArea"
 import { delayRequest } from "../../../store/redux/action/Request"
 import { fetchBugMap, registerSystemBug } from "../../../store/redux/action/BugAction"
 
-const ReportBug = (props) => {
+const RegisterBug = (props) => {
     const dispatch = useDispatch()
     const captionref = useRef()
     const inforef = useRef()
@@ -19,9 +19,9 @@ const ReportBug = (props) => {
         navigator(-1)
     }
 
-    const fetchBugData = async () => {
-        dispatch(fetchBugMap(props.token))
-    }
+    // const fetchBugData = async () => {
+    //     dispatch(fetchBugMap(props.token))
+    // }
 
     // console.log(props)
     const submitHandler = (e) => {
@@ -42,7 +42,7 @@ const ReportBug = (props) => {
         suggestionref.current.value = ""
     }
     useEffect(() => {
-        fetchBugData()
+        // fetchBugData()
         delayRequest(500)
     }, [])
 
@@ -63,13 +63,13 @@ const ReportBug = (props) => {
                                     <span className="bi bi-chevron-double-left" />
                                 </button>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                                 <Link to={"/bug/mapping"}>
                                     <button title="Display All Bugs" className="w-100 btn btn-lg btn-primary" type="button">
                                         <span className="bi bi-view-list" />
                                     </button>
                                 </Link>
-                            </div>
+                            </div> */}
                             <div className="col">
                                 <button className="w-100 btn btn-lg btn-danger" type="submit">
                                     <span className="bi bi-bug" />
@@ -94,4 +94,4 @@ const ReportBug = (props) => {
         </Fragment>
     )
 }
-export default ReportBug
+export default RegisterBug

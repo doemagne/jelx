@@ -22,9 +22,10 @@ import RegisterExistingMerchandise from './pages/admin/RegisterExistingMerchandi
 import MerchandiseCart from './pages/admin/MerchandiseCart';
 import MerchandiseCheckout from './pages/admin/MerchandiseCheckout';
 import MerchandiseCartcc from './pages/admin/MerchandiseCartcc';
-import ReportBug from './pages/admin/bug/ReportBug';
+import RegisterBug from './pages/admin/bug/RegisterBug';
 import BugListView from './pages/admin/bug/BugListView';
 import BugLog from './pages/admin/bug/BugLog';
+import BugView from './pages/admin/bug/BugView';
 function App() {
   const dispatch = useDispatch();
   const loader = useSelector(state => state.ui.loadstate);
@@ -60,25 +61,26 @@ function App() {
               <Route path="/account/signout" element={<SignOut />} />
               <Route path="/merchandise/register/*" element={<MerchandiseConfig authenticated={authenticated} />} />
               <Route path="/merchandise/new" element={<RegisterNewMerchandise authenticated={authenticated} />} />
-              <Route path="/merchandise/existing" element={<RegisterExistingMerchandise authenticated={authenticated}/>}/>
+              <Route path="/merchandise/existing" element={<RegisterExistingMerchandise authenticated={authenticated} />} />
               <Route path="/merchandise/cart" element={<MerchandiseCart cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/cart/checkout" element={<MerchandiseCheckout cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
-              <Route path="/merchandise/detail" element={<MerchandiseDetail cartuid={cartuid} authenticated={authenticated}/>}/>
-              <Route path="/bug/report" element={<ReportBug authenticated={authenticated} token={token}/>} />
-              <Route path="/bug/mapping" element={<BugLog authenticated={authenticated} token={token}/>} />
+              <Route path="/merchandise/detail" element={<MerchandiseDetail cartuid={cartuid} authenticated={authenticated} />} />
+              <Route path="/bug/register" element={<RegisterBug authenticated={authenticated} token={token} />} />
+              <Route path="/bug/mapping" element={<BugLog authenticated={authenticated} token={token} />} />
+              <Route path="/bug/update" element={<BugView token={token} />} />
               <Route path="/config" element={<Config />} />
-              <Route path='*' element={<NotFound/>}/>
+              <Route path='*' element={<NotFound />} />
             </Routes>
           </main>
         </BrowserRouter>
       </div>
-    {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
+      {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
     </Fragment>
   );
 }
 
-  //<Route path={`/merchandise/detail/:idkey/comments`} element={<Comments/>} />
+//<Route path={`/merchandise/detail/:idkey/comments`} element={<Comments/>} />
 export default App;
 /*
               <Route path={`/merchandise/detail/${params.idkey}/comments`} element={<Comments/>} />

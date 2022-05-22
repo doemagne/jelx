@@ -6,12 +6,13 @@ import Banner from "../../../components/js/UI/Banner/Banner"
 import CardJ from "../../../components/js/UI/CardJ"
 import { fetchBugMap } from "../../../store/redux/action/BugAction"
 import { delayRequest } from "../../../store/redux/action/Request"
-import BugRow from "./BugRow"
+import BugRow from "../bug/BugRow"
 import TableHead from "./TableHead"
 import TableRow from "./TableRow"
 import Field from "../../../components/js/UI/Field/Field"
 import FieldState from "../../../components/js/UI/Field/FieldState"
 import { filterItems, filterItemsI } from "../../../store/redux/slice/TableSlice"
+import { setCurrent } from "../../../store/redux/slice/BugSlice"
 
 const Table = (props) => {
     const [rowsl, setRowsl] = useState()
@@ -23,12 +24,14 @@ const Table = (props) => {
     const searchHandler = (query) => {
         console.log(`${query}:searching...`)
         dispatch(filterItems(query))
-        
-    }
 
+    }
+    const defaultClickHandler = (item)=> {
+        props.defaultClickHandler(item)
+    }
     useEffect(() => {
         if (rows) {
-            setRowsl(rows.map((item) => (<TableRow key={item.id} celldata={item} />)))
+            setRowsl(rows.map((item) => (<TableRow key={item.id} celldata={item} onClickHandler={defaultClickHandler.bind(null,item)}/>)))
         }
     }, [rows])
 
@@ -38,6 +41,8 @@ const Table = (props) => {
                 <div className="tcontrol">
                     <form>
                         <span className="row">
+                            <span className="col">
+                            </span>
                             <span className="col">
                                 <FieldState stateHandler={searchHandler} state={search} setState={setSearch} icon="search" input={{ className: 'form-control', type: 'text', id: 'search', placeholder: 'Search', defaultValue: "", readOnly: false, }} />
                             </span>
