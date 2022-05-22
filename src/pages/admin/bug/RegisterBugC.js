@@ -16,7 +16,8 @@ const RegisterBugC = (props) => {
     const currentpage = window.sessionStorage.getItem("window")
     const navigator = useNavigate()
     const cancelHandler = () => {
-        navigator(-1)
+        // navigator(-1)
+        props.setSelected(false)
     }
 
     // const fetchBugData = async () => {
@@ -37,9 +38,9 @@ const RegisterBugC = (props) => {
         }
         dispatch(registerSystemBug(data, props.token))
         // console.log(data)
-        captionref.current.value = ""
-        inforef.current.value = ""
-        suggestionref.current.value = ""
+        // captionref.current.value = ""
+        // inforef.current.value = ""
+        // suggestionref.current.value = ""
     }
     useEffect(() => {
         // fetchBugData()
@@ -48,7 +49,7 @@ const RegisterBugC = (props) => {
 
     return (
         <Fragment>
-            {!props.authenticated && <Navigate to="/" />}
+            {/* {!props.authenticated && <Navigate to="/" />} */}
             <main>
                 <CardJ>
                     <div>

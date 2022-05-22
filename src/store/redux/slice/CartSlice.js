@@ -84,7 +84,7 @@ const cartSlice = createSlice({
                     }
                     state.totalItems = counterupdate
                     state.totalAmount = totalUpdate
-                    console.log(counterupdate)
+                    // console.log(counterupdate)
                 }
             }
         },

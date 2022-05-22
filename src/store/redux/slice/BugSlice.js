@@ -14,7 +14,7 @@ const bugSlice = createSlice({
             if (action.payload) {
                 const b = state.bugs.find(bi => bi.id === action.payload)
                 if (b) {
-                    console.log(b)
+                    // console.log(b)
                     state.current = b
                 }
                 // state.current = state.bugs[b]

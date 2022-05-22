@@ -41,7 +41,7 @@ export const updateSystemBug = (data, token) => {
             message: 'submitting reported bug',
         }));
         try {
-            console.log("updating")
+            // console.log("updating")
             // console.log(data)
             // console.log(token)
             const endpoint = '/api/bug/update';

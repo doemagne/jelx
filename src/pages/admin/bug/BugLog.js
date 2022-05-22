@@ -8,18 +8,21 @@ import { fetchBugMap } from "../../../store/redux/action/BugAction"
 import { delayRequest } from "../../../store/redux/action/Request"
 import BugRow from "./BugRow"
 import Table from "../table/Table"
-import { loadTableData, setTableSelection } from "../../../store/redux/slice/TableSlice"
+import { filterItems, loadTableData, setTableSelection } from "../../../store/redux/slice/TableSlice"
 import BugView from "./BugView"
 import { setCurrent } from "../../../store/redux/slice/BugSlice"
 import BugViewC from "./BugViewC"
+import RegisterBug from "./RegisterBug"
+import RegisterBugC from "./RegisterBugC"
 
 const restrictions = ["created", "user", "uid", "page", "suggestion"]
 
 // let firstsort = true
 const BugLog = (props) => {
     const bugs = useSelector(state => state.bug.bugs)
+    const query = useSelector(state => state.table.query)
     const [selected, setSelected] = useState(false)
-    const [selectednew, setSelectedNew] = useState(false)
+    const [registered, setRegistered] = useState(false)
     const dispatch = useDispatch()
     const navigator = useNavigate()
 
@@ -30,8 +33,12 @@ const BugLog = (props) => {
         dispatch(fetchBugMap(props.token))
     }
 
+    const registerHandler = () => {
+        setRegistered(true)
+    }
+
     const onRowClickHandler = (item) => {
-        console.log(item.id)
+        // console.log(item.id)
         dispatch(setCurrent(item.id))
         dispatch(setTableSelection(item.id))
         // navigator("/bug/update")
@@ -40,20 +47,21 @@ const BugLog = (props) => {
 
     useEffect(() => {
         if (bugs) {
-            console.log("got bugs")
-            // console.log(bugs)
+            // console.log("got bugs")
             dispatch(loadTableData({ content: bugs, restrictions: restrictions }))
+            dispatch(filterItems(query))
         } else {
-            console.log("fetching bugs")
+            // console.log("fetching bugs")
             fetchBugData(props.token)
         }
-    }, [bugs, dispatch])
+    }, [bugs])
 
     return (
         <Fragment>
-            {!props.authenticated && <Navigate to="/"/>}
-            {selected && <BugViewC setSelected={setSelected} token={props.token}/>}
-            {!selected &&
+            {!props.authenticated && <Navigate to="/" />}
+            {registered && <RegisterBugC setSelected={setRegistered} token={props.token} />}
+            {selected && <BugViewC setSelected={setSelected} token={props.token} />}
+            {!selected && !registered &&
                 <Fragment>
                     <CardJ>
                         <div>
@@ -68,7 +76,7 @@ const BugLog = (props) => {
                                 </button>
                             </div>
                             <div className="col">
-                                <button className="w-100 btn btn-lg btn-danger" type="button" onClick={() => { navigator("/bug/register") }}>
+                                <button className="w-100 btn btn-lg btn-danger" type="button" onClick={registerHandler}>
                                     <span className="bi bi-bug" />
                                 </button>
                             </div>

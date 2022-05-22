@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import BugRow from "../../../pages/admin/bug/BugRow";
-import TableRow from "../../../pages/admin/table/TableRow";
+// import BugRow from "../../../pages/admin/bug/BugRow";
+// import TableRow from "../../../pages/admin/table/TableRow";
 
 const initialState = {
     data: null,
@@ -10,6 +10,7 @@ const initialState = {
     output: null,
     restrictions: ["uid", "page",],
     current: null,
+    query: "",
 }
 const desc = `sort-down`
 const asc = `sort-up`
@@ -36,7 +37,7 @@ const tableSlice = createSlice({
         updateTableRow: (state, action) => {
             const pay = action.payload
             const b = state.items.findIndex(bi => bi.id === pay.id)
-            
+
             if (state.items[b]) {
                 // console.log(state.items[b])
                 state.items[b] = pay
@@ -58,6 +59,9 @@ const tableSlice = createSlice({
             const query = action.payload.toLowerCase().substring(1, action.payload.length)
             const tdata = state.default.slice().reverse()
             const headers = state.headers.slice().reverse()
+            if (action.payload.length > 0) {
+                state.query = action.payload
+            }
             // let stack = []
             const filter = tdata.filter((item) => {
                 // const filter = state.items.filter((item) => {
