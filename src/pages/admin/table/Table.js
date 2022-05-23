@@ -31,6 +31,16 @@ const Table = (props) => {
     const defaultClickHandler = (item) => {
         props.defaultClickHandler(item)
     }
+
+    const onClickSearchHandler = () => {
+        setSearch("")
+        console.log(search)
+        dispatch(filterItems(""))
+    }
+
+    let baricon = q.length > 0 ? "arrow-clockwise" : "search"
+
+
     useEffect(() => {
         if (q.length > 0) {
             // searchHandler(q)
@@ -39,6 +49,7 @@ const Table = (props) => {
             setRowsl(rows.map((item) => (<TableRow key={item.id} celldata={item} onClickHandler={defaultClickHandler.bind(null, item)} />)))
         }
     }, [rows])
+
 
     return (
         <Fragment>
@@ -49,16 +60,16 @@ const Table = (props) => {
                             <span className="col">
                             </span>
                             <span className="col">
-                                <FieldState stateHandler={searchHandler} state={search} setState={setSearch} icon="search" input={{ className: 'form-control', type: 'text', id: 'search', placeholder: 'Search', defaultValue: q || search, readOnly: false, }} />
+                                <FieldState filterCount={rows.length} onClickHandler={onClickSearchHandler} stateHandler={searchHandler} state={search} setState={setSearch} icon={baricon} input={{ className: 'form-control', type: 'text', id: 'search', placeholder: 'Search', defaultValue: q || search, readOnly: false, }} />
                             </span>
                             <span className="col">
                             </span>
                         </span>
                     </form>
                 </div>
-                <table className="table table-light table-striped table-hover">
+                <table className="table table-light table-striped table-sm">
                     <TableHead />
-                    <tbody>{rowsl}</tbody>
+                    <tbody className="table-hover">{rowsl}</tbody>
                 </table>
             </CardJ>
         </Fragment>

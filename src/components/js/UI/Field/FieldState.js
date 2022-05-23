@@ -10,15 +10,20 @@ const FieldState = (props) => {
         props.stateHandler(e.target.value)
         // console.log(props.state)
     }
+    const onClickHandler = () => {
+        props.onClickHandler()
+    }
     return (
         <Fragment>
-            <div className='input-group mb-2'>
-                <div className='input-group-prepend'></div>
-                <div className='input-group-text'>
-                    <span className={`bi bi-${props.icon}`} />
+            {/* <form> */}
+                <div className='input-group mb-2'>
+                    <div className='input-group-prepend'></div>
+                    <button type="reset" className='input-group-text btn-dark' onClick={onClickHandler} value={props.state}>
+                        <span className={`bi bi-${props.icon} `}>{props.filterCount}</span>
+                    </button>
+                    <input {...props.input} onChange={onChangeHandler} />
                 </div>
-                <input {...props.input} onChange={onChangeHandler} />
-            </div>
+            {/* </form> */}
         </Fragment>
     );
 };

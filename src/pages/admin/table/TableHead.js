@@ -37,7 +37,7 @@ const TableHead = (props) => {
 
     return (
         <Fragment>
-            <thead>
+            <thead className="thead-dark">
                 <tr>
                     {headersl}
                 </tr>

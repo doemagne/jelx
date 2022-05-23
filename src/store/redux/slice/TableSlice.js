@@ -59,8 +59,10 @@ const tableSlice = createSlice({
             const query = action.payload.toLowerCase().substring(1, action.payload.length)
             const tdata = state.default.slice().reverse()
             const headers = state.headers.slice().reverse()
-            if (action.payload.length > 0) {
+            if (action.payload.length > 1) {
                 state.query = action.payload
+            } else {
+                state.query = ''
             }
             // let stack = []
             const filter = tdata.filter((item) => {

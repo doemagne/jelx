@@ -37,6 +37,7 @@ const RegisterBugC = (props) => {
 
         }
         dispatch(registerSystemBug(data, props.token))
+        props.setSelected(false)
         // console.log(data)
         // captionref.current.value = ""
         // inforef.current.value = ""
