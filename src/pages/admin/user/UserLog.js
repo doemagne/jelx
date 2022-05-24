@@ -4,33 +4,36 @@ import { useDispatch, useSelector } from "react-redux"
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
 import Banner from "../../../components/js/UI/Banner/Banner"
 import CardJ from "../../../components/js/UI/CardJ"
-import { fetchBugMap } from "../../../store/redux/action/BugAction"
-// import { delayRequest } from "../../../store/redux/action/Request"
-// import BugRow from "./BugRow"
+// import { fetchBugMap } from "../../../store/redux/action/BugAction"
 import Table from "../table/Table"
 import { filterItems, loadTableData, setTableSelection } from "../../../store/redux/slice/TableSlice"
-// import BugView from "./BugView"
 import { setCurrent } from "../../../store/redux/slice/BugSlice"
-import BugViewC from "./BugViewC"
+import Caption from "../table/view/Caption"
+import { fetchMap } from "../../../store/redux/action/MappingAction"
+// import BugViewC from "./BugViewC"
+// import RegisterBugC from "./RegisterBugC"
+// import { delayRequest } from "../../../store/redux/action/Request"
+// import BugRow from "./BugRow"
+// import BugView from "./BugView"
 // import RegisterBug from "./RegisterBug"
-import RegisterBugC from "./RegisterBugC"
 
-const restrictions = ["created", "user", "uid", "page", "suggestion"]
+const restrictions = ["phone","birthdate", "information", "language", "attachment"]
 
 // let firstsort = true
-const BugLog = (props) => {
-    const bugs = useSelector(state => state.bug.bugs)
+const UserLog = (props) => {
+    const data = useSelector(state => state.mapping.mapping.items)
     const query = useSelector(state => state.table.query)
     const [selected, setSelected] = useState(false)
     const [registered, setRegistered] = useState(false)
     const dispatch = useDispatch()
     const navigator = useNavigate()
+    window.sessionStorage.setItem("window", window.location.pathname)
 
     const cancelHandler = () => {
         navigator(-1)
     }
-    const fetchBugData = async () => {
-        dispatch(fetchBugMap(props.token))
+    const fetchData = async (table) => {
+        dispatch(fetchMap(table, props.token,restrictions))
     }
 
     const registerHandler = () => {
@@ -46,28 +49,24 @@ const BugLog = (props) => {
     }
 
     useEffect(() => {
-        if (bugs) {
-            // console.log("got bugs")
-            dispatch(loadTableData({ content: bugs, restrictions: restrictions }))
+        if (data.length > 0) {
+            // console.log(data)
+            dispatch(loadTableData({ content: data, restrictions: restrictions }))
             dispatch(filterItems(query))
         } else {
             // console.log("fetching bugs")
-            fetchBugData(props.token)
+            fetchData('user/profile')
         }
-    }, [bugs])
+    }, [data])
 
     return (
         <Fragment>
             {!props.authenticated && <Navigate to="/" />}
-            {registered && <RegisterBugC setSelected={setRegistered} token={props.token} />}
-            {selected && <BugViewC setSelected={setSelected} token={props.token} />}
+            {/* {registered && <RegisterBugC setSelected={setRegistered} token={props.token} />} */}
+            {/* {selected && <BugViewC setSelected={setSelected} token={props.token} />} */}
             {!selected && !registered &&
                 <Fragment>
-                    <CardJ>
-                        <div>
-                            <h1>Bug Log</h1>
-                        </div>
-                    </CardJ>
+                    <Caption caption={"User Log"} />
                     <CardJ>
                         <div className="row">
                             <div className="col">
@@ -84,11 +83,11 @@ const BugLog = (props) => {
                         </div>
                     </CardJ>
 
-                    <Table data={bugs} defaultClickHandler={onRowClickHandler}></Table>
+                    <Table data={data} defaultClickHandler={onRowClickHandler}></Table>
                     <Banner banner={"view-list"} />
                 </Fragment>}
         </Fragment>
     )
 }
 
-export default BugLog
+export default UserLog

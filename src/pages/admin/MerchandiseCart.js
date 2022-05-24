@@ -98,17 +98,8 @@ const MerchandiseCart = props => {
                                     <span className="bi bi-cash-coin" />
                                 </button>
                             </div>}
-                            
-
                         </div>
                     </CardJ>
-                    {orderClicked && <CardJ>
-                        <div className="row">
-                            <CheckoutProfile onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
-                            <CheckoutAddress onConfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={setFieldEdit} />
-                            <CheckoutPayment onconfirm={submitOrderHandler} onCancel={showCartHandler} fieldEdit={fieldEdit} setFieldEdit={() => { }} />
-                        </div>
-                    </CardJ>}
                     <CardJ>
                         <ul className={classes['cart-items']}>
                             {cartItems}

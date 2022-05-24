@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // import TableRow from "../../../pages/admin/table/TableRow";
 
 const initialState = {
+    mappings: [],
     data: null,
     headers: [],
     items: [],
@@ -20,6 +21,11 @@ const tableSlice = createSlice({
     name: 'table',
     initialState: initialState,
     reducers: {
+        transportTable: (state, action) => {
+            const pay = action.payload
+
+            state.mappings.push(pay)
+        },
         appendTableRow: (state, action) => {
             const pay = action.payload.content
             pay.id = state.default.length + 1

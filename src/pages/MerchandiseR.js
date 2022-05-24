@@ -1,51 +1,53 @@
 import { Fragment, useState, useEffect, useCallback } from "react";
-import CartJ from "../components/js/CartR/CartR";
-import HeaderR from "../components/js/Layout/Header/HeaderR";
 import MerchandiseJ from "../components/js/MerchandiseR/MerchandiseJ";
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchCartData } from "../store/redux/action/CartAction";
 import { Navigate } from "react-router-dom";
-import MerchandiseView from "../components/js/MerchandiseR/Item/MerchandiseView";
-import { toggle } from "../store/redux/slice/UISlice";
+import CardJ from "../components/js/UI/CardJ";
+import AvailableMerchandiseJ from "../components/js/MerchandiseR/MerchandiseAvailableJ";
 const MerchandiseR = (props) => {
     window.sessionStorage.setItem("window", window.location.pathname)
-    const [cartShown, setCartShown] = useState(false);
-    const cart = useSelector((state) => state.cart);
-    const dispatch = useDispatch();
-    const token = window.sessionStorage.getItem("token")
-    const toggleModal = useSelector(state => state.ui.cartToggle);
-    useEffect(() => {
-        if (cart.uid.length != 0) {
-            dispatch(fetchCartData(cart,token))
-        }
-        return;
-    }, [cart, dispatch]);
 
-    const showCartHandler = () => {
-        setCartShown(true);
-    };
-    const hideCartHandler = () => {
-        setCartShown(false);
-    };
-    const modalToggle = () => {
-        dispatch(toggle());
-    };
     return (
         <Fragment>
             {!props.authenticated && <Navigate to='/' />}
-            {cartShown && <CartJ onClose={hideCartHandler} />}
-            {toggleModal && <MerchandiseView onClose={modalToggle} />}
-            {/* <HeaderR onShowCart={showCartHandler} /> */}
-            <main>
-                <MerchandiseJ />
-            </main>
-
+            <CardJ>
+                <h1>Merchandise</h1>
+            </CardJ>
+            <AvailableMerchandiseJ />
         </Fragment>
     );
 };
 
 export default MerchandiseR;
+/* {cartShown && <CartJ onClose={hideCartHandler} />} */ 
+/* {toggleModal && <MerchandiseView onClose={modalToggle} />} */ 
+/* <HeaderR onShowCart={showCartHandler} /> */ 
+// import HeaderR from "../components/js/Layout/Header/HeaderR";
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchCartData } from "../store/redux/action/CartAction";
+// import CartJ from "../components/js/CartR/CartR";
+// import MerchandiseView from "../components/js/MerchandiseR/Item/MerchandiseView";
+// import { toggle } from "../store/redux/slice/UISlice";
+// const [cartShown, setCartShown] = useState(false);
+    // const cart = useSelector((state) => state.cart);
+    // const dispatch = useDispatch();
+    // const token = window.sessionStorage.getItem("token")
+    // const toggleModal = useSelector(state => state.ui.cartToggle);
+    // useEffect(() => {
+    //     if (cart.uid.length != 0) {
+    //         dispatch(fetchCartData(cart,token))
+    //     }
+    //     return;
+    // }, [cart, dispatch]);
 
+    // const showCartHandler = () => {
+    //     setCartShown(true);
+    // };
+    // const hideCartHandler = () => {
+    //     setCartShown(false);
+    // };
+    // const modalToggle = () => {
+    //     dispatch(toggle());
+    // };
 /*
             {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
 setUID(props.cartuid);

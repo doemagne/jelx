@@ -1,3 +1,5 @@
+import tableReducer from './slice/TableSlice';
+import mappingReducer from './slice/MappingSlice';
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from './slice/CounterSlice'
 import authReducer from './slice/AuthSlice';
@@ -8,10 +10,11 @@ import cartReducer from './slice/CartSlice';
 import userReducer from './slice/UserSlice';
 import merchandiseReducer from './slice/MerchandiseSlice';
 import bugReducer from './slice/BugSlice';
-import tableReducer from './slice/TableSlice';
 
 const Store = configureStore({
     reducer: {
+        table: tableReducer,
+        mapping: mappingReducer,
         ui: uiReducer,
         cart: cartReducer,
         user: userReducer,
@@ -21,7 +24,6 @@ const Store = configureStore({
         whui: whuiReducer,
         whcart: whcartReducer,
         bug: bugReducer,
-        table: tableReducer,
     },
 })
 

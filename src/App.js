@@ -26,6 +26,8 @@ import RegisterBug from './pages/admin/bug/RegisterBug';
 import BugListView from './pages/admin/bug/BugListView';
 import BugLog from './pages/admin/bug/BugLog';
 import BugView from './pages/admin/bug/BugView';
+import SystemConfig from './pages/admin/system/SystemConfig';
+import UserLog from './pages/admin/user/UserLog';
 function App() {
   const dispatch = useDispatch();
   const loader = useSelector(state => state.ui.loadstate);
@@ -55,10 +57,11 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/account/signinN" element={<SignInN />} />
-              <Route path="/account/signupN" element={<SignUpN />} />
+              <Route path="/account/signin" element={<SignInN />} />
+              <Route path="/account/signup" element={<SignUpN />} />
               <Route path="/account/user" element={<Account authenticated={authenticated} />} />
               <Route path="/account/signout" element={<SignOut />} />
+              <Route path="/system/config" element={<SystemConfig authenticated={authenticated}/>} />
               <Route path="/merchandise/register/*" element={<MerchandiseConfig authenticated={authenticated} />} />
               <Route path="/merchandise/new" element={<RegisterNewMerchandise authenticated={authenticated} />} />
               <Route path="/merchandise/existing" element={<RegisterExistingMerchandise authenticated={authenticated} />} />
@@ -68,6 +71,7 @@ function App() {
               <Route path="/merchandise/detail" element={<MerchandiseDetail cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/bug/register" element={<RegisterBug authenticated={authenticated} token={token} />} />
               <Route path="/bug/mapping" element={<BugLog authenticated={authenticated} token={token} />} />
+              <Route path="/user/profile/mapping" element={<UserLog authenticated={authenticated} token={token} />} />
               <Route path="/bug/update" element={<BugView token={token} />} />
               <Route path="/config" element={<Config />} />
               <Route path='*' element={<NotFound />} />

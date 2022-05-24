@@ -67,7 +67,7 @@ const Table = (props) => {
                         </span>
                     </form>
                 </div>
-                <table className="table table-light table-striped table-sm">
+                <table className="table table-sm table-striped">
                     <TableHead />
                     <tbody className="table-hover">{rowsl}</tbody>
                 </table>

@@ -35,6 +35,7 @@ export const updateUserCredential = (data, token) => {
 }
 export const fetchTransportData = (token) => {
     return (async (dispatch) => {
+        // console.log("CART:::")
         dispatch(notify({
             status: 'pending',
             title: 'update is pending',
@@ -53,12 +54,12 @@ export const fetchTransportData = (token) => {
             dispatch(setloading(false));
             dispatch(notify({
                 status: 'success',
-                title: 'updated profile successfully.',
-                message: 'request was successful.',
+                title: 'user profile was fetched',
+                message: 'continue with your session.',
             }));
         } catch (error) {
             dispatch(notify({
-                status: 'pending',
+                status: 'error',
                 title: 'Unauthenticated',
                 message: `Please sign in.`,
             }));
@@ -71,8 +72,8 @@ export const registerUser = (credentials) => {
         try {
             dispatch(notify({
                 status: 'pending',
-                title: 'update is pending',
-                message: 'request pending',
+                title: 'submitting signup request',
+                message: 'registering user signup',
             }));
             dispatch(setloading(true));
             const endpoint = '/api/user/signup';
@@ -84,8 +85,8 @@ export const registerUser = (credentials) => {
             dispatch(setredirect(true));
             dispatch(notify({
                 status: 'success',
-                title: 'updated signup profile successfully.',
-                message: 'request was successful.',
+                title: 'sign up request was submitted to the server.',
+                message: 'please signin.',
             }));
         } catch (error) {
             dispatch(notify(notificationfailed));
@@ -104,8 +105,8 @@ export const authenticateUser = (credentials) => {
         try {
             dispatch(notify({
                 status: 'pending',
-                title: 'update is pending',
-                message: 'request pending',
+                title: 'authenticating',
+                message: 'system authentication process',
             }));
             dispatch(setloading(true));
             const endpoint = '/api/user/signin';
@@ -119,8 +120,8 @@ export const authenticateUser = (credentials) => {
             dispatch(setloading(false));
             dispatch(notify({
                 status: 'success',
-                title: 'auhentication successfully checked',
-                message: `authentication checked.`,
+                title: 'authenticated',
+                message: `continue session`,
             }));
         } catch (error) {
             dispatch(notify({
@@ -148,7 +149,7 @@ export const signoutUser = () => {
             const response = await sendPostRequest(null, endpoint)
             dispatch(signout());
             dispatch(notify({
-                status: 'unauthenticated',
+                status: 'success',
                 title: 'you are now signed out',
                 message: response.message,
             }));
@@ -159,8 +160,8 @@ export const signoutUser = () => {
             dispatch(setloading(false));
             dispatch(notify({
                 status: 'error',
-                title: 'failed to signout',
-                message: `[failed to sign out]${error.message}`,
+                title: 'failed',
+                message: `sign out failed:${error.message}`,
             }));
 
         }

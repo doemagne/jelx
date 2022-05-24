@@ -5,33 +5,29 @@ import { setloading } from "../slice/UISlice";
 //fetchcart
 export const fetchCartData = (cart, token) => {
     return (async (dispatch) => {
-
-        dispatch(notify({
-            status: 'pending',
-            title: 'sending',
-            message: 'Sending cart data, please wait',
-        }));
         try {
+            dispatch(notify({
+                status: 'pending',
+                title: 'fetching',
+                message: 'fetching cart data, please wait',
+            }));
             dispatch(setloading(true));
             const endpoint = '/api/cart/update';
-            //const content = await sendPutRequest(cart, endpoint);
             const content = await sendTokenPutRequest(cart, endpoint, token);
-            dispatch(notify({
-                status: 'success',
-                title: 'success',
-                message: 'cart data was fetched successfully.',
-            }));
-            // console.log(content);
             dispatch(updateCart(content.cart));
             dispatch(setloading(false));
+            dispatch(notify({
+                status: 'success',
+                title: 'fetched cart',
+                message: `cart data was fetched`,
+            }));
         } catch (error) {
-            // console.log(error)
+            dispatch(setloading(false));
             dispatch(notify({
                 status: 'error',
-                title: 'failed to send',
+                title: 'failed to fetch cart',
                 message: `${error.message}`,
             }));
-            dispatch(setloading(false));
         }
     });
 }
@@ -41,8 +37,8 @@ export const sendCartItem = (item, token) => {
         try {
             dispatch(notify({
                 status: 'pending',
-                title: 'request pending',
-                message: 'cart data pending.',
+                title: 'pending',
+                message: 'updating cart',
             }))
             dispatch(setloading(true));
             const endpoint = '/api/cart/item/register';
@@ -53,19 +49,19 @@ export const sendCartItem = (item, token) => {
             } else {
                 dispatch(addItemToCart(item));
             }
+            dispatch(setloading(false));
             dispatch(notify({
                 status: 'success',
-                title: 'success',
-                message: 'cart data was sent successfully.',
+                title: 'updated',
+                message: 'cart was updated.',
             }));
-            dispatch(setloading(false));
         } catch (error) {
+            dispatch(setloading(false));
             dispatch(notify({
-                status: 'failed',
-                title: 'failed to send',
+                status: 'error',
+                title: 'failed to update',
                 message: ` ${error.message}`,
             }));
-            dispatch(setloading(false));
         }
     });
 }

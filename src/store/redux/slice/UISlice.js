@@ -22,6 +22,9 @@ const uiSlice = createSlice({
                 message: action.payload.message,
             };
         },
+        closeNotification: (state) => {
+            state.notification = null
+        }, 
         setloading: (state, action) => {
           state.loadstate = action.payload;
         },
@@ -31,6 +34,6 @@ const uiSlice = createSlice({
     }
 });
 
-export const { setredirect, setloading, toggle, notify } = uiSlice.actions;
+export const { setredirect, setloading, toggle, notify, closeNotification } = uiSlice.actions;
 
 export default uiSlice.reducer;

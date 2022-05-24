@@ -12,6 +12,10 @@
     bottom: 0px;
   }
   
+  .notification span {
+    cursor: pointer;
+  }
+
   .notification h2,
   .notification p {
     font-size: 1rem;

@@ -1,19 +1,19 @@
+import classes from './Navigation.module.css';
 import './Navigation.module.css';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import AuthLogout from './AuthLogout';
+import BrandBar from './BrandBar';
+import { signoutUser } from '../../../store/redux/action/userAction';
+import SearchBar from './Anonymous/SearchBar';
+import { useDispatch, useSelector } from 'react-redux';
+import Anonymous from './Anonymous/Anonymous';
 //import { Navigate } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
+import Notification from '../../js/UI/Notification/Notification';
 import NavAuthBar from './NavAuthBar';
 import AnonymousBar from './Anonymous/AnonymousBar';
-import Anonymous from './Anonymous/Anonymous';
-import AuthLogout from './AuthLogout';
-import SearchBar from './Anonymous/SearchBar';
-import BrandBar from './BrandBar';
-import { useDispatch, useSelector } from 'react-redux';
-import { signoutUser } from '../../../store/redux/action/userAction';
-import Notification from '../../js/UI/Notification/Notification';
 // import classes from '../../js/Layout/HeaderCartButton/HeaderCartButton.module.css'
-import classes from './Navigation.module.css';
 //import { signout } from '../../../store/slice/AuthSlice';
 let nav;
 let navigation;
@@ -30,6 +30,7 @@ const Navigation = (props) => {
         window.sessionStorage.setItem("window", "/");
         dispatch(signoutUser());
     }
+    const currwindow = window.location.pathname
     const navigator = useNavigate()
     const cartCtx = useSelector(state => state.cart);
     const { items } = cartCtx;
@@ -76,7 +77,7 @@ const Navigation = (props) => {
                         <span className={classes.button}>{cartCtx.totalItems}</span>
                     </button>
                 </Link>
-                <Link to="/merchandise/register" className='nav-link active' aria-current="page">
+                <Link to="/system/config" className='nav-link active' aria-current="page">
                     <span className="bi bi-gear" />
                 </Link>
                 <Link to="/sensor/telemetry" className='nav-link active' aria-current="page" >
@@ -93,20 +94,51 @@ const Navigation = (props) => {
                 </Link>
             </Nav>
         );
+        {/* <Link to="/merchandise/register" className='nav-link active' aria-current="page"> */ }
+
     } else {
         navigation = (
             <Nav>
                 <Link to="/" className='nav-link active' aria-current="page" >
                     <span className="bi bi-house" />
                 </Link>
-                <Link to="/account/signinN" className="nav-link active" aria-current="page">
+                <Link to="/account/signin" className="nav-link active" aria-current="page">
                     <span className="bi bi-door-open" />
                 </Link>
-                <Link to="/account/signupN" className="nav-link active" aria-current="page" >
+                <Link to="/account/signup" className="nav-link active" aria-current="page" >
                     <span className="bi bi-person-lines-fill" />
                 </Link>
             </Nav>
         );
+    }
+    const configpath = currwindow === "/system/config" | currwindow.includes("mapping")
+    if (props.authenticated && configpath) {
+        navigation = (
+            <Nav>
+                <Link to="/" className='nav-link active' aria-current="page" >
+                    <span className="bi bi-house" />
+                </Link>
+                <Link to="/user/profile/mapping" className='nav-link active' aria-current="page">
+                    <span className="bi bi-person-circle" />
+                </Link>
+                <Link to="/user/address/mapping" className='nav-link active' aria-current="page">
+                    <span className="bi bi-signpost" />
+                </Link>
+                <Link to="/cart/order/mapping" className='nav-link active' aria-current="page">
+                    <span className="bi bi-cart" />
+                </Link>
+                <Link to="/merchandise/mapping" className='nav-link active' aria-current="page">
+                    <span className="bi bi-boxes" />
+                </Link>
+                <Link to="/bug/mapping" className='nav-link active' aria-current="page" >
+                    <span className="bi bi-bug" />
+                </Link>
+                <Link to="/notification/mapping" className='nav-link active' aria-current="page" >
+                    <span className="bi bi-bell" />
+                </Link>
+            </Nav>
+        )
+
     }
     return (
         <Fragment>
