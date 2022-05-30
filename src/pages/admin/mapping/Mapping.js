@@ -3,23 +3,20 @@ import { Fragment, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import CardJ from "../../../components/js/UI/CardJ"
 import FieldState from "../../../components/js/UI/Field/FieldState"
-import { filterItems, filterItemsI } from "../../../store/redux/slice/TableSlice"
+import { filterItems } from "../../../store/redux/slice/MappingSlice"
 import MappingRow from "./MappingRow"
 import MappingHead from "./MappingHead"
 
 const Mapping = (props) => {
     const [rowsl, setRowsl] = useState()
     const [search, setSearch] = useState('')
-    // const rows = useSelector(state => state.mapping.mappings[props.mapIdx].items)
-    const rows = props.data.items
-    const headers = props.data.headers
-    // const q = useSelector(state => state.mapping.mapping.query)
-    const q = props.data.query
-    // const [,] = useState()
+    const rows = useSelector(state => state.mapping.mappings[props.mapIdx].items)
+    const headers = useSelector(state => state.mapping.mappings[props.mapIdx].headers)
+    const q = useSelector(state => state.mapping.mappings[props.mapIdx].query)
     const dispatch = useDispatch()
 
     const searchHandler = (query) => {
-        dispatch(filterItems(query))
+        dispatch(filterItems({ query: query, map: props.mapIdx }))
 
     }
     const defaultClickHandler = (item) => {
@@ -29,16 +26,16 @@ const Mapping = (props) => {
     const onClickSearchHandler = () => {
         setSearch("")
         console.log(search)
-        dispatch(filterItems(""))
+        dispatch(filterItems({ query: "", map: props.mapIdx }))
     }
 
     let baricon = q.length > 0 ? "arrow-clockwise" : "search"
 
 
     useEffect(() => {
-        console.log("setting")
+        // console.log("setting")
         if (rows) {
-            console.log("rows")
+            // console.log("rows")
             setRowsl(rows.map((item) => (<MappingRow headers={headers} key={item.id} celldata={item} onClickHandler={defaultClickHandler.bind(null, item)} />)))
         }
     }, [rows])
@@ -70,3 +67,11 @@ const Mapping = (props) => {
 }
 
 export default Mapping
+
+    // const rows = useSelector(state => state.mapping.mappings[props.mapIdx].items)
+    // const rows = props.data.items
+    // const headers = props.data.headers
+    // const q = useSelector(state => state.mapping.mapping.query)
+    // const q = props.data.query
+
+    // const [,] = useState()

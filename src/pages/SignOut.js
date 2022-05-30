@@ -1,6 +1,13 @@
+import { Fragment } from "react";
+import Banner from "../components/js/UI/Banner/Banner";
+import Caption from "./admin/table/view/Caption";
+
 const SignOut = () => {
     return (
-        <div>You are now signed out.</div>
+        <Fragment>
+            <Caption caption="You are now signed out."/>
+            <Banner banner={"door-closed"} />
+        </Fragment>
     )
 }
 

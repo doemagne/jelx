@@ -58,12 +58,12 @@ export const fetchTransportData = (token) => {
                 message: 'continue with your session.',
             }));
         } catch (error) {
+            dispatch(setloading(false));
             dispatch(notify({
                 status: 'error',
                 title: 'Unauthenticated',
                 message: `Please sign in.`,
             }));
-            dispatch(setloading(false));
         }
     });
 }
@@ -115,21 +115,21 @@ export const authenticateUser = (credentials) => {
             dispatch(setTransport({ id: 1, content: content }));
             dispatch(authenticator(content.authenticated));
             dispatch(updateCart(content.cart));
-            dispatch(notify(notificationsignedin));
-            dispatch(setredirect(true));
             dispatch(setloading(false));
+            // dispatch(notify(notificationsignedin));
+            dispatch(setredirect(true));
             dispatch(notify({
                 status: 'success',
                 title: 'authenticated',
                 message: `continue session`,
             }));
         } catch (error) {
+            dispatch(setloading(false));
             dispatch(notify({
                 status: 'failed',
                 title: 'failed to send',
                 message: `[incorrect username or password]${error.message}`,
             }));
-            dispatch(setloading(false));
         }
     });
 }
@@ -148,16 +148,16 @@ export const signoutUser = () => {
             const endpoint = '/api/user/signout';
             const response = await sendPostRequest(null, endpoint)
             dispatch(signout());
+            dispatch(setloading(false));
             dispatch(notify({
                 status: 'success',
                 title: 'you are now signed out',
                 message: response.message,
             }));
-            dispatch(setloading(false));
             window.location.reload();
         } catch (error) {
-            dispatch(notify(notificationfailed));
             dispatch(setloading(false));
+            dispatch(notify(notificationfailed));
             dispatch(notify({
                 status: 'error',
                 title: 'failed',

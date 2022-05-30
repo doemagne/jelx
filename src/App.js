@@ -71,7 +71,7 @@ function App() {
               <Route path="/merchandise/cartr" element={<MerchandiseR cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/merchandise/detail" element={<MerchandiseDetail cartuid={cartuid} authenticated={authenticated} />} />
               <Route path="/bug/register" element={<RegisterBug authenticated={authenticated} token={token} />} />
-              <Route path="/bug/mapping" element={<BugLogX authenticated={authenticated} token={token} mapRef="userprofile"/>} />
+              <Route path="/bug/mapping" element={<BugLog authenticated={authenticated} token={token} mapRef="userprofile"/>} />
               <Route path="/user/profile/mapping" element={<UserLog authenticated={authenticated} token={token} mapRef={"bugs"}/>} />
               <Route path="/bug/update" element={<BugView token={token} />} />
               <Route path="/config" element={<Config />} />

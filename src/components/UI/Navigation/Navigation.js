@@ -29,7 +29,7 @@ const Navigation = (props) => {
     const loadstate = useSelector(state => state.ui.loadstate)
     const signoutHandler = async (e) => {
         e.preventDefault();
-        window.sessionStorage.setItem("window", "/");
+        window.sessionStorage.setItem("window", "/account/signout");
         dispatch(signoutUser());
     }
     const currwindow = window.location.pathname

@@ -25,15 +25,15 @@ const SystemConfig = (props) => {
     }
     const onClickHandler = (mapping) => {
         setMapping(mapping)
-        console.log(mapping.name)
+        // console.log(mapping.name)
     }
     const cancelHandler = () => {
         setMapping(null)
     }
 
     useEffect(() => {
-        if (mappings.length === 1) {
-            console.log("no mappings")
+        if (mappings.length === 0) {
+            // console.log("no mappings")
             fetchHandler(maps)
         }
         if (mappings) {

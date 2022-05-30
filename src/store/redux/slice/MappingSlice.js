@@ -30,7 +30,8 @@ let mappingsX = new Map([
     ["default", mapping],
 ])
 let initialState = {
-    mappings: [mapping],
+    mappings: [],
+    // mappings: [mapping],
     mapping: mapping,
 }
 const desc = `sort-down`
@@ -74,7 +75,7 @@ const mappingSlice = createSlice({
                 }
                 // state.mapping = null
                 const pay = action.payload.content
-                console.log(pay)
+                // console.log(pay)
                 map.id = state.mappings.length
                 const restrictions = action.payload.restrictions
                 map.restrictions = state.mapping.restrictions.concat(restrictions)
@@ -83,7 +84,7 @@ const mappingSlice = createSlice({
                 let fix = name.substring(1, name.length)
                 let prefix = `${pre}${fix}`
                 map.name = prefix
-                console.log(prefix)
+                // console.log(prefix)
                 // map.name = action.payload.table
                 if (pay) {
                     map.data = pay    // let headers
@@ -124,29 +125,32 @@ const mappingSlice = createSlice({
             state.mapping.default.push(pay)
         },
         setTableSelection: (state, action) => {
-            if (action.payload) {
-                const b = state.mapping.items.find(bi => bi.id === action.payload)
-                if (b) {
-                    state.mapping.current = b
-                }
+            // if (action.payload) {
+            const pay = action.payload
+            const b = state.mappings[pay.map].items.find(bi => bi.id === pay.item.id)
+            if (b) {
+                state.mappings[pay.map].current = b
+                console.log(b.id)
             }
+            // }
         },
         updateTableRow: (state, action) => {
             const pay = action.payload
             const b = state.mapping.items.findIndex(bi => bi.id === pay.id)
 
             if (state.mapping.items[b]) {
-                state.mapping.items[b] = pay
+                state.mapping.items[b] = pay.item
             }
         },
         filterItems: (state, action) => {
-            const query = action.payload.toLowerCase().substring(1, action.payload.length)
-            const tdata = state.mapping.default.slice().reverse()
-            const headers = state.mapping.headers.slice().reverse()
-            if (action.payload.length > 1) {
-                state.mapping.query = action.payload
+            const pay = action.payload
+            const query = pay.query.toLowerCase().substring(1, pay.query.length)
+            const tdata = state.mappings[pay.map].default.slice().reverse()
+            const headers = state.mappings[pay.map].headers.slice().reverse()
+            if (pay.query.length > 1) {
+                state.mappings[pay.map].query = pay.query
             } else {
-                state.mapping.query = ''
+                state.mappings[pay.map].query = ''
             }
             const filter = tdata.filter((item) => {
                 for (const k in headers) {
@@ -159,7 +163,7 @@ const mappingSlice = createSlice({
                     }
                 }
             })
-            state.mapping.items = filter
+            state.mappings[pay.map].items = filter
         },
         sortascending: (state, action) => {
             const header = action.payload
@@ -170,8 +174,8 @@ const mappingSlice = createSlice({
                 .sort((a, b) => a[header.headerCaption] < b[header.headerCaption] ? 1 : -1)
             )
             // if (state.mappings[header.map].headers[header.id]) {
-                state.mappings[header.map].headers[header.id].headerSort = desc
-                console.log(state.mappings[header.map].headers[header.id].headerSort)
+            state.mappings[header.map].headers[header.id].headerSort = desc
+            console.log(state.mappings[header.map].headers[header.id].headerSort)
             // }
         },
         sortdescending: (state, action) => {
@@ -184,8 +188,8 @@ const mappingSlice = createSlice({
                 .sort((a, b) => a[header.headerCaption] > b[header.headerCaption] ? 1 : -1)
             )
             // if (state.mappings[header.map].headers[header.id]) {
-                state.mappings[header.map].headers[header.id].headerSort = asc
-                console.log(state.mappings[header.map].headers[header.id].headerSort)
+            state.mappings[header.map].headers[header.id].headerSort = asc
+            console.log(state.mappings[header.map].headers[header.id].headerSort)
             // }
         },
         loadTableData: (state, action) => {

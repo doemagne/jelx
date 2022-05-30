@@ -1,18 +1,11 @@
 import "../table/Table.module.css"
 import { Fragment, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
 import Banner from "../../../components/js/UI/Banner/Banner"
 import CardJ from "../../../components/js/UI/CardJ"
-// import { fetchBugMap } from "../../../store/redux/action/BugAction"
-import Table from "../table/Table"
-import { setTableSelection } from "../../../store/redux/slice/TableSlice"
-import { setCurrent } from "../../../store/redux/slice/BugSlice"
+import { setTableSelection } from "../../../store/redux/slice/MappingSlice"
 import Caption from "../table/view/Caption"
-import { fetchMap } from "../../../store/redux/action/MappingAction"
-import { filterItems, loadTableData } from "../../../store/redux/slice/MappingSlice"
 import Mapping from "../mapping/Mapping"
-import { delayRequest } from "../../../store/redux/action/Request"
 
 const restrictions = []
 
@@ -29,12 +22,11 @@ const UserLog = (props) => {
     }
     
     const onRowClickHandler = (item) => {
-        dispatch(setCurrent(item.id))
-        dispatch(setTableSelection(item.id))
+        // dispatch(setCurrent(item.id))
+        // item.map = props.mapping.id
+        dispatch(setTableSelection({item:item, map:props.mapping.id}))
         // setSelected(true)
     }
-    // const str = "hi"
-    // str.replace()
 
     return (
         <Fragment>
@@ -65,6 +57,13 @@ const UserLog = (props) => {
 }
 
 export default UserLog
+// import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
+// import { fetchMap } from "../../../store/redux/action/MappingAction"
+// import { filterItems, loadTableData } from "../../../store/redux/slice/MappingSlice"
+// // import { fetchBugMap } from "../../../store/redux/action/BugAction"
+// import Table from "../table/Table"
+// import { setCurrent } from "../../../store/redux/slice/BugSlice"
+// import { delayRequest } from "../../../store/redux/action/Request"
 
 // let firstsort = true
 // import BugViewC from "./BugViewC"
