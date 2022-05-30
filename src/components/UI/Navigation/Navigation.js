@@ -13,6 +13,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Notification from '../../js/UI/Notification/Notification';
 import NavAuthBar from './NavAuthBar';
 import AnonymousBar from './Anonymous/AnonymousBar';
+import { loadTableData } from '../../../store/redux/slice/MappingSlice';
+import { delayRequest } from '../../../store/redux/action/Request';
 // import classes from '../../js/Layout/HeaderCartButton/HeaderCartButton.module.css'
 //import { signout } from '../../../store/slice/AuthSlice';
 let nav;
@@ -111,15 +113,24 @@ const Navigation = (props) => {
             </Nav>
         );
     }
+    const bugHandler = () => {
+        dispatch(loadTableData({ name: "bug" }))
+        delayRequest(1000)
+    }
+    const profileHandler = () => {
+        console.log("navigating to profile log")
+        dispatch(loadTableData({ name: "userprofile" }))
+        delayRequest(1000)
+    }
     const configpath = currwindow === "/system/config" | currwindow.includes("mapping")
     if (props.authenticated && configpath) {
         navigation = (
             <Nav>
-                <Link to="/" className='nav-link active' aria-current="page" >
+                <Link to="/account/user" className='nav-link active' aria-current="page" >
                     <span className="bi bi-house" />
                 </Link>
                 <Link to="/user/profile/mapping" className='nav-link active' aria-current="page">
-                    <span className="bi bi-person-circle" />
+                    <span className="bi bi-person-circle" onClick={profileHandler}/>
                 </Link>
                 <Link to="/user/address/mapping" className='nav-link active' aria-current="page">
                     <span className="bi bi-signpost" />
@@ -131,14 +142,13 @@ const Navigation = (props) => {
                     <span className="bi bi-boxes" />
                 </Link>
                 <Link to="/bug/mapping" className='nav-link active' aria-current="page" >
-                    <span className="bi bi-bug" />
+                    <span className="bi bi-bug" onClick={bugHandler}/>
                 </Link>
                 <Link to="/notification/mapping" className='nav-link active' aria-current="page" >
                     <span className="bi bi-bell" />
                 </Link>
             </Nav>
         )
-
     }
     return (
         <Fragment>

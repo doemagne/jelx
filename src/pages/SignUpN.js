@@ -48,7 +48,7 @@ const SignUpN = (props) => {
   }
 
   if (redirect) {
-    return <Navigate to="/account/signinN" />
+    return <Navigate to="/account/signin" />
   }
 
   return (

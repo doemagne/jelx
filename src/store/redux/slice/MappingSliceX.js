@@ -1,18 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-class mapX {
-    constructor(id, name, query, restrictions, data, items, defaultdata, current) {
-        this.id = id
-        this.name = name
-        this.query = query
-        this.restrictions = restrictions
-        this.data = data
-        this.items = items
-        this.default = defaultdata
-        this.current = current
-    }
-}
-let mappingz = new mapX(0, "default", "", [], [], [], [], null)
 let mapping = {
     id: 0,
     name: "default",
@@ -25,7 +12,6 @@ let mapping = {
     current: null,
     query: "",
 }
-
 let mappingsX = new Map([
     ["default", mapping],
 ])
@@ -58,35 +44,18 @@ const mappingSlice = createSlice({
         transportTableX: (state, action) => {
             const table = state.mappings.findIndex((t) => t.name === action.payload.table)
             if (state.mappings[table]) {
-                console.log(`mapping for ${table} already exists`)
+                // const prior = state.mappings.findIndex((t) => t.name === state.mapping.name)
+                // state.mappings[prior] = state.mapping
+                console.log(state.mapping.name)
+                state.mapping = state.mappings[table]
             } else {
-                let map = {
-                    id: 0,
-                    name: "default",
-                    data: null,
-                    headers: [],
-                    items: [],
-                    default: [],
-                    output: null,
-                    restrictions: [],
-                    current: null,
-                    query: "",
-                }
-                // state.mapping = null
                 const pay = action.payload.content
                 console.log(pay)
-                map.id = state.mappings.length
                 const restrictions = action.payload.restrictions
-                map.restrictions = state.mapping.restrictions.concat(restrictions)
-                let name = action.payload.table
-                let pre = name.substring(0, 1).toUpperCase()
-                let fix = name.substring(1, name.length)
-                let prefix = `${pre}${fix}`
-                map.name = prefix
-                console.log(prefix)
-                // map.name = action.payload.table
+                state.mapping.restrictions = state.mapping.restrictions.concat(restrictions)
+                state.mapping.name = action.payload.table
                 if (pay) {
-                    map.data = pay    // let headers
+                    state.mapping.data = pay    // let headers
                     let i = 0
                     for (const k in pay[0]) {
                         let restricted = false
@@ -95,26 +64,25 @@ const mappingSlice = createSlice({
                         }
                         if (restricted) { continue }
                         const header = {
-                            id: map.headers.length,
+                            id: `${action.payload.table}${k}${i}`,
                             headerCaption: k,
                             headerSort: asc,
                             active: true,
-                            map: map.id,
                         }
                         i++
-                        if (header) { map.headers.push(header) }
+                        if (header) { state.mapping.headers.push(header) }
                     }
                     let items = []
                     for (const k in pay) {
                         if (k === "token") { continue }
                         const item = pay[k]
-                        if (map.items) { items.push(item) }
+                        if (state.mapping.items) { items.push(item) }
                     }
                     if (items.length > 0) {
-                        map.items = items.slice().reverse()
-                        map.default = items
+                        state.mapping.items = items.slice().reverse()
+                        state.mapping.default = items
                     }
-                    state.mappings.push(map)
+                    state.mappings.push(state.mapping)
                 }
             }
         },
@@ -163,44 +131,29 @@ const mappingSlice = createSlice({
         },
         sortascending: (state, action) => {
             const header = action.payload
-            // const headerIdx = state.mappings[header.map].headers.findIndex(id => state.mappings[header.map].headers[header.id] === id)
-            console.log(state.mappings[header.map].headers[header.id].headerCaption)
-            state.mappings[header.map].items = ([]
-                .concat(state.mappings[header.map].items)
+            const headerIdx = state.mapping.headers.findIndex(id => state.mapping.headers[header.id] == id)
+            state.mapping.items = ([]
+                .concat(state.mapping.items)
                 .sort((a, b) => a[header.headerCaption] < b[header.headerCaption] ? 1 : -1)
             )
-            // if (state.mappings[header.map].headers[header.id]) {
-                state.mappings[header.map].headers[header.id].headerSort = desc
-                console.log(state.mappings[header.map].headers[header.id].headerSort)
-            // }
+            state.mapping.headers[headerIdx].headerSort = desc
         },
         sortdescending: (state, action) => {
             const header = action.payload
-            // const headerIdx = state.mappings[header.map].headers.findIndex(id => state.mappings[header.map].headers[header.id] == id)
-            console.log(state.mappings[header.map].headers[header.id])
-            // console.log(state.mappings[header.map].id)
-            state.mappings[header.map].items = ([]
-                .concat(state.mappings[header.map].items)
+            const headerIdx = state.mapping.headers.findIndex(id => state.mapping.headers[header.id] == id)
+            state.mapping.items = ([]
+                .concat(state.mapping.items)
                 .sort((a, b) => a[header.headerCaption] > b[header.headerCaption] ? 1 : -1)
             )
-            // if (state.mappings[header.map].headers[header.id]) {
-                state.mappings[header.map].headers[header.id].headerSort = asc
-                console.log(state.mappings[header.map].headers[header.id].headerSort)
-            // }
+            state.mapping.headers[headerIdx].headerSort = asc
         },
         loadTableData: (state, action) => {
             // state.mapping = null
             const table = state.mappings.findIndex((t) => t.name === action.payload.table)
             if (state.mappings[table]) {
-                console.log("loading table data " + table)
-                // state.mapping = null
-                state.mapping.data = initialState.mapping.data
-                state.mapping.headers = []
-                state.mapping.output = initialState.mapping.output
-                state.mapping.items = initialState.mapping.items
-                state.mapping.default = initialState.mapping.default
-                state.mapping = state.mappings[table]
                 console.log(state.mapping.name)
+                state.mapping= null
+                state.mapping = state.mappings[table]
                 // const prior = state.mappings.findIndex((t) => t.name === state.mapping.name)
                 // state.mappings[prior] = state.mapping
                 // console.log(state.mapping.name)
