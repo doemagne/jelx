@@ -38,86 +38,85 @@ const desc = `sort-down`
 const asc = `sort-up`
 
 // const p = {"s":{}}
+export const prefixCaption = (payload) => {
+    let name = payload
+    let pre = name.substring(0, 1).toUpperCase()
+    let fix = name.substring(1, name.length)
+    let prefix = `${pre}${fix}`
+    return prefix
+}
+const defaultMap = () => {
+    let map = {
+        id: 0,
+        name: "default",
+        data: null,
+        headers: [],
+        items: [],
+        default: [],
+        output: null,
+        restrictions: [],
+        current: null,
+        query: "",
+    }
+    return map
+}
 
 const mappingSlice = createSlice({
     name: 'mapping',
     initialState: initialState,
     reducers: {
-        transportTable: (state, action) => {
-            const pay = action.payload
-            console.log(pay)
-            let mapkey = ''
-            for (const k in pay) {
-                if (k === "token") { continue }
-                if (k.length > 0) {
-                    mapkey = k
-                    console.log(k)
-                    break
-                }
-            }
-        },
         transportTableX: (state, action) => {
             const table = state.mappings.findIndex((t) => t.name === action.payload.table)
-            if (state.mappings[table]) {
-                console.log(`mapping for ${table} already exists`)
-            } else {
-                let map = {
-                    id: 0,
-                    name: "default",
-                    data: null,
-                    headers: [],
-                    items: [],
-                    default: [],
-                    output: null,
-                    restrictions: [],
-                    current: null,
-                    query: "",
+            // if (state.mappings[table]) {
+            // console.log(`mapping for ${table} already exists`)
+            // } else {
+            let map = defaultMap()
+            const pay = action.payload.content
+            map.id = state.mappings.length
+            // const restrictions = action.payload.restrictions
+            // map.restrictions = state.mapping.restrictions.concat(restrictions)
+            map.name = prefixCaption(action.payload.table)
+            if (pay) {
+                map.data = pay    // let headers
+                let i = 0
+                for (const k in pay[0]) {
+                    // let restricted = false
+                    // for (const r in state.mapping.restrictions) {
+                    // if (state.mapping.restrictions[r] == k) { restricted = true }
+                    // }
+                    // if (restricted) { continue }
+                    const header = {
+                        id: map.headers.length,
+                        headerCaption: k,
+                        headerSort: desc,
+                        active: true,
+                        fieldType: "Field",
+                        icon: "image",
+                        readOnly: false,
+                        inputType: 'text',
+                        map: map.id,
+                        mapName: map.name,
+                    }
+                    i++
+                    if (header) { map.headers.push(header) }
                 }
-                // state.mapping = null
-                const pay = action.payload.content
-                // console.log(pay)
-                map.id = state.mappings.length
-                const restrictions = action.payload.restrictions
-                map.restrictions = state.mapping.restrictions.concat(restrictions)
-                let name = action.payload.table
-                let pre = name.substring(0, 1).toUpperCase()
-                let fix = name.substring(1, name.length)
-                let prefix = `${pre}${fix}`
-                map.name = prefix
-                // console.log(prefix)
-                // map.name = action.payload.table
-                if (pay) {
-                    map.data = pay    // let headers
-                    let i = 0
-                    for (const k in pay[0]) {
-                        let restricted = false
-                        for (const r in state.mapping.restrictions) {
-                            if (state.mapping.restrictions[r] == k) { restricted = true }
-                        }
-                        if (restricted) { continue }
-                        const header = {
-                            id: map.headers.length,
-                            headerCaption: k,
-                            headerSort: asc,
-                            active: true,
-                            map: map.id,
-                        }
-                        i++
-                        if (header) { map.headers.push(header) }
-                    }
-                    let items = []
-                    for (const k in pay) {
-                        if (k === "token") { continue }
-                        const item = pay[k]
-                        if (map.items) { items.push(item) }
-                    }
-                    if (items.length > 0) {
-                        map.items = items.slice().reverse()
-                        map.default = items
-                    }
-                    state.mappings.push(map)
+                let items = []
+                for (const k in pay) {
+                    if (k === "token") { continue }
+                    const item = pay[k]
+                    if (map.items) { items.push(item) }
                 }
+                if (items.length > 0) {
+                    map.items = items.slice().reverse()
+                    map.default = items
+                }
+                state.mappings.push(map)
+                // let headermap = defaultMap()
+                // headermap.id = state.mappings.length
+                // headermap.name = `${map.name} Headers`
+                // for (const h in map.headers[0]) { }
             }
+            // }
         },
         appendTableRow: (state, action) => {
             const pay = action.payload.content
@@ -136,14 +135,43 @@ const mappingSlice = createSlice({
         },
         updateTableRow: (state, action) => {
             const pay = action.payload
-            const b = state.mapping.items.findIndex(bi => bi.id === pay.id)
+            // console.log(pay)
+            console.log(state.mappings[pay.map].items.length)
+            let idx = state.mappings[pay.map].items.findIndex((item) => item.id === state.mappings[pay.map].current.id)
+            state.mappings[pay.map].items[idx] = state.mappings[pay.map].current
+            idx = state.mappings[pay.map].default.findIndex((item) => item.id === state.mappings[pay.map].current.id)
+            state.mappings[pay.map].default[idx] = state.mappings[pay.map].current
+            idx = state.mappings[pay.map].data.findIndex((item) => item.id === state.mappings[pay.map].current.id)
+            state.mappings[pay.map].data[idx] = state.mappings[pay.map].current
 
-            if (state.mapping.items[b]) {
-                state.mapping.items[b] = pay.item
+            // idx = state.mappings[pay.map].default.findIndex((item) => item.id = state.mappings[pay.map].current.id)
+            // console.log(idx)
+            // state.mappings[pay.map].default[idx] = state.mappings[pay.map].current
+            // idx = state.mappings[pay.map].data.findIndex((item) => item.id = state.mappings[pay.map].current.id)
+            // console.log(idx)
+            // state.mappings[pay.map].data[idx] = state.mappings[pay.map].current
+            // console.log(idx)
+            // // state.mappings[pay.map]
+            // const pay = action.payload
+            // const b = state.mapping.items.findIndex(bi => bi.id === pay.id)
+
+            // if (state.mapping.items[b]) {
+            //     state.mapping.items[b] = pay.item
+            // }
+        },
+        updateCurrentHeader: (state, action) => {
+            const pay = action.payload
+            console.log(pay)
+            state.mappings[pay.map].current[pay.headerCaption] = pay.value
+            if (pay.value === "on") {
+                state.mappings[pay.map].current[pay.headerCaption] = true
+            }else if (pay.value === "off") {
+                state.mappings[pay.map].current[pay.headerCaption] = false
             }
         },
         filterItems: (state, action) => {
             const pay = action.payload
+            console.log(pay)
             const query = pay.query.toLowerCase().substring(1, pay.query.length)
             const tdata = state.mappings[pay.map].default.slice().reverse()
             const headers = state.mappings[pay.map].headers.slice().reverse()
@@ -265,6 +293,6 @@ const mappingSlice = createSlice({
     }
 });
 
-export const { transportTableX, appendRow, setTableSelection, updateTableRow, filterItemsI, filterItems, sortdescending, sortascending, loadTableDataX, loadTableData } = mappingSlice.actions;
+export const { updateCurrentHeader, transportTableX, appendRow, setTableSelection, updateTableRow, filterItemsI, filterItems, sortdescending, sortascending, loadTableDataX, loadTableData } = mappingSlice.actions;
 
 export default mappingSlice.reducer;

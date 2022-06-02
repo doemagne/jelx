@@ -6,12 +6,14 @@ import CardJ from "../../../components/js/UI/CardJ"
 import { setTableSelection } from "../../../store/redux/slice/MappingSlice"
 import Caption from "../table/view/Caption"
 import Mapping from "../mapping/Mapping"
+import MapView from "../mapping/MapView"
 
 const restrictions = []
 
 const UserLog = (props) => {
     const data = props.mapping
     const dispatch = useDispatch()
+    const [rowSelected, setRowSelected] = useState()
 
     const cancelHandler = () => {
         props.setMapping(null)
@@ -20,40 +22,37 @@ const UserLog = (props) => {
     const registerHandler = () => {
         // setRegistered(true)
     }
-    
+
     const onRowClickHandler = (item) => {
-        // dispatch(setCurrent(item.id))
-        // item.map = props.mapping.id
-        dispatch(setTableSelection({item:item, map:props.mapping.id}))
-        // setSelected(true)
+        dispatch(setTableSelection({ item: item, map: data.id }))
+        setRowSelected({ item: item, map: data.id })
     }
 
-    return (
-        <Fragment>
-            {/* {!props.authenticated && <Navigate to="/" />} */}
-            <Fragment>
-                <Caption caption={`${data.name} Logs`} />
-                <CardJ>
-                    <div className="row">
-                        <div className="col">
-                            <button className="w-100 btn btn-lg btn-warning" type="button" onClick={cancelHandler}>
-                                <span className="bi bi-chevron-double-left" />
-                            </button>
-                        </div>
-                        <div className="col">
-                            <button className="w-100 btn btn-lg btn-danger" type="button" onClick={registerHandler}>
-                                <span className="bi bi-bug" />
-                            </button>
-                        </div>
-
+    return (<Fragment>
+        {/* {!props.authenticated && <Navigate to="/" />} */}
+        {rowSelected && <MapView mapname={data.name === "Userprofile" ? "profile" : data.name} rowSelected={rowSelected} setRowSelected={setRowSelected} mapId={data.id} caption={`${data.name}`} />}
+        {!rowSelected && <Fragment>
+            <CardJ>
+                <div className="row">
+                    <div className="col">
+                        <button className="btn btn-default btn-warning" type="button" onClick={cancelHandler}>
+                            <span className="bi bi-chevron-double-left" />
+                        </button>
                     </div>
-                </CardJ>
-
-                <Mapping mapIdx={data.id} data={data} defaultClickHandler={onRowClickHandler}></Mapping>
-                <Banner banner={"view-list"} />
-            </Fragment>
-        </Fragment>
-    )
+                    <div className="col">
+                        <Caption caption={`${data.name} Logs`} />
+                    </div>
+                    <div className="col">
+                        <button className="btn btn-default btn-danger" type="button" onClick={registerHandler}>
+                            <span className="bi bi-bug" />
+                        </button>
+                    </div>
+                </div>
+            </CardJ>
+            <Mapping mapIdx={data.id} data={data} defaultClickHandler={onRowClickHandler}></Mapping>
+            <Banner banner={"view-list"} />
+        </Fragment>}
+    </Fragment>)
 }
 
 export default UserLog

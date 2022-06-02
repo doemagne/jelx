@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { delayRequest } from "../action/Request";
 
 const initialState = {
     cartToggle: false,
@@ -21,6 +22,7 @@ const uiSlice = createSlice({
                 title: action.payload.title,
                 message: action.payload.message,
             };
+            delayRequest(100)
         },
         closeNotification: (state) => {
             state.notification = null

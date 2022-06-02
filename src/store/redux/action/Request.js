@@ -16,7 +16,7 @@ export const sendTokenGetRequest = async (endpoint, token) => {
     if (!stimulus.ok) {
         let rt = await stimulus.text()
         // console.log(rt)
-        if (rt === authcookieflag){
+        if (rt === authcookieflag) {
             throw new Error(rt);
         }
         throw new Error(`an error occured.: ${rt}`);
@@ -24,24 +24,24 @@ export const sendTokenGetRequest = async (endpoint, token) => {
     const response = await stimulus.json();
     let th = stimulus.headers.get('X-Csrf-Token')
     response.token = th
-    
+
     return response;
 }
 
 // const reader = stimulus.body.getReader()
-        // reader.read().then(function processText(done, value) {
-        //     if (done) {
-        //         console.log("Streamed.")
-        //         if (value) {
-        //             console.log(value)
-        //         }
-        //         return 
-        //     }
-        //     pay += value.length
-        //     const chunk = value
-        //     return reader.read().then(processText)
-        // })
-        
+// reader.read().then(function processText(done, value) {
+//     if (done) {
+//         console.log("Streamed.")
+//         if (value) {
+//             console.log(value)
+//         }
+//         return 
+//     }
+//     pay += value.length
+//     const chunk = value
+//     return reader.read().then(processText)
+// })
+
 
 export const sendTokenGetRequestx = async (endpoint, token) => {
     // console.log(endpoint);
@@ -91,11 +91,11 @@ export const sendTokenPutRequest = async (data, endpoint, token) => {
     if (!stimulus.ok) {
         let rt = await stimulus.text()
         // console.log(rt)
-        if (rt === authcookieflag){
+        if (rt === authcookieflag) {
             throw new Error(rt);
         }
         throw new Error(`an error occured: ${rt}`);
-            // throw new Error('an error occured when the sending post request.');
+        // throw new Error('an error occured when the sending post request.');
     }
     const response = await stimulus.json();
     let th = stimulus.headers.get('X-Csrf-Token')
@@ -120,7 +120,7 @@ export const sendTokenPostRequest = async (data, endpoint, token) => {
     if (!stimulus.ok) {
         let rt = await stimulus.text()
         // console.log(rt)
-        if (rt === authcookieflag){
+        if (rt === authcookieflag) {
             throw new Error(rt);
         }
         throw new Error(`an error occured: ${rt}`);
@@ -184,12 +184,18 @@ export const sendGenericRequest = async (data, endpoint, method) => {
     return response;
 }
 
-export const uploadMediaForm = async (formdata, endpoint) => {
+export const uploadMediaForm = async (formdata, endpoint, token) => {
     //try {
+    console.log(formdata)
     const ctrl = new AbortController();
     setTimeout(() => ctrl.abort(), 5000);
-    const stimulus = await fetch(endpoint, {
+    const stimulus = await fetch(`${ServerURL}${endpoint}`, {
+        credentials: "include",
         method: 'POST',
+        headers: {
+            // "Content-Type": "multipart/form-data",
+            "X-Csrf-Token": token,
+        },
         body: formdata,
         signal: ctrl.signal,
     });
