@@ -1,12 +1,12 @@
 import { Fragment, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchMap } from "../../../store/redux/action/MappingAction"
+import { fetchMap, generateHeaders } from "../../../store/redux/action/MappingAction"
 import { delayRequest } from "../../../store/redux/action/Request"
-import { transportTableX } from "../../../store/redux/slice/MappingSlice"
+import { headerMapping, transportTableX } from "../../../store/redux/slice/MappingSlice"
 import UserLog from "../user/UserLog"
 import ButtonMap from "./ButtonMap"
 
-const maps = ["userprofile", "bug", "merchandise"]
+const maps = ["header", "userprofile", "bug", "merchandise",]
 const restrictions = []
 
 const SystemConfig = (props) => {
@@ -25,10 +25,21 @@ const SystemConfig = (props) => {
             fetchData(map)
         })
     }
+    const q = false
     const fetchHeaderData = () => {
-        mappings.forEach((m) => {
-            console.log(m)
-            dispatch(transportTableX({ table: `${m.name} Header`, content: m.headers, restrictions: restrictions }))
+        if (q) {
+            const hm = mappings.find(m => m.name === "Header")
+            if (!hm) {
+                dispatch(transportTableX({ table: `Header`, content: mappings[0].headers, restrictions: restrictions }))
+                console.log("click again")
+            } else {
+                mappings.forEach((m) => {
+                    dispatch(generateHeaders(m.headers, props.token))
+                })
+            }
+        }
+        mappings.forEach(m => {
+            dispatch(headerMapping({map: m.id}))
         })
     }
     const onClickHandler = (mapping) => {
@@ -58,7 +69,7 @@ const SystemConfig = (props) => {
 
     return (
         <Fragment>
-            {!mapping &&< button className="btn btn-default btn-dark" onClick={fetchHeaderData}>Headers</button>}
+            {!mapping && < button className="btn btn-default btn-dark" onClick={fetchHeaderData}>Headers</button>}
             {!mapping && mapOptions}
             {mapping && <UserLog setMapping={setMapping} mapping={mapping} />}
         </Fragment>

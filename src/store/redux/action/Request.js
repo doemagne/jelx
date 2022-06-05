@@ -183,6 +183,25 @@ export const sendGenericRequest = async (data, endpoint, method) => {
     //console.log(response);
     return response;
 }
+            // "Content-Type": "application/json",
+
+            export const updateMediaForm = async (formdata, endpoint, token) => {
+                console.log(formdata)
+                const ctrl = new AbortController();
+                setTimeout(() => ctrl.abort(), 5000);
+                const stimulus = await fetch(`${ServerURL}${endpoint}`, {
+                    credentials: "include",
+                    method: 'PUT',
+                    headers: {
+                        "X-Csrf-Token": token,
+                    },
+                    body: formdata,
+                    signal: ctrl.signal,
+                });
+                if (!stimulus.ok) {
+                    throw new Error('an error occured when the sending post request.');
+                }
+            }
 
 export const uploadMediaForm = async (formdata, endpoint, token) => {
     //try {

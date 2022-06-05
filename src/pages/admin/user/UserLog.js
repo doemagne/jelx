@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Banner from "../../../components/js/UI/Banner/Banner"
 import CardJ from "../../../components/js/UI/CardJ"
-import { setTableSelection } from "../../../store/redux/slice/MappingSlice"
+import { prepareItemRegistration, setTableSelection } from "../../../store/redux/slice/MappingSlice"
 import Caption from "../table/view/Caption"
 import Mapping from "../mapping/Mapping"
 import MapView from "../mapping/MapView"
@@ -14,13 +14,17 @@ const UserLog = (props) => {
     const data = props.mapping
     const dispatch = useDispatch()
     const [rowSelected, setRowSelected] = useState()
-
+    const current = useSelector(state => state.mapping.mappings[data.id].current)
+    // const current = data.current
     const cancelHandler = () => {
         props.setMapping(null)
     }
 
     const registerHandler = () => {
         // setRegistered(true)
+        dispatch(prepareItemRegistration({ map: data.id }))
+        setRowSelected({ item: current, map: data.id })
+        console.log(current)
     }
 
     const onRowClickHandler = (item) => {
@@ -43,8 +47,8 @@ const UserLog = (props) => {
                         <Caption caption={`${data.name} Logs`} />
                     </div>
                     <div className="col">
-                        <button className="btn btn-default btn-danger" type="button" onClick={registerHandler}>
-                            <span className="bi bi-bug" />
+                        <button className="btn btn-default btn-success" type="button" onClick={registerHandler}>
+                            <span className="bi bi-plus-circle" />
                         </button>
                     </div>
                 </div>

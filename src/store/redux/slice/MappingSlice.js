@@ -123,6 +123,39 @@ const mappingSlice = createSlice({
             pay.id = state.mapping.default.length + 1
             state.mapping.default.push(pay)
         },
+        prepareItemRegistration: (state, action) => {
+            const pay = action.payload
+            const newI = { ...state.mappings[pay.map].items[0] }
+            for (const k in newI) {
+                newI[k] = null
+            }
+            console.log(newI)
+            state.mappings[pay.map].current = newI
+
+        },
+        generateHeaderMapping: (state, action) => {
+
+        },
+        headerMapping: (state, action) => {
+            const pay = action.payload
+            const H = state.mappings.findIndex(h => h.name === "Header")
+            const mapheaders = state.mappings[H].items.filter((i) => {
+                if (i.mapName === state.mappings[pay.map].name) {
+                    return i
+                }
+            })
+            console.log(mapheaders.length)
+            for (const k in state.mappings[pay.map].headers) {
+                // console.log(k)
+                const h = mapheaders.findIndex(hm => hm.headerCaption === state.mappings[pay.map].headers[k].headerCaption)
+                // console.log(`${state.mappings[pay.map].headers[k].headerCaption} ::: ${mapheaders[h].headerCaption}`)
+                if (mapheaders[h]) {
+                    const headermap = mapheaders[h]
+                    state.mappings[pay.map].headers[k] = headermap
+                    // console.log(`${state.mappings[pay.map].headers[k].headerCaption}:${mapheaders[h].headerCaption}`)
+                }
+            }
+        },
         setTableSelection: (state, action) => {
             // if (action.payload) {
             const pay = action.payload
@@ -143,21 +176,6 @@ const mappingSlice = createSlice({
             state.mappings[pay.map].default[idx] = state.mappings[pay.map].current
             idx = state.mappings[pay.map].data.findIndex((item) => item.id === state.mappings[pay.map].current.id)
             state.mappings[pay.map].data[idx] = state.mappings[pay.map].current
-
-            // idx = state.mappings[pay.map].default.findIndex((item) => item.id = state.mappings[pay.map].current.id)
-            // console.log(idx)
-            // state.mappings[pay.map].default[idx] = state.mappings[pay.map].current
-            // idx = state.mappings[pay.map].data.findIndex((item) => item.id = state.mappings[pay.map].current.id)
-            // console.log(idx)
-            // state.mappings[pay.map].data[idx] = state.mappings[pay.map].current
-            // console.log(idx)
-            // // state.mappings[pay.map]
-            // const pay = action.payload
-            // const b = state.mapping.items.findIndex(bi => bi.id === pay.id)
-
-            // if (state.mapping.items[b]) {
-            //     state.mapping.items[b] = pay.item
-            // }
         },
         updateCurrentHeader: (state, action) => {
             const pay = action.payload
@@ -165,7 +183,7 @@ const mappingSlice = createSlice({
             state.mappings[pay.map].current[pay.headerCaption] = pay.value
             if (pay.value === "on") {
                 state.mappings[pay.map].current[pay.headerCaption] = true
-            }else if (pay.value === "off") {
+            } else if (pay.value === "off") {
                 state.mappings[pay.map].current[pay.headerCaption] = false
             }
         },
@@ -293,6 +311,6 @@ const mappingSlice = createSlice({
     }
 });
 
-export const { updateCurrentHeader, transportTableX, appendRow, setTableSelection, updateTableRow, filterItemsI, filterItems, sortdescending, sortascending, loadTableDataX, loadTableData } = mappingSlice.actions;
+export const { updateCurrentHeader, prepareItemRegistration, transportTableX, appendRow, setTableSelection, updateTableRow, filterItemsI, filterItems, sortdescending, sortascending, loadTableDataX, loadTableData, headerMapping } = mappingSlice.actions;
 
 export default mappingSlice.reducer;
